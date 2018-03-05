@@ -122,4 +122,17 @@ public class UserServiceImp implements UserService {
         }
         return response;
     }
+
+    @Override
+    public UserResponse getUserInfor(String phone) {
+        UserResponse response = new UserResponse();
+        Users users = Utils.getUserByPhone(phone);
+        if(users != null){
+            response.setUsers(users);
+        }else {
+            response.setError(ErrorCode.USER_NOT_EXIST);
+            response.setMsg("Số điện thoại này chưa được đăng ký.");
+        }
+        return response;
+    }
 }

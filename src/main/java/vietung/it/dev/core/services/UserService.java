@@ -9,4 +9,5 @@ public interface UserService {
     public UserResponse changePass(String phone, String oldPass, String newPass);
     public UserResponse changePhone(String oldPhone, String newPhone, String pass);
     public UserResponse changeRole(String phone, String pass, int role);
+    public UserResponse getUserInfor(String phone);
 }
