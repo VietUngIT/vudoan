@@ -9,6 +9,8 @@ import vietung.it.dev.core.config.APIConfig;
 import vietung.it.dev.core.config.MongoConfig;
 import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.config.VertxHttpConfigServer;
+import vietung.it.dev.core.services.UserService;
+import vietung.it.dev.core.services.imp.UserServiceImp;
 
 public class APILauncher {
     private static Logger logger = LoggerFactory.getLogger(APILauncher.class.getName());
@@ -34,6 +36,8 @@ public class APILauncher {
                             logger.error("Unable to start your application", event.cause());
                         }
                     });
+            //UserService service = new UserServiceImp();
+            //service.register("VietUngIT","01649216037","123456",4);
         }catch (Exception e){
             e.printStackTrace();
         }

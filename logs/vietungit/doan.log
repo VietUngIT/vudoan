@@ -385,3 +385,115 @@
 03 Mar 2018, 23:25:32,717 start on port 8080
 03 Mar 2018, 23:25:32,725 Vert.x application is started!
 03 Mar 2018, 23:26:25,071 Log to Users : { "_id" : { "$oid" : "5a9accb0292b1214cc2a52fb" }, "name" : "VietUngIT_02", "phone" : "0983220557", "password" : "79c24954807c83c719a99fa71958ad1afb7b17a2fe03d4773d383797dfcbfbf3", "roles" : 2, "idFacebook" : null, "avatar" : 0, "createTime" : { "$numberLong" : "1520094384746" } }
+05 thg 3 2018, 13:58:01,724 Logger is initialed
+05 thg 3 2018, 13:58:01,775 APIConfig is initialed
+05 thg 3 2018, 13:58:02,346 MongoPool is initialed
+05 thg 3 2018, 13:58:02,661 start on port 8080
+05 thg 3 2018, 13:58:02,661 start on port 8080
+05 thg 3 2018, 13:58:02,661 start on port 8080
+05 thg 3 2018, 13:58:02,661 start on port 8080
+05 thg 3 2018, 13:58:02,661 start on port 8080
+05 thg 3 2018, 13:58:02,661 start on port 8080
+05 thg 3 2018, 13:58:02,661 start on port 8080
+05 thg 3 2018, 13:58:02,661 start on port 8080
+05 thg 3 2018, 13:58:02,670 Vert.x application is started!
+05 thg 3 2018, 13:58:42,971 Log to Users : { "_id" : { "$oid" : "5a9ceaa24f99cf0e008a917b" }, "name" : "VietUngIT_005", "phone" : "0983220558", "password" : "79c24954807c83c719a99fa71958ad1afb7b17a2fe03d4773d383797dfcbfbf3", "roles" : 2, "idFacebook" : null, "avatar" : 0, "createTime" : { "$numberLong" : "1520233122640" } }
+05 thg 3 2018, 14:01:25,962 Logger is initialed
+05 thg 3 2018, 14:01:26,017 APIConfig is initialed
+05 thg 3 2018, 14:01:26,450 MongoPool is initialed
+05 thg 3 2018, 14:01:26,770 start on port 8080
+05 thg 3 2018, 14:01:26,770 start on port 8080
+05 thg 3 2018, 14:01:26,770 start on port 8080
+05 thg 3 2018, 14:01:26,770 start on port 8080
+05 thg 3 2018, 14:01:26,770 start on port 8080
+05 thg 3 2018, 14:01:26,770 start on port 8080
+05 thg 3 2018, 14:01:26,770 start on port 8080
+05 thg 3 2018, 14:01:26,770 start on port 8080
+05 thg 3 2018, 14:01:26,775 Vert.x application is started!
+05 thg 3 2018, 14:02:03,672 Error Request
+05 thg 3 2018, 14:03:34,826 Logger is initialed
+05 thg 3 2018, 14:03:34,866 APIConfig is initialed
+05 thg 3 2018, 14:03:35,258 MongoPool is initialed
+05 thg 3 2018, 14:03:35,591 start on port 8080
+05 thg 3 2018, 14:03:35,591 start on port 8080
+05 thg 3 2018, 14:03:35,592 start on port 8080
+05 thg 3 2018, 14:03:35,591 start on port 8080
+05 thg 3 2018, 14:03:35,591 start on port 8080
+05 thg 3 2018, 14:03:35,592 start on port 8080
+05 thg 3 2018, 14:03:35,592 start on port 8080
+05 thg 3 2018, 14:03:35,592 start on port 8080
+05 thg 3 2018, 14:03:35,594 Vert.x application is started!
+05 thg 3 2018, 14:06:08,479 Logger is initialed
+05 thg 3 2018, 14:06:08,523 APIConfig is initialed
+05 thg 3 2018, 14:06:08,907 MongoPool is initialed
+05 thg 3 2018, 14:06:09,238 start on port 8080
+05 thg 3 2018, 14:06:09,244 start on port 8080
+05 thg 3 2018, 14:06:09,245 start on port 8080
+05 thg 3 2018, 14:06:09,245 start on port 8080
+05 thg 3 2018, 14:06:09,245 start on port 8080
+05 thg 3 2018, 14:06:09,245 start on port 8080
+05 thg 3 2018, 14:06:09,246 start on port 8080
+05 thg 3 2018, 14:06:09,246 start on port 8080
+05 thg 3 2018, 14:06:09,251 Vert.x application is started!
+05 thg 3 2018, 14:06:48,324 Error Request
+05 thg 3 2018, 14:19:05,177 Logger is initialed
+05 thg 3 2018, 14:19:05,216 APIConfig is initialed
+05 thg 3 2018, 14:19:05,631 MongoPool is initialed
+05 thg 3 2018, 14:19:05,946 start on port 8080
+05 thg 3 2018, 14:19:05,946 start on port 8080
+05 thg 3 2018, 14:19:05,946 start on port 8080
+05 thg 3 2018, 14:19:05,946 start on port 8080
+05 thg 3 2018, 14:19:05,946 start on port 8080
+05 thg 3 2018, 14:19:05,946 start on port 8080
+05 thg 3 2018, 14:19:05,946 start on port 8080
+05 thg 3 2018, 14:19:05,946 start on port 8080
+05 thg 3 2018, 14:19:05,953 Vert.x application is started!
+05 thg 3 2018, 14:21:28,154 Logger is initialed
+05 thg 3 2018, 14:21:28,191 APIConfig is initialed
+05 thg 3 2018, 14:21:28,579 MongoPool is initialed
+05 thg 3 2018, 14:21:28,926 start on port 8080
+05 thg 3 2018, 14:21:28,926 start on port 8080
+05 thg 3 2018, 14:21:28,926 start on port 8080
+05 thg 3 2018, 14:21:28,926 start on port 8080
+05 thg 3 2018, 14:21:28,926 start on port 8080
+05 thg 3 2018, 14:21:28,926 start on port 8080
+05 thg 3 2018, 14:21:28,926 start on port 8080
+05 thg 3 2018, 14:21:28,926 start on port 8080
+05 thg 3 2018, 14:21:28,928 Vert.x application is started!
+05 thg 3 2018, 14:32:44,337 Logger is initialed
+05 thg 3 2018, 14:32:44,379 APIConfig is initialed
+05 thg 3 2018, 14:32:44,731 MongoPool is initialed
+05 thg 3 2018, 14:32:45,092 start on port 8080
+05 thg 3 2018, 14:32:45,092 start on port 8080
+05 thg 3 2018, 14:32:45,092 start on port 8080
+05 thg 3 2018, 14:32:45,092 start on port 8080
+05 thg 3 2018, 14:32:45,092 start on port 8080
+05 thg 3 2018, 14:32:45,092 start on port 8080
+05 thg 3 2018, 14:32:45,092 start on port 8080
+05 thg 3 2018, 14:32:45,092 start on port 8080
+05 thg 3 2018, 14:32:45,094 Vert.x application is started!
+05 thg 3 2018, 14:33:17,055 Logger is initialed
+05 thg 3 2018, 14:33:17,096 APIConfig is initialed
+05 thg 3 2018, 14:33:17,434 MongoPool is initialed
+05 thg 3 2018, 14:33:17,813 start on port 8080
+05 thg 3 2018, 14:33:17,813 start on port 8080
+05 thg 3 2018, 14:33:17,814 start on port 8080
+05 thg 3 2018, 14:33:17,814 start on port 8080
+05 thg 3 2018, 14:33:17,814 start on port 8080
+05 thg 3 2018, 14:33:17,814 start on port 8080
+05 thg 3 2018, 14:33:17,814 start on port 8080
+05 thg 3 2018, 14:33:17,815 start on port 8080
+05 thg 3 2018, 14:33:17,819 Vert.x application is started!
+05 thg 3 2018, 14:33:29,244 Log to Users : { "_id" : { "$oid" : "5a9cf2c84f99cf2570c22fca" }, "name" : "VietUngIT_005", "phone" : "0983220558", "password" : "79c24954807c83c719a99fa71958ad1afb7b17a2fe03d4773d383797dfcbfbf3", "roles" : 2, "idFacebook" : null, "avatar" : 0, "createTime" : { "$numberLong" : "1520235208906" } }
+05 thg 3 2018, 14:36:49,327 Logger is initialed
+05 thg 3 2018, 14:36:49,367 APIConfig is initialed
+05 thg 3 2018, 14:36:49,704 MongoPool is initialed
+05 thg 3 2018, 14:36:50,113 start on port 8080
+05 thg 3 2018, 14:36:50,113 start on port 8080
+05 thg 3 2018, 14:36:50,113 start on port 8080
+05 thg 3 2018, 14:36:50,113 start on port 8080
+05 thg 3 2018, 14:36:50,113 start on port 8080
+05 thg 3 2018, 14:36:50,113 start on port 8080
+05 thg 3 2018, 14:36:50,113 start on port 8080
+05 thg 3 2018, 14:36:50,113 start on port 8080
+05 thg 3 2018, 14:36:50,121 Vert.x application is started!

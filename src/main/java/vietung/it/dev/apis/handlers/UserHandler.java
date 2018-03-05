@@ -17,8 +17,7 @@ public class UserHandler extends BaseApiHandler {
                 String name = request.getParam("n");
                 String phone = request.getParam("ph");
                 String pass = request.getParam("p");
-                String r = request.getParam("role");
-                return registerHandler(name,phone,pass,r,userService);
+                return registerHandler(name,phone,pass,userService);
             }else if(type.equals("login")){
                 String phone = request.getParam("ph");
                 String pass = request.getParam("p");
@@ -38,12 +37,26 @@ public class UserHandler extends BaseApiHandler {
                 String pass = request.getParam("p");
                 String r = request.getParam("role");
                 return changeRoleHandler(phone,pass,r,userService);
+            }else if(type.equals("get")){
+                String phone = request.getParam("phone");
+                return getUserInfoHandler(phone,userService);
             }else{
                 SimpleResponse response = new SimpleResponse();
                 response.setError(ErrorCode.INVALID_PARAMS);
                 response.setMsg("Invalid params.");
                 return response;
             }
+        }else {
+            SimpleResponse response = new SimpleResponse();
+            response.setError(ErrorCode.INVALID_PARAMS);
+            response.setMsg("Invalid params.");
+            return response;
+        }
+    }
+
+    private BaseResponse getUserInfoHandler(String phone, UserService userService) {
+        if(phone!=null){
+            return userService.getUserInfor(phone);
         }else {
             SimpleResponse response = new SimpleResponse();
             response.setError(ErrorCode.INVALID_PARAMS);
@@ -105,18 +118,9 @@ public class UserHandler extends BaseApiHandler {
         }
     }
 
-    private BaseResponse registerHandler(String name, String phone, String pass, String r,UserService userService) {
-        if(name!=null && phone!=null && pass!=null && r!=null){
-            try {
-                int role = Integer.parseInt(r);
-                return userService.register(name,phone,pass,role);
-            }catch (NumberFormatException e){
-                e.printStackTrace();
-                SimpleResponse response = new SimpleResponse();
-                response.setError(ErrorCode.CANT_CAST_TYPE_ROLE);
-                response.setMsg("Lỗi ép dữ liệu kiểu của role.");
-                return response;
-            }
+    private BaseResponse registerHandler(String name, String phone, String pass,UserService userService) {
+        if(name!=null && phone!=null && pass!=null){
+            return userService.register(name,phone,pass,0);
         }else {
             SimpleResponse response = new SimpleResponse();
             response.setError(ErrorCode.INVALID_PARAMS);
