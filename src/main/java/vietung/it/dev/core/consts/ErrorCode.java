@@ -9,4 +9,7 @@ public class ErrorCode {
     public static final int DUPLICATE_USER = 5;
     public static final int CANT_CAST_TYPE_ROLE = 6;
     public static final int INVALID_PASSWORD = 7;
+    public static final int NOT_A_OBJECT_ID = 8;
+    public static final int ID_NOT_EXIST = 9;
+    public static final int LESS_ROLE = 10;
 }

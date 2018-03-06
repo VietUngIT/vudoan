@@ -17,12 +17,12 @@ public class HandBook extends MongoLog {
     public Document toDocument() {
         Document document = new Document();
         document.append("title",title);
-        document.append("content",content);
         document.append("author",author);
         document.append("image",image);
         document.append("views",views);
         document.append("typeNews",typeNews);
         document.append("timeCreate",timeCreate);
+        document.append("content",content);
         return document;
     }
 }
