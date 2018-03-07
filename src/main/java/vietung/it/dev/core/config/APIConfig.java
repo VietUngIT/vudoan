@@ -27,11 +27,13 @@ public class APIConfig {
             JsonObject obj = arr.get(i).getAsJsonObject();
             String path = obj.get("path").getAsString();
             String handlerClassPath = obj.get("handler").getAsString();
+            JsonArray roleArray = obj.get("roles").getAsJsonArray();
             boolean isPublic = obj.get("isPublic").getAsBoolean();
             String method = obj.get("method").getAsString();
             BaseApiHandler handler = (BaseApiHandler) Class.forName(handlerClassPath).newInstance();
             handler.setPath(path);
             handler.setPublic(isPublic);
+            handler.initRoles(roleArray);
             handler.setMethod(method);
             handlers.put(handler.getPath(), handler);
         }

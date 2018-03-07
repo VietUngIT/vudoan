@@ -7,5 +7,6 @@
 *.rar
 *.jar
 *.log
+*.xml
 logs
 target

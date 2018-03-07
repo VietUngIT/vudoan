@@ -1,12 +1,48 @@
 {
-  "port":8080,
+  "port":8083,
   "mode":"local",
   "api":[
     {
       "path":"/user",
       "handler":"vietung.it.dev.apis.handlers.UserHandler",
       "isPublic":true,
+      "roles":[],
       "method":"GET"
+    },
+    {
+      "path":"/news",
+      "handler":"vietung.it.dev.apis.handlers.NewsHandler",
+      "isPublic":true,
+      "roles":[],
+      "method":"GET"
+    },
+    {
+      "path":"/create-news",
+      "handler":"vietung.it.dev.apis.handlers.CreateNewsHandler",
+      "isPublic":false,
+      "roles":[2,3],
+      "method":"POST"
+    },
+    {
+      "path":"/type-news",
+      "handler":"vietung.it.dev.apis.handlers.TypeNewsHandler",
+      "isPublic":true,
+      "roles":[],
+      "method":"GET"
+    },
+    {
+      "path":"/create-type-news",
+      "handler":"vietung.it.dev.apis.handlers.CreateTypeNewsHandler",
+      "isPublic":false,
+      "roles":[2,3],
+      "method":"POST"
+    },
+    {
+      "path":"/comment-news",
+      "handler":"vietung.it.dev.apis.handlers.CommentNewsNewsHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"POST"
     }
   ]
 }

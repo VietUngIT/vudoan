@@ -1,5 +1,6 @@
 package vietung.it.dev.core.services.imp;
 
+import com.google.gson.JsonArray;
 import com.mongodb.DB;
 import org.bson.types.ObjectId;
 import org.jongo.Jongo;
@@ -77,56 +78,89 @@ public class NewsServiceImp implements NewsService {
     }
 
     @Override
-    public NewsResponse commentNews(String idNews, String phone, String content) throws Exception {
+    public NewsResponse deleteNews(String idNews) {
         NewsResponse response = new NewsResponse();
         if (!ObjectId.isValid(idNews)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
             response.setMsg("Id không đúng.");
             return response;
         }
-        Users users = Utils.getUserByPhone(phone);
-        if(users != null){
-            CommentsNews commentsNews = new CommentsNews();
-            ObjectId id = new ObjectId();
-            commentsNews.set_id(id.toHexString());
-            commentsNews.setName(users.getName());
-            commentsNews.setPhone(users.getPhone());
-            commentsNews.setAvatar(users.getAvatar());
-            commentsNews.setContent(content);
-            commentsNews.setIdNews(idNews);
-            commentsNews.setTimeCreate(Calendar.getInstance().getTimeInMillis());
-            MongoPool.log(CommentsNews.class.getSimpleName(),commentsNews.toDocument());
-            response.setData(commentsNews.toJson());
-        }else {
-            response.setError(ErrorCode.USER_NOT_EXIST);
-            response.setMsg("Số điện thoại này chưa được đăng ký.");
-        }
+
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(News.class.getSimpleName());
+        collection.remove(new ObjectId(idNews));
+
         return response;
     }
 
     @Override
-    public NewsResponse deleteNews(String idNews, String phone) {
+    public NewsResponse getNewsById(String idNews) {
         NewsResponse response = new NewsResponse();
         if (!ObjectId.isValid(idNews)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
             response.setMsg("Id không đúng.");
             return response;
         }
-        Users users = Utils.getUserByPhone(phone);
-        if(users != null){
-            if(users.getRoles()>1){
-                DB db = MongoPool.getDBJongo();
-                Jongo jongo = new Jongo(db);
-                MongoCollection collection = jongo.getCollection(News.class.getSimpleName());
-                collection.remove(new ObjectId(idNews));
-            }else {
-                response.setError(ErrorCode.LESS_ROLE);
-                response.setMsg("Không có đủ quyền thực hiện.");
-            }
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(News.class.getSimpleName());
+        StringBuilder builder = new StringBuilder();
+        builder.append("{_id:#}");
+        MongoCursor<News> cursor = collection.find(builder.toString(), new ObjectId(idNews)).as(News.class);
+        if(cursor.hasNext()){
+            News news = cursor.next();
+            response.setData(news.toJson());
         }else {
-            response.setError(ErrorCode.USER_NOT_EXIST);
-            response.setMsg("Số điện thoại này chưa được đăng ký.");
+            response.setError(ErrorCode.ID_NOT_EXIST);
+            response.setMsg("Id không tồn tại.");
         }
+
         return response;
     }
+
+    @Override
+    public NewsResponse getAllNews(long tlast, int offer) {
+        NewsResponse response = new NewsResponse();
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        StringBuilder builder = new StringBuilder();
+        builder.append("{timeCreate:{$lt:#}}");
+        MongoCollection collection = jongo.getCollection(News.class.getSimpleName());
+        MongoCursor<News> cursor = collection.find(builder.toString(),tlast).sort("{timeCreate:-1}").limit(offer).as(News.class);
+        JsonArray jsonArray = new JsonArray();
+        while(cursor.hasNext()){
+            News news = cursor.next();
+            jsonArray.add(news.toJson());
+        }
+        response.setDatas(jsonArray);
+
+        return response;
+    }
+
+    @Override
+    public NewsResponse getAllNewsByType(long tlast, int offer, int idType) {
+        NewsResponse response = new NewsResponse();
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        StringBuilder builder = new StringBuilder();
+        if(tlast>0){
+            builder.append("{$and: [{idTypeNews: #},{timeCreate:{$lt:#}}]}");
+        }else {
+            builder.append("{$and: [{idTypeNews: #}]}");
+        }
+        MongoCollection collection = jongo.getCollection(News.class.getSimpleName());
+        MongoCursor<News> cursor = collection.find(builder.toString(),idType,tlast).sort("{timeCreate:-1}").limit(offer).as(News.class);
+        JsonArray jsonArray = new JsonArray();
+        while(cursor.hasNext()){
+            News news = cursor.next();
+            jsonArray.add(news.toJson());
+        }
+        response.setDatas(jsonArray);
+
+        return response;
+    }
+
+
+
 }
