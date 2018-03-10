@@ -10,4 +10,4 @@
 *.xml
 logs
 target
-*.idea/worksplace.xml
+.idea/worksplace.xml
