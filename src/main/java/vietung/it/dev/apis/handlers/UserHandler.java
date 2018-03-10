@@ -73,7 +73,7 @@ public class UserHandler extends BaseApiHandler {
             }catch (NumberFormatException e){
                 e.printStackTrace();
                 SimpleResponse response = new SimpleResponse();
-                response.setError(ErrorCode.CANT_CAST_TYPE_ROLE);
+                response.setError(ErrorCode.CANT_CAST_TYPE);
                 response.setMsg("Lỗi ép dữ liệu kiểu của role.");
                 return response;
             }

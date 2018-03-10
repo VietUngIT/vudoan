@@ -65,7 +65,8 @@ public class VertxHttpConfigServer extends AbstractVerticle implements Handler<H
             response = handler.handle(request);
         } else {
             String phone = request.getParam("ph");
-            response = handlePrivateRequest(handler, request, phone);
+            String pass = request.getParam("p");
+            response = handlePrivateRequest(handler, request, phone,pass);
         }
         if (response == null) {
             logger.error("Response NULL: {}", request.path());
@@ -87,7 +88,8 @@ public class VertxHttpConfigServer extends AbstractVerticle implements Handler<H
                     response = handler.handle(request);
                 } else {
                     String phone = request.formAttributes().get("ph");
-                    response = handlePrivateRequest(handler, request, phone);
+                    String pass = request.formAttributes().get("p");
+                    response = handlePrivateRequest(handler, request, phone, pass);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -98,16 +100,16 @@ public class VertxHttpConfigServer extends AbstractVerticle implements Handler<H
             makeHttpResponse(request, response);
         });
     }
-    private BaseResponse handlePrivateRequest(BaseApiHandler handler, HttpServerRequest request, String phone) throws Exception {
+    private BaseResponse handlePrivateRequest(BaseApiHandler handler, HttpServerRequest request, String phone, String pass) throws Exception {
         BaseResponse response = null;
         if (phone != null) {
-            boolean securityCheck = handler.isUserExist(phone);
+            boolean securityCheck = handler.checkSecurityCheck(phone,pass);
             if (securityCheck) {
                 response = handler.handle(request);
             } else {
                 response = new SimpleResponse();
-                response.setError(ErrorCode.USER_NOT_EXIST);
-                response.setMsg("Tài khoản không tồn tại.");
+                response.setError(ErrorCode.NOT_AUTHORISED);
+                response.setMsg("Lỗi xác thực.");
             }
         } else {
             response = new SimpleResponse();

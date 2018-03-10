@@ -24,6 +24,9 @@ public class Utils {
             return null;
         }
     }
+    public static String toJsonStringGson(Object obj) {
+        return gson.toJson(obj);
+    }
     public static Users getUserByPhone(String phone) {
         DB db =  MongoPool.getDBJongo();
         Jongo jongo = new Jongo(db);

@@ -18,6 +18,7 @@ public class News extends MongoLog{
     private int likes;
     private int comments;
     private long timeCreate;
+    private int idTypeNews;
     private String typeNews;
     @Override
     public Document toDocument() {
@@ -31,6 +32,7 @@ public class News extends MongoLog{
         document.append("views",views);
         document.append("likes",likes);
         document.append("comments",comments);
+        document.append("idTypeNews",idTypeNews);
         document.append("typeNews",typeNews);
         document.append("timeCreate",timeCreate);
         document.append("content",content);
@@ -51,6 +53,7 @@ public class News extends MongoLog{
         jsonObject.addProperty("views",views);
         jsonObject.addProperty("likes",likes);
         jsonObject.addProperty("comments",comments);
+        jsonObject.addProperty("idTypeNews",idTypeNews);
         jsonObject.addProperty("typeNews",typeNews);
         jsonObject.addProperty("timeCreate",timeCreate);
         jsonObject.addProperty("content",content);
