@@ -22,21 +22,6 @@ public class UserHandler extends BaseApiHandler {
                 String phone = request.getParam("ph");
                 String pass = request.getParam("p");
                 return loginHandler(phone,pass,userService);
-            }else if(type.equals("cpass")){
-                String phone = request.getParam("ph");
-                String oldpass = request.getParam("p");
-                String newpass = request.getParam("np");
-                return changePassHandler(phone,oldpass,newpass,userService);
-            }else if(type.equals("cphone")){
-                String oldphone = request.getParam("ph");
-                String pass = request.getParam("p");
-                String newphone = request.getParam("nph");
-                return changePhoneHandler(oldphone,newphone,pass,userService);
-            }else if(type.equals("crole")){
-                String phone = request.getParam("ph");
-                String pass = request.getParam("p");
-                String r = request.getParam("role");
-                return changeRoleHandler(phone,pass,r,userService);
             }else if(type.equals("get")){
                 String phone = request.getParam("phone");
                 return getUserInfoHandler(phone,userService);
@@ -57,48 +42,6 @@ public class UserHandler extends BaseApiHandler {
     private BaseResponse getUserInfoHandler(String phone, UserService userService) {
         if(phone!=null){
             return userService.getUserInfor(phone);
-        }else {
-            SimpleResponse response = new SimpleResponse();
-            response.setError(ErrorCode.INVALID_PARAMS);
-            response.setMsg("Invalid params.");
-            return response;
-        }
-    }
-
-    private BaseResponse changeRoleHandler(String phone, String pass, String r, UserService userService) {
-        if(phone!=null && pass!=null && r!=null){
-            try {
-                int role = Integer.parseInt(r);
-                return userService.changeRole(phone,pass,role);
-            }catch (NumberFormatException e){
-                e.printStackTrace();
-                SimpleResponse response = new SimpleResponse();
-                response.setError(ErrorCode.CANT_CAST_TYPE);
-                response.setMsg("Lỗi ép dữ liệu kiểu của role.");
-                return response;
-            }
-        }else {
-            SimpleResponse response = new SimpleResponse();
-            response.setError(ErrorCode.INVALID_PARAMS);
-            response.setMsg("Invalid params.");
-            return response;
-        }
-    }
-
-    private BaseResponse changePhoneHandler(String oldphone, String newphone, String pass, UserService userService) {
-        if(oldphone!=null && newphone!=null && pass!=null){
-            return userService.changePhone(oldphone,newphone,pass);
-        }else {
-            SimpleResponse response = new SimpleResponse();
-            response.setError(ErrorCode.INVALID_PARAMS);
-            response.setMsg("Invalid params.");
-            return response;
-        }
-    }
-
-    private BaseResponse changePassHandler(String phone, String oldpass, String newpass, UserService userService) {
-        if(phone!=null && oldpass!=null && newpass!=null){
-            return userService.changePass(phone,oldpass,newpass);
         }else {
             SimpleResponse response = new SimpleResponse();
             response.setError(ErrorCode.INVALID_PARAMS);

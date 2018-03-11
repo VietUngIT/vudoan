@@ -3,23 +3,22 @@ package vietung.it.dev.apis.response;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.Data;
-import vietung.it.dev.core.models.TypeNews;
-import vietung.it.dev.core.utils.Utils;
+import vietung.it.dev.core.models.PriceMarket;
 
 @Data
-public class TypeNewsResponse extends BaseResponse {
-    private TypeNews typeNews;
-    private JsonArray arrTypeNews;
+public class PriceMarketResponse extends BaseResponse {
+    private PriceMarket data;
+    private JsonArray datas;
     @Override
     public String toJonString() {
         JsonObject object = new JsonObject();
         object.addProperty("e",getError());
         object.addProperty("msg",getMsg());
-        if(typeNews!=null){
-            object.add("data", typeNews.toJson());
+        if (data!=null){
+            object.add("data",data.toJson());
         }
-        if(arrTypeNews!=null){
-            object.add("array",arrTypeNews);
+        if(datas!=null){
+            object.add("array",datas);
         }
         return object.toString();
     }

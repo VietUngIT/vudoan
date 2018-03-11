@@ -6,19 +6,27 @@ import vietung.it.dev.apis.response.SimpleResponse;
 import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.services.TypeNewsService;
 import vietung.it.dev.core.services.imp.TypeNewsServiceImp;
+import vietung.it.dev.core.utils.Utils;
 
 public class CreateTypeNewsHandler extends BaseApiHandler {
     @Override
     public BaseResponse handle(HttpServerRequest request) throws Exception {
         TypeNewsService service = new TypeNewsServiceImp();
-        String type = request.getFormAttribute("type");
+        String type = request.getFormAttribute("t");
         if(type != null){
             if(type.equals("ad")){
+                String tc = request.getFormAttribute("typecate");
                 String nameType = request.getFormAttribute("name");
-                if(nameType!=null){
-                    return service.addTypeNews(nameType);
+                if(nameType!=null && tc!=null){
+                    try{
+                        int typeCate = Integer.parseInt(tc);
+                        return service.addTypeNews(nameType,typeCate);
+                    }catch (NumberFormatException e){
+                        e.printStackTrace();
+                        return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu.");
+                    }
                 }else {
-                    return invalidParams();
+                    return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
                 }
             }else if(type.equals("ed")){
                 String nameType = request.getFormAttribute("name");
@@ -26,26 +34,13 @@ public class CreateTypeNewsHandler extends BaseApiHandler {
                 if(nameType!=null && id!=null){
                     return service.editTypeNews(id,nameType);
                 }else {
-                    return invalidParams();
-                }
-            }else if(type.equals("del")){
-                String id = request.getFormAttribute("id");
-                if(id!=null){
-                    return service.deleteTypeNews(id);
-                }else {
-                    return invalidParams();
+                    return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
                 }
             }else {
-                return invalidParams();
+                return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
             }
         }else {
-            return invalidParams();
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }
-    }
-    private BaseResponse invalidParams(){
-        SimpleResponse response = new SimpleResponse();
-        response.setError(ErrorCode.INVALID_PARAMS);
-        response.setMsg("Invalid params.");
-        return response;
     }
 }

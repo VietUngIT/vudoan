@@ -3,6 +3,7 @@ package vietung.it.dev.core.models;
 import com.google.gson.JsonObject;
 import lombok.Data;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 @Data
 public class CommentsNews extends MongoLog {
@@ -13,22 +14,11 @@ public class CommentsNews extends MongoLog {
     private String content;
     private String idNews;
     private long timeCreate;
+
     @Override
     public Document toDocument() {
         Document document = new Document();
-        document.append("name",name);
-        document.append("avatar",avatar);
-        document.append("phone",phone);
-        document.append("idNews",idNews);
-        document.append("timeCreate",timeCreate);
-        document.append("content",content);
-        return document;
-    }
-    public Document toDocumentWithID() {
-        Document document = new Document();
-        document.append("_id",_id);
-        document.append("name",name);
-        document.append("avatar",avatar);
+        document.append("_id",new ObjectId(_id));
         document.append("phone",phone);
         document.append("idNews",idNews);
         document.append("timeCreate",timeCreate);

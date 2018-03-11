@@ -6,6 +6,7 @@ import org.bson.Document;
 
 @Data
 public class Users extends MongoLog {
+    private String _id;
     private String name;
     private String phone;
     private String password;

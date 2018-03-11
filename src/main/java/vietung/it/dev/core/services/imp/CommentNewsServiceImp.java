@@ -12,6 +12,7 @@ import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.models.CommentsNews;
 import vietung.it.dev.core.models.Users;
 import vietung.it.dev.core.services.CommentNewsService;
+import vietung.it.dev.core.services.NewsService;
 import vietung.it.dev.core.utils.Utils;
 
 import java.util.Calendar;
@@ -20,6 +21,7 @@ public class CommentNewsServiceImp implements CommentNewsService {
     @Override
     public NewsResponse commentNews(String idNews, String phone, String content) throws Exception {
         NewsResponse response = new NewsResponse();
+        NewsService service = new NewsServiceImp();
         if (!ObjectId.isValid(idNews)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
             response.setMsg("Id không đúng.");
@@ -29,13 +31,13 @@ public class CommentNewsServiceImp implements CommentNewsService {
         CommentsNews commentsNews = new CommentsNews();
         ObjectId id = new ObjectId();
         commentsNews.set_id(id.toHexString());
-        commentsNews.setName(users.getName());
         commentsNews.setPhone(users.getPhone());
-        commentsNews.setAvatar(users.getAvatar());
         commentsNews.setContent(content);
         commentsNews.setIdNews(idNews);
         commentsNews.setTimeCreate(Calendar.getInstance().getTimeInMillis());
         MongoPool.log(CommentsNews.class.getSimpleName(),commentsNews.toDocument());
+        int num = service.commentNews(idNews,true);
+        response.setNumCmtByNew(num);
         response.setData(commentsNews.toJson());
 
         return response;
@@ -44,6 +46,7 @@ public class CommentNewsServiceImp implements CommentNewsService {
     @Override
     public NewsResponse deleteCommentNews(String idCmt, String phone) {
         NewsResponse response = new NewsResponse();
+        NewsService service = new NewsServiceImp();
         if (!ObjectId.isValid(idCmt)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
             response.setMsg("Id không đúng.");
@@ -59,6 +62,8 @@ public class CommentNewsServiceImp implements CommentNewsService {
         if(cursor.hasNext()){
             CommentsNews commentsNews = cursor.next();
             if(users.getRoles()==2 || users.getRoles()==3 || users.getPhone().equals(commentsNews.getPhone())){
+                int num = service.commentNews(commentsNews.getIdNews(),false);
+                response.setNumCmtByNew(num);
                 collection.remove(new ObjectId(idCmt));
             }else {
                 response.setError(ErrorCode.NO_ROLE_DELETE);
@@ -90,6 +95,9 @@ public class CommentNewsServiceImp implements CommentNewsService {
         JsonArray jsonArray = new JsonArray();
         while(cursor.hasNext()){
             CommentsNews commentsNews = cursor.next();
+            Users users = Utils.getUserByPhone(commentsNews.getPhone());
+            commentsNews.setName(users.getName());
+            commentsNews.setAvatar(users.getAvatar());
             jsonArray.add(commentsNews.toJson());
         }
         response.setDatas(jsonArray);

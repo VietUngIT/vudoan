@@ -3,12 +3,14 @@ package vietung.it.dev.core.services;
 import vietung.it.dev.apis.response.NewsResponse;
 
 public interface NewsService {
-    public NewsResponse likeNews(String idNews,Boolean isLike) throws Exception;
-    public NewsResponse viewNews(String idNews) throws Exception;
-
-    public NewsResponse deleteNews(String idNews);
-    public NewsResponse getNewsById(String idNews);
-    public NewsResponse getAllNews(long tlast, int offer);
-    public NewsResponse getAllNewsByType(long tlast, int offer, int idType);
+    NewsResponse likeNews(String idNews,Boolean isLike) throws Exception;
+    NewsResponse viewNews(String idNews) throws Exception;
+    int commentNews(String idNews, Boolean isCmt);
+    NewsResponse deleteNews(String idNews);
+    NewsResponse getNewsById(String idNews);
+    NewsResponse getAllNews(long tlast, int offer);
+    NewsResponse getAllNewsByType(long tlast, int offer, String idType);
+    NewsResponse createNews(String title, String shortDescription, String author, String image, String source, String tags, String typeNews,String nameTypeNews, String content);
+    NewsResponse editNews(String idNews,String title, String shortDescription, String author, String image, String source, String tags, String typeNews,String nameTypeNews, String content);
 
 }

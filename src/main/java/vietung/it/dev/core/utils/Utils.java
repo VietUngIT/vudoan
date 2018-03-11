@@ -7,6 +7,8 @@ import com.mongodb.DB;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
+import vietung.it.dev.apis.response.BaseResponse;
+import vietung.it.dev.apis.response.SimpleResponse;
 import vietung.it.dev.core.config.MongoConfig;
 import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.models.Users;
@@ -52,5 +54,12 @@ public class Utils {
         } catch (Exception e) {
             return "";
         }
+    }
+
+    public static BaseResponse notifiError(int errorCode, String msg){
+        SimpleResponse response = new SimpleResponse();
+        response.setError(errorCode);
+        response.setMsg(msg);
+        return response;
     }
 }
