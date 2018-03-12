@@ -55,6 +55,29 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public UserResponse loginAdmin(String phone, String pass) {
+        UserResponse response = new UserResponse();
+        Users users = Utils.getUserByPhone(phone);
+        if(users != null){
+            if(users.getPassword().equals(Utils.sha256(pass))){
+                if(users.getRoles()==2 || users.getRoles()==3){
+                    response.setUsers(users);
+                }else {
+                    response.setError(ErrorCode.LESS_ROLE);
+                    response.setMsg("Không có quyền truy cập.");
+                }
+            }else {
+                response.setError(ErrorCode.INVALID_PASSWORD);
+                response.setMsg("Mật khẩu không đúng.");
+            }
+        }else {
+            response.setError(ErrorCode.USER_NOT_EXIST);
+            response.setMsg("Số điện thoại này chưa được đăng ký.");
+        }
+        return response;
+    }
+
+    @Override
     public UserResponse changePass(String phone, String oldPass, String newPass) {
         UserResponse response = new UserResponse();
         Users users = Utils.getUserByPhone(phone);

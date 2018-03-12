@@ -22,11 +22,6 @@ public class ManagerUserHandler extends BaseApiHandler {
             String pass = request.getParam("p");
             String newphone = request.getParam("nph");
             return changePhoneHandler(oldphone,newphone,pass,userService);
-        }else if(type.equals("crole")){
-            String phone = request.getParam("ph");
-            String pass = request.getParam("p");
-            String r = request.getParam("role");
-            return changeRoleHandler(phone,pass,r,userService);
         }else{
             SimpleResponse response = new SimpleResponse();
             response.setError(ErrorCode.INVALID_PARAMS);
@@ -34,25 +29,7 @@ public class ManagerUserHandler extends BaseApiHandler {
             return response;
         }
     }
-    private BaseResponse changeRoleHandler(String phone, String pass, String r, UserService userService) {
-        if(phone!=null && pass!=null && r!=null){
-            try {
-                int role = Integer.parseInt(r);
-                return userService.changeRole(phone,pass,role);
-            }catch (NumberFormatException e){
-                e.printStackTrace();
-                SimpleResponse response = new SimpleResponse();
-                response.setError(ErrorCode.CANT_CAST_TYPE);
-                response.setMsg("Lỗi ép dữ liệu kiểu của role.");
-                return response;
-            }
-        }else {
-            SimpleResponse response = new SimpleResponse();
-            response.setError(ErrorCode.INVALID_PARAMS);
-            response.setMsg("Invalid params.");
-            return response;
-        }
-    }
+
 
     private BaseResponse changePhoneHandler(String oldphone, String newphone, String pass, UserService userService) {
         if(oldphone!=null && newphone!=null && pass!=null){
