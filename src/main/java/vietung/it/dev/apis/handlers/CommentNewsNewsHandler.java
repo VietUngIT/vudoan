@@ -11,7 +11,7 @@ public class CommentNewsNewsHandler extends BaseApiHandler {
     @Override
     public BaseResponse handle(HttpServerRequest request) throws Exception {
         CommentNewsService service = new CommentNewsServiceImp();
-        String type = request.getFormAttribute("type");
+        String type = request.getFormAttribute("t");
         if(type!=null){
             if(type.equals("cmt")){
                 String idNews = request.getFormAttribute("idn");

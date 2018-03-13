@@ -3,6 +3,7 @@ package vietung.it.dev.core.models;
 import com.google.gson.JsonObject;
 import lombok.Data;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 @Data
 public class News extends MongoLog{
@@ -18,11 +19,12 @@ public class News extends MongoLog{
     private int likes;
     private int comments;
     private long timeCreate;
-    private int idTypeNews;
-    private String typeNews;
+    private ObjectId typeNews;
+    private String nameTypeNews;
     @Override
     public Document toDocument() {
         Document document = new Document();
+        document.append("_id",new ObjectId(_id));
         document.append("title",title);
         document.append("shortDescription",shortDescription);
         document.append("author",author);
@@ -32,7 +34,6 @@ public class News extends MongoLog{
         document.append("views",views);
         document.append("likes",likes);
         document.append("comments",comments);
-        document.append("idTypeNews",idTypeNews);
         document.append("typeNews",typeNews);
         document.append("timeCreate",timeCreate);
         document.append("content",content);
@@ -53,8 +54,8 @@ public class News extends MongoLog{
         jsonObject.addProperty("views",views);
         jsonObject.addProperty("likes",likes);
         jsonObject.addProperty("comments",comments);
-        jsonObject.addProperty("idTypeNews",idTypeNews);
-        jsonObject.addProperty("typeNews",typeNews);
+        jsonObject.addProperty("typeNews",String.valueOf(typeNews));
+        jsonObject.addProperty("nameTypeNews",nameTypeNews);
         jsonObject.addProperty("timeCreate",timeCreate);
         jsonObject.addProperty("content",content);
         return jsonObject;

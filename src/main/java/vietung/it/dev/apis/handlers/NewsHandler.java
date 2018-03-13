@@ -6,12 +6,13 @@ import vietung.it.dev.apis.response.SimpleResponse;
 import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.services.NewsService;
 import vietung.it.dev.core.services.imp.NewsServiceImp;
+import vietung.it.dev.core.utils.Utils;
 
 public class NewsHandler extends BaseApiHandler {
     @Override
     public BaseResponse handle(HttpServerRequest request) throws Exception {
         NewsService service = new NewsServiceImp();
-        String type = request.getFormAttribute("t");
+        String type = request.getParam("t");
         if(type!=null){
             if(type.equals("getall")){
                 String timelast = request.getParam("timelast");
@@ -19,7 +20,7 @@ public class NewsHandler extends BaseApiHandler {
                 return getAllNewsHandler(timelast,offer,service);
             }if(type.equals("getbytype")){
                 String timelast = request.getParam("timelast");
-                String idtype = request.getParam("offer");
+                String idtype = request.getParam("idtype");
                 String offer = request.getParam("offer");
                 return getAllNewsByTypeHandler(timelast,idtype,offer,service);
             }else if(type.equals("get")){
@@ -33,39 +34,27 @@ public class NewsHandler extends BaseApiHandler {
                 String idNews = request.getParam("idn");
                 return viewNewsHandler(idNews,service);
             }else {
-                SimpleResponse response = new SimpleResponse();
-                response.setError(ErrorCode.INVALID_PARAMS);
-                response.setMsg("Invalid params.");
-                return response;
+                return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
             }
         }else {
-            SimpleResponse response = new SimpleResponse();
-            response.setError(ErrorCode.INVALID_PARAMS);
-            response.setMsg("Invalid params.");
-            return response;
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }
     }
+
 
     private BaseResponse getAllNewsByTypeHandler(String timelast, String idtype, String offer, NewsService service) {
         if(timelast!=null && offer!=null && idtype!=null){
             try {
                 long tlast = Long.parseLong(timelast);
-                int idT = Integer.parseInt(idtype);
                 int of = Integer.parseInt(offer);
-                return service.getAllNewsByType(tlast,of,idT);
+                return service.getAllNewsByType(tlast,of,idtype);
             }catch (NumberFormatException e){
                 e.printStackTrace();
-                SimpleResponse response = new SimpleResponse();
-                response.setError(ErrorCode.CANT_CAST_TYPE);
-                response.setMsg("Lỗi ép kiểu dữ liệu.");
-                return response;
+                return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");
             }
 
         }else {
-            SimpleResponse response = new SimpleResponse();
-            response.setError(ErrorCode.INVALID_PARAMS);
-            response.setMsg("Invalid params.");
-            return response;
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }
     }
 
@@ -77,17 +66,11 @@ public class NewsHandler extends BaseApiHandler {
                 return service.getAllNews(tlast,of);
             }catch (NumberFormatException e){
                 e.printStackTrace();
-                SimpleResponse response = new SimpleResponse();
-                response.setError(ErrorCode.CANT_CAST_TYPE);
-                response.setMsg("Lỗi ép kiểu dữ liệu.");
-                return response;
+                return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");
             }
 
         }else {
-            SimpleResponse response = new SimpleResponse();
-            response.setError(ErrorCode.INVALID_PARAMS);
-            response.setMsg("Invalid params.");
-            return response;
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }
     }
 
@@ -97,14 +80,11 @@ public class NewsHandler extends BaseApiHandler {
                 return service.getNewsById(idNews);
             }catch (Exception e){
                 e.printStackTrace();
-                return systemError(e);
+                return Utils.notifiError(ErrorCode.SYSTEM_ERROR,"Lỗi hệ thống."+e.getMessage());
             }
 
         }else {
-            SimpleResponse response = new SimpleResponse();
-            response.setError(ErrorCode.INVALID_PARAMS);
-            response.setMsg("Invalid params.");
-            return response;
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }
     }
 
@@ -114,14 +94,11 @@ public class NewsHandler extends BaseApiHandler {
                 return service.viewNews(idNews);
             }catch (Exception e){
                 e.printStackTrace();
-                return systemError(e);
+                return Utils.notifiError(ErrorCode.SYSTEM_ERROR,"Lỗi hệ thống."+e.getMessage());
             }
 
         }else {
-            SimpleResponse response = new SimpleResponse();
-            response.setError(ErrorCode.INVALID_PARAMS);
-            response.setMsg("Invalid params.");
-            return response;
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }
     }
 
@@ -132,21 +109,11 @@ public class NewsHandler extends BaseApiHandler {
                 return service.likeNews(idNews,isLike);
             }catch (Exception e){
                 e.printStackTrace();
-                return systemError(e);
+                return Utils.notifiError(ErrorCode.SYSTEM_ERROR,"Lỗi hệ thống."+e.getMessage());
             }
 
         }else {
-            SimpleResponse response = new SimpleResponse();
-            response.setError(ErrorCode.INVALID_PARAMS);
-            response.setMsg("Invalid params.");
-            return response;
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }
-    }
-
-    private BaseResponse systemError(Exception e){
-        SimpleResponse response = new SimpleResponse();
-        response.setError(ErrorCode.SYSTEM_ERROR);
-        response.setMsg("Lỗi hệ thống."+e.getMessage());
-        return response;
     }
 }

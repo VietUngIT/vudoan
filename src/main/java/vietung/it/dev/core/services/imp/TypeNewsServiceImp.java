@@ -1,5 +1,6 @@
 package vietung.it.dev.core.services.imp;
 
+import com.google.gson.JsonArray;
 import com.mongodb.DB;
 import org.bson.types.ObjectId;
 import org.jongo.Jongo;
@@ -13,33 +14,58 @@ import vietung.it.dev.core.services.TypeNewsService;
 
 public class TypeNewsServiceImp implements TypeNewsService {
     @Override
-    public TypeNewsResponse addTypeNews(String nameType) {
+    public TypeNewsResponse getTypeNews(String id) {
+        TypeNewsResponse response = new TypeNewsResponse();
+        if (!ObjectId.isValid(id)) {
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("Id không đúng.");
+            return response;
+        }
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(TypeNews.class.getSimpleName());
+        StringBuilder builder = new StringBuilder();
+        builder.append("{_id:#}");
+        MongoCursor<TypeNews> cursor = collection.find(builder.toString(),new ObjectId(id)).limit(1).as(TypeNews.class);
+        if(cursor.hasNext()){
+            TypeNews typeNews = cursor.next();
+            response.setTypeNews(typeNews);
+        }else {
+            response.setError(ErrorCode.ID_NOT_EXIST);
+            response.setMsg("Id không tồn tại.");
+        }
+        return response;
+    }
+
+    @Override
+    public TypeNewsResponse getAllTypeNews(int typeCate) {
         TypeNewsResponse response = new TypeNewsResponse();
         DB db = MongoPool.getDBJongo();
         Jongo jongo = new Jongo(db);
         MongoCollection collection = jongo.getCollection(TypeNews.class.getSimpleName());
-        MongoCursor<TypeNews> cursor = collection.find().sort("{idType:-1}").limit(1).as(TypeNews.class);
-        if(cursor.hasNext()){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("{typeCate:#}");
+        MongoCursor<TypeNews> cursor = collection.find(stringBuilder.toString(),typeCate).as(TypeNews.class);
+        JsonArray jsonArray = new JsonArray();
+        while (cursor.hasNext()){
             TypeNews typeNews = cursor.next();
-            int idType = typeNews.getIdType();
-            TypeNews typeNewsAdd = new TypeNews();
-            ObjectId _id = new ObjectId();
-            typeNewsAdd.set_id(_id.toHexString());
-            typeNewsAdd.setIdType(idType+1);
-            typeNewsAdd.setNameType(nameType);
-            typeNewsAdd.setDel(false);
-            MongoPool.log(TypeNews.class.getSimpleName(),typeNewsAdd.toDocument());
-            response.setTypeNews(typeNewsAdd);
-        }else {
-            TypeNews typeNews = new TypeNews();
-            ObjectId _id = new ObjectId();
-            typeNews.set_id(_id.toHexString());
-            typeNews.setIdType(1);
-            typeNews.setNameType(nameType);
-            typeNews.setDel(false);
-            MongoPool.log(TypeNews.class.getSimpleName(),typeNews.toDocument());
-            response.setTypeNews(typeNews);
+            jsonArray.add(typeNews.toJson());
         }
+        response.setArrTypeNews(jsonArray);
+        return response;
+    }
+
+    @Override
+    public TypeNewsResponse addTypeNews(String nameType,int typeCate) {
+        TypeNewsResponse response = new TypeNewsResponse();
+        TypeNews typeNews = new TypeNews();
+        ObjectId _id = new ObjectId();
+        typeNews.set_id(_id.toHexString());
+        typeNews.setTypeCate(typeCate);
+        typeNews.setNameType(nameType);
+        MongoPool.log(TypeNews.class.getSimpleName(),typeNews.toDocument());
+        response.setTypeNews(typeNews);
+
         return response;
     }
 
@@ -70,20 +96,6 @@ public class TypeNewsServiceImp implements TypeNewsService {
         return response;
     }
 
-    @Override
-    public TypeNewsResponse deleteTypeNews(String id) {
-        TypeNewsResponse response = new TypeNewsResponse();
-        if (!ObjectId.isValid(id)) {
-            response.setError(ErrorCode.NOT_A_OBJECT_ID);
-            response.setMsg("Id không đúng.");
-            return response;
-        }
-        DB db = MongoPool.getDBJongo();
-        Jongo jongo = new Jongo(db);
-        MongoCollection collection = jongo.getCollection(TypeNews.class.getSimpleName());
-        collection.remove(new ObjectId(id));
-        return response;
-    }
 //    class UpdateNameTypeNewsRunnable implements Runnable {
 //        private Thread t;
 //        public void run() {

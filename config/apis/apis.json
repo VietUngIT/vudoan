@@ -43,6 +43,41 @@
       "isPublic":false,
       "roles":[],
       "method":"POST"
+    },
+    {
+      "path":"/manager-user",
+      "handler":"vietung.it.dev.apis.handlers.ManagerUserHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
+    },
+    {
+      "path":"/manager-handbook",
+      "handler":"vietung.it.dev.apis.handlers.ManagerHandBookHandler",
+      "isPublic":false,
+      "roles":[2,3],
+      "method":"POST"
+    },
+    {
+      "path":"/handbook",
+      "handler":"vietung.it.dev.apis.handlers.HandBookHandler",
+      "isPublic":true,
+      "roles":[],
+      "method":"GET"
+    },
+    {
+      "path":"/pricemarket",
+      "handler":"vietung.it.dev.apis.handlers.PriceMarketHandler",
+      "isPublic":true,
+      "roles":[],
+      "method":"GET"
+    },
+    {
+      "path":"/admin-user",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminUserHandler",
+      "isPublic":false,
+      "roles":[2,3],
+      "method":"GET"
     }
   ]
 }

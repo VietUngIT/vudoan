@@ -5,18 +5,14 @@ import com.google.gson.JsonObject;
 import lombok.Data;
 
 @Data
-public class NewsResponse extends BaseResponse {
+public class HandBookResponse extends BaseResponse {
     private JsonObject data;
     private JsonArray datas;
-    private int numCmtByNew = -1;
     @Override
     public String toJonString() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("e",getError());
         jsonObject.addProperty("msg",getMsg());
-        if (numCmtByNew!=-1){
-            jsonObject.addProperty("numCmtByNew",numCmtByNew);
-        }
         if(data!=null){
             jsonObject.add("data",data);
         }
