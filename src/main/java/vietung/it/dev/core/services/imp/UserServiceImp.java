@@ -41,7 +41,7 @@ public class UserServiceImp implements UserService {
         UserResponse response = new UserResponse();
         Users users = Utils.getUserByPhone(phone);
         if(users != null){
-            if(users.getPassword().equals(Utils.sha256(pass))){
+            if(users.getPassword().equals(pass)){
                 response.setUsers(users);
             }else {
                 response.setError(ErrorCode.INVALID_PASSWORD);
@@ -59,7 +59,7 @@ public class UserServiceImp implements UserService {
         UserResponse response = new UserResponse();
         Users users = Utils.getUserByPhone(phone);
         if(users != null){
-            if(users.getPassword().equals(Utils.sha256(pass))){
+            if(users.getPassword().equals(pass)){
                 if(users.getRoles()==2 || users.getRoles()==3){
                     response.setUsers(users);
                 }else {
