@@ -36,8 +36,6 @@ public class APILauncher {
                             logger.error("Unable to start your application", event.cause());
                         }
                     });
-            //UserService service = new UserServiceImp();
-            //service.register("VietUngIT","01649216037","123456",4);
         }catch (Exception e){
             e.printStackTrace();
         }
