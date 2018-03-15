@@ -73,8 +73,22 @@
       "method":"GET"
     },
     {
-      "path":"/admin-user",
+      "path":"/adminuser",
       "handler":"vietung.it.dev.apis.handlers.admin.AdminUserHandler",
+      "isPublic":false,
+      "roles":[2,3],
+      "method":"GET"
+    },
+    {
+      "path":"/fieldofexpert",
+      "handler":"vietung.it.dev.apis.handlers.FieldOfExpertHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
+    },
+    {
+      "path":"/adminfieldofexpert",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminFieldOfExpertHandler",
       "isPublic":false,
       "roles":[2,3],
       "method":"GET"

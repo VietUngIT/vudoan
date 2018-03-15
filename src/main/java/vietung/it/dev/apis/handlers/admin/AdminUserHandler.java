@@ -1,6 +1,8 @@
 package vietung.it.dev.apis.handlers.admin;
 
 import io.vertx.core.http.HttpServerRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import vietung.it.dev.apis.handlers.BaseApiHandler;
 import vietung.it.dev.apis.response.BaseResponse;
 import vietung.it.dev.apis.response.SimpleResponse;
@@ -9,7 +11,9 @@ import vietung.it.dev.core.services.UserService;
 import vietung.it.dev.core.services.imp.UserServiceImp;
 import vietung.it.dev.core.utils.Utils;
 
+
 public class AdminUserHandler extends BaseApiHandler {
+    private static Logger logger = LoggerFactory.getLogger(AdminUserHandler.class.getName());
     @Override
     public BaseResponse handle(HttpServerRequest request) throws Exception {
         UserService userService = new UserServiceImp();
@@ -18,7 +22,9 @@ public class AdminUserHandler extends BaseApiHandler {
            if(type.equals("login")){
                 String phone = request.getParam("ph");
                 String pass = request.getParam("p");
-                return loginHandler(phone,pass,userService);
+                BaseResponse response = loginHandler(phone,pass,userService);
+                logger.debug("{} -- {}",response.getError(),response.getMsg());
+                return response;
             }else if(type.equals("crole")){
                String phone = request.getParam("ph");
                String pass = request.getParam("p");

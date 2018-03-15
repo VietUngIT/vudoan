@@ -20,7 +20,7 @@ public abstract class BaseApiHandler {
     public boolean checkSecurityCheck(String phone, String pass){
         Users users = Utils.getUserByPhone(phone);
         if(users != null) {
-            if(users.getPassword().equals(Utils.sha256(pass))){
+            if(users.getPassword().equals(pass)){
                 int role = users.getRoles();
                 return checkRole(role);
             }
