@@ -10,6 +10,20 @@
       "method":"GET"
     },
     {
+      "path":"/manageruser",
+      "handler":"vietung.it.dev.apis.handlers.ManagerUserHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
+    },
+    {
+      "path":"/adminuser",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminUserHandler",
+      "isPublic":false,
+      "roles":[2,3],
+      "method":"GET"
+    },
+    {
       "path":"/news",
       "handler":"vietung.it.dev.apis.handlers.NewsHandler",
       "isPublic":true,
@@ -45,13 +59,6 @@
       "method":"POST"
     },
     {
-      "path":"/manager-user",
-      "handler":"vietung.it.dev.apis.handlers.ManagerUserHandler",
-      "isPublic":false,
-      "roles":[],
-      "method":"GET"
-    },
-    {
       "path":"/manager-handbook",
       "handler":"vietung.it.dev.apis.handlers.ManagerHandBookHandler",
       "isPublic":false,
@@ -70,13 +77,6 @@
       "handler":"vietung.it.dev.apis.handlers.PriceMarketHandler",
       "isPublic":true,
       "roles":[],
-      "method":"GET"
-    },
-    {
-      "path":"/adminuser",
-      "handler":"vietung.it.dev.apis.handlers.admin.AdminUserHandler",
-      "isPublic":false,
-      "roles":[2,3],
       "method":"GET"
     },
     {

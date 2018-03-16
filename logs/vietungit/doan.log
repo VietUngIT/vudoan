@@ -1,71 +1,12 @@
-14 Mar 2018, 00:01:42,268 0 -- Success.
-14 Mar 2018, 00:02:20,907 0 -- Success.
-14 Mar 2018, 00:02:44,748 0 -- Success.
-14 Mar 2018, 00:04:40,907 0 -- Success.
-14 Mar 2018, 00:06:58,049 0 -- Success.
-14 Mar 2018, 00:08:11,399 0 -- Success.
-14 Mar 2018, 00:11:47,463 0 -- Success.
-14 Mar 2018, 00:16:10,427 0 -- Success.
-14 Mar 2018, 13:40:35,307 Logger is initialed
-14 Mar 2018, 13:40:35,609 APIConfig is initialed
-14 Mar 2018, 13:40:37,471 MongoPool is initialed
-14 Mar 2018, 13:40:38,379 start on port 8083
-14 Mar 2018, 13:40:38,379 start on port 8083
-14 Mar 2018, 13:40:38,379 start on port 8083
-14 Mar 2018, 13:40:38,379 start on port 8083
-14 Mar 2018, 13:40:38,379 start on port 8083
-14 Mar 2018, 13:40:38,379 start on port 8083
-14 Mar 2018, 13:40:38,379 start on port 8083
-14 Mar 2018, 13:40:38,379 start on port 8083
-14 Mar 2018, 13:40:38,379 start on port 8083
-14 Mar 2018, 13:40:38,379 start on port 8083
-14 Mar 2018, 13:40:38,379 start on port 8083
-14 Mar 2018, 13:40:38,379 start on port 8083
-14 Mar 2018, 13:40:38,379 start on port 8083
-14 Mar 2018, 13:40:38,379 start on port 8083
-14 Mar 2018, 13:40:38,379 start on port 8083
-14 Mar 2018, 13:40:38,379 start on port 8083
-14 Mar 2018, 13:40:38,386 Vert.x application is started!
-14 Mar 2018, 19:13:24,368 Logger is initialed
-14 Mar 2018, 19:13:24,626 APIConfig is initialed
-14 Mar 2018, 19:13:25,995 MongoPool is initialed
-14 Mar 2018, 19:13:26,884 start on port 8083
-14 Mar 2018, 19:13:26,885 start on port 8083
-14 Mar 2018, 19:13:26,885 start on port 8083
-14 Mar 2018, 19:13:26,886 start on port 8083
-14 Mar 2018, 19:13:26,887 start on port 8083
-14 Mar 2018, 19:13:26,884 start on port 8083
-14 Mar 2018, 19:13:26,888 start on port 8083
-14 Mar 2018, 19:13:26,888 start on port 8083
-14 Mar 2018, 19:13:26,889 start on port 8083
-14 Mar 2018, 19:13:26,890 start on port 8083
-14 Mar 2018, 19:13:26,890 start on port 8083
-14 Mar 2018, 19:13:26,884 start on port 8083
-14 Mar 2018, 19:13:26,890 start on port 8083
-14 Mar 2018, 19:13:26,891 start on port 8083
-14 Mar 2018, 19:13:26,888 start on port 8083
-14 Mar 2018, 19:13:26,892 start on port 8083
-14 Mar 2018, 19:13:26,895 Vert.x application is started!
-14 Mar 2018, 19:21:05,058 0 -- Success.
-14 Mar 2018, 19:29:36,782 0 -- Success.
-14 Mar 2018, 22:53:27,143 Logger is initialed
-14 Mar 2018, 22:53:27,362 APIConfig is initialed
-14 Mar 2018, 22:53:28,659 MongoPool is initialed
-14 Mar 2018, 22:53:29,319 start on port 8083
-14 Mar 2018, 22:53:29,319 start on port 8083
-14 Mar 2018, 22:53:29,319 start on port 8083
-14 Mar 2018, 22:53:29,319 start on port 8083
-14 Mar 2018, 22:53:29,319 start on port 8083
-14 Mar 2018, 22:53:29,319 start on port 8083
-14 Mar 2018, 22:53:29,319 start on port 8083
-14 Mar 2018, 22:53:29,319 start on port 8083
-14 Mar 2018, 22:53:29,319 start on port 8083
-14 Mar 2018, 22:53:29,319 start on port 8083
-14 Mar 2018, 22:53:29,319 start on port 8083
-14 Mar 2018, 22:53:29,319 start on port 8083
-14 Mar 2018, 22:53:29,319 start on port 8083
-14 Mar 2018, 22:53:29,319 start on port 8083
-14 Mar 2018, 22:53:29,319 start on port 8083
-14 Mar 2018, 22:53:29,319 start on port 8083
-14 Mar 2018, 22:53:29,323 Vert.x application is started!
-14 Mar 2018, 22:53:48,938 0 -- Success.
+16 thg 3 2018, 14:37:39,005 Logger is initialed
+16 thg 3 2018, 14:37:39,069 APIConfig is initialed
+16 thg 3 2018, 14:37:39,661 MongoPool is initialed
+16 thg 3 2018, 14:37:40,027 start on port 8083
+16 thg 3 2018, 14:37:40,027 start on port 8083
+16 thg 3 2018, 14:37:40,027 start on port 8083
+16 thg 3 2018, 14:37:40,027 start on port 8083
+16 thg 3 2018, 14:37:40,028 start on port 8083
+16 thg 3 2018, 14:37:40,028 start on port 8083
+16 thg 3 2018, 14:37:40,028 start on port 8083
+16 thg 3 2018, 14:37:40,028 start on port 8083
+16 thg 3 2018, 14:37:40,030 Vert.x application is started!

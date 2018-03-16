@@ -10,8 +10,8 @@ public class Users extends MongoLog {
     private String name;
     private String phone;
     private String password;
+    private String address;
     private int roles;
-    private String idFacebook;
     private int avatar;
     private long createTime;
 
@@ -22,7 +22,7 @@ public class Users extends MongoLog {
         doc.append("phone", phone);
         doc.append("password", password);
         doc.append("roles", roles);
-        doc.append("idFacebook", idFacebook);
+        doc.append("address", address);
         doc.append("avatar", avatar);
         doc.append("createTime", createTime);
         return doc;
@@ -34,7 +34,7 @@ public class Users extends MongoLog {
         jsonObject.addProperty("phone", phone);
         jsonObject.addProperty("password", password);
         jsonObject.addProperty("roles", roles);
-        jsonObject.addProperty("idFacebook", idFacebook);
+        jsonObject.addProperty("address", address);
         jsonObject.addProperty("avatar", avatar);
         jsonObject.addProperty("createTime", createTime);
         return jsonObject;

@@ -23,13 +23,11 @@ public class AdminUserHandler extends BaseApiHandler {
                 String phone = request.getParam("ph");
                 String pass = request.getParam("p");
                 BaseResponse response = loginHandler(phone,pass,userService);
-                logger.debug("{} -- {}",response.getError(),response.getMsg());
                 return response;
             }else if(type.equals("crole")){
                String phone = request.getParam("ph");
-               String pass = request.getParam("p");
                String r = request.getParam("role");
-               return changeRoleHandler(phone,pass,r,userService);
+               return changeRoleHandler(phone,r,userService);
            }else{
                return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
             }
@@ -45,11 +43,11 @@ public class AdminUserHandler extends BaseApiHandler {
             return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }
     }
-    private BaseResponse changeRoleHandler(String phone, String pass, String r, UserService userService) {
-        if(phone!=null && pass!=null && r!=null){
+    private BaseResponse changeRoleHandler(String phone,String r, UserService userService) {
+        if(phone!=null && r!=null){
             try {
                 int role = Integer.parseInt(r);
-                return userService.changeRole(phone,pass,role);
+                return userService.changeRole(phone,role);
             }catch (NumberFormatException e){
                 e.printStackTrace();
                 return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép dữ liệu kiểu của role.");

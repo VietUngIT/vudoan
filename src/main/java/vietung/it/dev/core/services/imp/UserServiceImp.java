@@ -101,21 +101,16 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public UserResponse changePhone(String oldPhone, String newPhone, String pass) {
+    public UserResponse changePhone(String oldPhone, String newPhone) {
         UserResponse response = new UserResponse();
         Users users = Utils.getUserByPhone(oldPhone);
         if(users != null){
-            if(users.getPassword().equals(Utils.sha256(pass))){
-                DB db =  MongoPool.getDBJongo();
-                Jongo jongo = new Jongo(db);
-                MongoCollection collection = jongo.getCollection(Users.class.getSimpleName());
-                collection.update("{phone: #}",oldPhone).with("{$set: {phone: #}}",newPhone);
-                users.setPhone(newPhone);
-                response.setUsers(users);
-            }else {
-                response.setError(ErrorCode.INVALID_PASSWORD);
-                response.setMsg("Mật khẩu không đúng.");
-            }
+            DB db =  MongoPool.getDBJongo();
+            Jongo jongo = new Jongo(db);
+            MongoCollection collection = jongo.getCollection(Users.class.getSimpleName());
+            collection.update("{phone: #}",oldPhone).with("{$set: {phone: #}}",newPhone);
+            users.setPhone(newPhone);
+            response.setUsers(users);
         }else {
             response.setError(ErrorCode.USER_NOT_EXIST);
             response.setMsg("Số điện thoại này chưa được đăng ký.");
@@ -124,21 +119,34 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public UserResponse changeRole(String phone, String pass, int role) {
+    public UserResponse changeAddress(String phone, String address) {
         UserResponse response = new UserResponse();
         Users users = Utils.getUserByPhone(phone);
         if(users != null){
-            if(users.getPassword().equals(Utils.sha256(pass))){
-                DB db =  MongoPool.getDBJongo();
-                Jongo jongo = new Jongo(db);
-                MongoCollection collection = jongo.getCollection(Users.class.getSimpleName());
-                collection.update("{phone: #}",phone).with("{$set: {roles: #}}",role);
-                users.setRoles(role);
-                response.setUsers(users);
-            }else {
-                response.setError(ErrorCode.INVALID_PASSWORD);
-                response.setMsg("Mật khẩu không đúng.");
-            }
+            DB db =  MongoPool.getDBJongo();
+            Jongo jongo = new Jongo(db);
+            MongoCollection collection = jongo.getCollection(Users.class.getSimpleName());
+            collection.update("{phone: #}",phone).with("{$set: {address: #}}",address);
+            users.setAddress(address);
+            response.setUsers(users);
+        }else {
+            response.setError(ErrorCode.USER_NOT_EXIST);
+            response.setMsg("Số điện thoại này chưa được đăng ký.");
+        }
+        return response;
+    }
+
+    @Override
+    public UserResponse changeRole(String phone, int role) {
+        UserResponse response = new UserResponse();
+        Users users = Utils.getUserByPhone(phone);
+        if(users != null){
+            DB db =  MongoPool.getDBJongo();
+            Jongo jongo = new Jongo(db);
+            MongoCollection collection = jongo.getCollection(Users.class.getSimpleName());
+            collection.update("{phone: #}",phone).with("{$set: {roles: #}}",role);
+            users.setRoles(role);
+            response.setUsers(users);
         }else {
             response.setError(ErrorCode.USER_NOT_EXIST);
             response.setMsg("Số điện thoại này chưa được đăng ký.");

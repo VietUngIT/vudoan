@@ -14,14 +14,21 @@ public class ManagerUserHandler extends BaseApiHandler {
         String type = request.getParam("t");
         if(type.equals("cpass")){
             String phone = request.getParam("ph");
-            String oldpass = request.getParam("p");
+            String oldpass = request.getParam("pass");
             String newpass = request.getParam("np");
             return changePassHandler(phone,oldpass,newpass,userService);
         }else if(type.equals("cphone")){
             String oldphone = request.getParam("ph");
-            String pass = request.getParam("p");
             String newphone = request.getParam("nph");
-            return changePhoneHandler(oldphone,newphone,pass,userService);
+            return changePhoneHandler(oldphone,newphone,userService);
+        }
+        else if(type.equals("caddress")){
+            String phone = request.getParam("ph");
+            String address = request.getParam("nph");
+            return changeAdressHandler(phone,address,userService);
+        }else if(type.equals("get")){
+            String phone = request.getParam("ph");
+            return getUserInfoHandler(phone,userService);
         }else{
             SimpleResponse response = new SimpleResponse();
             response.setError(ErrorCode.INVALID_PARAMS);
@@ -30,10 +37,31 @@ public class ManagerUserHandler extends BaseApiHandler {
         }
     }
 
+    private BaseResponse changeAdressHandler(String phone, String address, UserService userService) {
+        if(phone!=null && address!=null ){
+            return userService.changeAddress(phone,address);
+        }else {
+            SimpleResponse response = new SimpleResponse();
+            response.setError(ErrorCode.INVALID_PARAMS);
+            response.setMsg("Invalid params.");
+            return response;
+        }
+    }
 
-    private BaseResponse changePhoneHandler(String oldphone, String newphone, String pass, UserService userService) {
-        if(oldphone!=null && newphone!=null && pass!=null){
-            return userService.changePhone(oldphone,newphone,pass);
+    private BaseResponse getUserInfoHandler(String phone, UserService userService) {
+        if(phone!=null){
+            return userService.getUserInfor(phone);
+        }else {
+            SimpleResponse response = new SimpleResponse();
+            response.setError(ErrorCode.INVALID_PARAMS);
+            response.setMsg("Invalid params.");
+            return response;
+        }
+    }
+
+    private BaseResponse changePhoneHandler(String oldphone, String newphone, UserService userService) {
+        if(oldphone!=null && newphone!=null ){
+            return userService.changePhone(oldphone,newphone);
         }else {
             SimpleResponse response = new SimpleResponse();
             response.setError(ErrorCode.INVALID_PARAMS);
