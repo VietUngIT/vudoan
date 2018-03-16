@@ -5,10 +5,7 @@ import io.vertx.core.Vertx;
 import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import vietung.it.dev.core.config.APIConfig;
-import vietung.it.dev.core.config.MongoConfig;
-import vietung.it.dev.core.config.MongoPool;
-import vietung.it.dev.core.config.VertxHttpConfigServer;
+import vietung.it.dev.core.config.*;
 import vietung.it.dev.core.services.UserService;
 import vietung.it.dev.core.services.imp.UserServiceImp;
 
@@ -26,6 +23,8 @@ public class APILauncher {
             logger.info("APIConfig is initialed");
             MongoPool.init();
             logger.info("MongoPool is initialed");
+            CloudinaryConfig.loadConfig();
+            logger.info("Cloudinary is initialed");
             Vertx vertx = Vertx.vertx();
             int procs = Runtime.getRuntime().availableProcessors();
             vertx.deployVerticle(VertxHttpConfigServer.class.getName(),

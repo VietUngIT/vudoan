@@ -92,6 +92,13 @@
       "isPublic":false,
       "roles":[2,3],
       "method":"GET"
+    },
+    {
+      "path":"/upload",
+      "handler":"vietung.it.dev.apis.handlers.UploadHandler",
+      "isPublic":true,
+      "roles":[],
+      "method":"POST"
     }
   ]
 }
