@@ -25,7 +25,7 @@ public class AdminUserHandler extends BaseApiHandler {
                 BaseResponse response = loginHandler(phone,pass,userService);
                 return response;
             }else if(type.equals("crole")){
-               String phone = request.getParam("ph");
+               String phone = request.getParam("phone");
                String r = request.getParam("role");
                return changeRoleHandler(phone,r,userService);
            }else{

@@ -22,6 +22,12 @@
       "isPublic":false,
       "roles":[2,3],
       "method":"GET"
+    },{
+      "path":"/upload",
+      "handler":"vietung.it.dev.apis.handlers.UploadHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"POST"
     },
     {
       "path":"/news",
@@ -92,13 +98,6 @@
       "isPublic":false,
       "roles":[2,3],
       "method":"GET"
-    },
-    {
-      "path":"/upload",
-      "handler":"vietung.it.dev.apis.handlers.UploadHandler",
-      "isPublic":true,
-      "roles":[],
-      "method":"POST"
     }
   ]
 }

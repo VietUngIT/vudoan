@@ -21,11 +21,14 @@ public class ManagerUserHandler extends BaseApiHandler {
             String oldphone = request.getParam("ph");
             String newphone = request.getParam("nph");
             return changePhoneHandler(oldphone,newphone,userService);
-        }
-        else if(type.equals("caddress")){
+        }else if(type.equals("caddress")){
             String phone = request.getParam("ph");
-            String address = request.getParam("nph");
-            return changeAdressHandler(phone,address,userService);
+            String address = request.getParam("address");
+            return changeAddressHandler(phone,address,userService);
+        }else if(type.equals("cname")){
+            String phone = request.getParam("ph");
+            String name = request.getParam("name");
+            return changeNameHandler(phone,name,userService);
         }else if(type.equals("get")){
             String phone = request.getParam("ph");
             return getUserInfoHandler(phone,userService);
@@ -37,7 +40,18 @@ public class ManagerUserHandler extends BaseApiHandler {
         }
     }
 
-    private BaseResponse changeAdressHandler(String phone, String address, UserService userService) {
+    private BaseResponse changeNameHandler(String phone, String name, UserService userService) {
+        if(phone!=null && name!=null ){
+            return userService.changeName(phone,name);
+        }else {
+            SimpleResponse response = new SimpleResponse();
+            response.setError(ErrorCode.INVALID_PARAMS);
+            response.setMsg("Invalid params.");
+            return response;
+        }
+    }
+
+    private BaseResponse changeAddressHandler(String phone, String address, UserService userService) {
         if(phone!=null && address!=null ){
             return userService.changeAddress(phone,address);
         }else {

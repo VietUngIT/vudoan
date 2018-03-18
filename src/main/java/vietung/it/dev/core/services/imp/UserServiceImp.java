@@ -9,9 +9,11 @@ import vietung.it.dev.core.config.MongoConfig;
 import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.models.Users;
+import vietung.it.dev.core.services.UploadService;
 import vietung.it.dev.core.services.UserService;
 import vietung.it.dev.core.utils.Utils;
 
+import java.io.IOException;
 import java.util.Calendar;
 
 public class UserServiceImp implements UserService {
@@ -110,6 +112,24 @@ public class UserServiceImp implements UserService {
             MongoCollection collection = jongo.getCollection(Users.class.getSimpleName());
             collection.update("{phone: #}",oldPhone).with("{$set: {phone: #}}",newPhone);
             users.setPhone(newPhone);
+            response.setUsers(users);
+        }else {
+            response.setError(ErrorCode.USER_NOT_EXIST);
+            response.setMsg("Số điện thoại này chưa được đăng ký.");
+        }
+        return response;
+    }
+
+    @Override
+    public UserResponse changeName(String phone, String name) {
+        UserResponse response = new UserResponse();
+        Users users = Utils.getUserByPhone(phone);
+        if(users != null){
+            DB db =  MongoPool.getDBJongo();
+            Jongo jongo = new Jongo(db);
+            MongoCollection collection = jongo.getCollection(Users.class.getSimpleName());
+            collection.update("{phone: #}",phone).with("{$set: {name: #}}",name);
+            users.setName(name);
             response.setUsers(users);
         }else {
             response.setError(ErrorCode.USER_NOT_EXIST);

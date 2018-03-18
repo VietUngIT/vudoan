@@ -9,6 +9,7 @@ public interface UserService {
     public UserResponse loginAdmin(String phone, String pass);
     public UserResponse changePass(String phone, String oldPass, String newPass);
     public UserResponse changePhone(String oldPhone, String newPhone);
+    public UserResponse changeName(String phone, String name);
     public UserResponse changeAddress(String phone, String address);
     public UserResponse changeRole(String phone, int role);
     public UserResponse getUserInfor(String phone);

@@ -10,7 +10,7 @@ public class CommentsNews extends MongoLog {
     private String _id;
     private String name;
     private String phone;
-    private int avatar;
+    private String avatar;
     private String content;
     private String idNews;
     private long timeCreate;

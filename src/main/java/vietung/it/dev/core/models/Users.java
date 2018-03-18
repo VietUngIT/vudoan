@@ -12,7 +12,7 @@ public class Users extends MongoLog {
     private String password;
     private String address;
     private int roles;
-    private int avatar;
+    private String avatar;
     private long createTime;
 
     @Override

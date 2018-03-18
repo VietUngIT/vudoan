@@ -87,8 +87,8 @@ public class VertxHttpConfigServer extends AbstractVerticle implements Handler<H
                 if (handler.isPublic()) {
                     response = handler.handle(request);
                 } else {
-                    String phone = request.formAttributes().get("ph");
-                    String pass = request.formAttributes().get("p");
+                    String phone = request.getFormAttribute("ph");
+                    String pass = request.getFormAttribute("p");
                     response = handlePrivateRequest(handler, request, phone, pass);
                 }
             } catch (Exception e) {
@@ -114,7 +114,7 @@ public class VertxHttpConfigServer extends AbstractVerticle implements Handler<H
         } else {
             response = new SimpleResponse();
             response.setError(ErrorCode.INVALID_PARAMS);
-            response.setMsg("invalid params.");
+            response.setMsg("---> phone invalid params.");
         }
         return response;
     }
