@@ -1,116 +1,308 @@
-19 Mar 2018, 11:05:50,297 Logger is initialed
-19 Mar 2018, 11:05:50,632 APIConfig is initialed
-19 Mar 2018, 11:05:52,115 MongoPool is initialed
-19 Mar 2018, 11:05:52,126 Cloudinary is initialed
-19 Mar 2018, 11:05:52,869 start on port 8083
-19 Mar 2018, 11:05:52,870 start on port 8083
-19 Mar 2018, 11:05:52,870 start on port 8083
-19 Mar 2018, 11:05:52,869 start on port 8083
-19 Mar 2018, 11:05:52,870 start on port 8083
-19 Mar 2018, 11:05:52,870 start on port 8083
-19 Mar 2018, 11:05:52,870 start on port 8083
-19 Mar 2018, 11:05:52,870 start on port 8083
-19 Mar 2018, 11:05:52,870 start on port 8083
-19 Mar 2018, 11:05:52,870 start on port 8083
-19 Mar 2018, 11:05:52,870 start on port 8083
-19 Mar 2018, 11:05:52,870 start on port 8083
-19 Mar 2018, 11:05:52,869 start on port 8083
-19 Mar 2018, 11:05:52,869 start on port 8083
-19 Mar 2018, 11:05:52,869 start on port 8083
-19 Mar 2018, 11:05:52,869 start on port 8083
-19 Mar 2018, 11:05:52,874 Vert.x application is started!
-19 Mar 2018, 11:07:17,043 Logger is initialed
-19 Mar 2018, 11:07:17,229 APIConfig is initialed
-19 Mar 2018, 11:07:18,812 MongoPool is initialed
-19 Mar 2018, 11:07:18,813 Cloudinary is initialed
-19 Mar 2018, 11:07:19,524 start on port 8083
-19 Mar 2018, 11:07:19,525 start on port 8083
-19 Mar 2018, 11:07:19,525 start on port 8083
-19 Mar 2018, 11:07:19,525 start on port 8083
-19 Mar 2018, 11:07:19,525 start on port 8083
-19 Mar 2018, 11:07:19,525 start on port 8083
-19 Mar 2018, 11:07:19,525 start on port 8083
-19 Mar 2018, 11:07:19,525 start on port 8083
-19 Mar 2018, 11:07:19,525 start on port 8083
-19 Mar 2018, 11:07:19,524 start on port 8083
-19 Mar 2018, 11:07:19,525 start on port 8083
-19 Mar 2018, 11:07:19,524 start on port 8083
-19 Mar 2018, 11:07:19,524 start on port 8083
-19 Mar 2018, 11:07:19,524 start on port 8083
-19 Mar 2018, 11:07:19,524 start on port 8083
-19 Mar 2018, 11:07:19,524 start on port 8083
-19 Mar 2018, 11:07:19,528 Vert.x application is started!
-19 Mar 2018, 11:09:17,468 Log to CategoryNews : { "_id" : "5aaf37ed292b1218e0a108d8", "name" : "Trong nước" }
-19 Mar 2018, 11:09:39,479 Logger is initialed
-19 Mar 2018, 11:09:39,571 APIConfig is initialed
-19 Mar 2018, 11:09:40,904 MongoPool is initialed
-19 Mar 2018, 11:09:40,905 Cloudinary is initialed
-19 Mar 2018, 11:09:41,628 start on port 8083
-19 Mar 2018, 11:09:41,628 start on port 8083
-19 Mar 2018, 11:09:41,628 start on port 8083
-19 Mar 2018, 11:09:41,628 start on port 8083
-19 Mar 2018, 11:09:41,628 start on port 8083
-19 Mar 2018, 11:09:41,628 start on port 8083
-19 Mar 2018, 11:09:41,628 start on port 8083
-19 Mar 2018, 11:09:41,628 start on port 8083
-19 Mar 2018, 11:09:41,628 start on port 8083
-19 Mar 2018, 11:09:41,628 start on port 8083
-19 Mar 2018, 11:09:41,628 start on port 8083
-19 Mar 2018, 11:09:41,628 start on port 8083
-19 Mar 2018, 11:09:41,628 start on port 8083
-19 Mar 2018, 11:09:41,628 start on port 8083
-19 Mar 2018, 11:09:41,628 start on port 8083
-19 Mar 2018, 11:09:41,628 start on port 8083
-19 Mar 2018, 11:09:41,632 Vert.x application is started!
-19 Mar 2018, 11:09:58,397 Log to CategoryNews : { "_id" : "5aaf3816292b1221402aa165", "name" : "Nước ngoài" }
-19 Mar 2018, 11:10:19,709 Log to CategoryNews : { "_id" : "5aaf382b292b1221402aa166", "name" : "Sự kiện" }
-19 Mar 2018, 11:10:48,521 Log to CategoryNews : { "_id" : "5aaf3848292b1221402aa167", "name" : "Chính sách" }
-19 Mar 2018, 11:10:59,384 Log to CategoryNews : { "_id" : "5aaf3853292b1221402aa168", "name" : "Dự báo" }
-19 Mar 2018, 11:17:22,682 Logger is initialed
-19 Mar 2018, 11:17:22,772 APIConfig is initialed
-19 Mar 2018, 11:17:24,058 MongoPool is initialed
-19 Mar 2018, 11:17:24,059 Cloudinary is initialed
-19 Mar 2018, 11:17:24,727 start on port 8083
-19 Mar 2018, 11:17:24,727 start on port 8083
-19 Mar 2018, 11:17:24,727 start on port 8083
-19 Mar 2018, 11:17:24,727 start on port 8083
-19 Mar 2018, 11:17:24,727 start on port 8083
-19 Mar 2018, 11:17:24,727 start on port 8083
-19 Mar 2018, 11:17:24,727 start on port 8083
-19 Mar 2018, 11:17:24,727 start on port 8083
-19 Mar 2018, 11:17:24,727 start on port 8083
-19 Mar 2018, 11:17:24,727 start on port 8083
-19 Mar 2018, 11:17:24,727 start on port 8083
-19 Mar 2018, 11:17:24,727 start on port 8083
-19 Mar 2018, 11:17:24,727 start on port 8083
-19 Mar 2018, 11:17:24,727 start on port 8083
-19 Mar 2018, 11:17:24,727 start on port 8083
-19 Mar 2018, 11:17:24,727 start on port 8083
-19 Mar 2018, 11:17:24,731 Vert.x application is started!
-19 Mar 2018, 11:18:13,926 Log to CategoryNews : { "_id" : { "$oid" : "5aaf3a05292b1215a0749937" }, "name" : "Trong nước" }
-19 Mar 2018, 11:18:43,709 Log to CategoryNews : { "_id" : { "$oid" : "5aaf3a23292b1215a0749938" }, "name" : "Nước ngoài" }
-19 Mar 2018, 11:18:57,095 Log to CategoryNews : { "_id" : { "$oid" : "5aaf3a30292b1215a0749939" }, "name" : "Sự kiện" }
-19 Mar 2018, 11:19:08,220 Log to CategoryNews : { "_id" : { "$oid" : "5aaf3a3b292b1215a074993a" }, "name" : "Dự báo" }
-19 Mar 2018, 11:19:26,843 Log to CategoryNews : { "_id" : { "$oid" : "5aaf3a4e292b1215a074993b" }, "name" : "Chính sách" }
-19 Mar 2018, 11:20:56,115 Log to CategoryNews : { "_id" : { "$oid" : "5aaf3aa7292b1215a074993c" }, "name" : "Demo" }
-19 Mar 2018, 11:24:17,612 Logger is initialed
-19 Mar 2018, 11:24:17,706 APIConfig is initialed
-19 Mar 2018, 11:24:19,133 MongoPool is initialed
-19 Mar 2018, 11:24:19,134 Cloudinary is initialed
-19 Mar 2018, 11:24:19,855 start on port 8083
-19 Mar 2018, 11:24:19,856 start on port 8083
-19 Mar 2018, 11:24:19,856 start on port 8083
-19 Mar 2018, 11:24:19,856 start on port 8083
-19 Mar 2018, 11:24:19,856 start on port 8083
-19 Mar 2018, 11:24:19,856 start on port 8083
-19 Mar 2018, 11:24:19,856 start on port 8083
-19 Mar 2018, 11:24:19,856 start on port 8083
-19 Mar 2018, 11:24:19,856 start on port 8083
-19 Mar 2018, 11:24:19,855 start on port 8083
-19 Mar 2018, 11:24:19,855 start on port 8083
-19 Mar 2018, 11:24:19,855 start on port 8083
-19 Mar 2018, 11:24:19,855 start on port 8083
-19 Mar 2018, 11:24:19,855 start on port 8083
-19 Mar 2018, 11:24:19,855 start on port 8083
-19 Mar 2018, 11:24:19,855 start on port 8083
-19 Mar 2018, 11:24:19,863 Vert.x application is started!
+20 Mar 2018, 00:21:39,544 Logger is initialed
+20 Mar 2018, 00:21:39,858 APIConfig is initialed
+20 Mar 2018, 00:21:41,263 MongoPool is initialed
+20 Mar 2018, 00:21:41,277 Cloudinary is initialed
+20 Mar 2018, 00:21:42,125 start on port 8083
+20 Mar 2018, 00:21:42,125 start on port 8083
+20 Mar 2018, 00:21:42,125 start on port 8083
+20 Mar 2018, 00:21:42,125 start on port 8083
+20 Mar 2018, 00:21:42,125 start on port 8083
+20 Mar 2018, 00:21:42,125 start on port 8083
+20 Mar 2018, 00:21:42,125 start on port 8083
+20 Mar 2018, 00:21:42,125 start on port 8083
+20 Mar 2018, 00:21:42,125 start on port 8083
+20 Mar 2018, 00:21:42,125 start on port 8083
+20 Mar 2018, 00:21:42,125 start on port 8083
+20 Mar 2018, 00:21:42,125 start on port 8083
+20 Mar 2018, 00:21:42,125 start on port 8083
+20 Mar 2018, 00:21:42,125 start on port 8083
+20 Mar 2018, 00:21:42,125 start on port 8083
+20 Mar 2018, 00:21:42,125 start on port 8083
+20 Mar 2018, 00:21:42,131 Vert.x application is started!
+20 Mar 2018, 00:27:15,682 Log to CategoryAgriTech : { "_id" : { "$oid" : "5aaff2f3292b123410fa19cd" }, "name" : "Cây lương thực" }
+20 Mar 2018, 00:27:52,483 Log to CategoryAgriTech : { "_id" : { "$oid" : "5aaff318292b123410fa19ce" }, "name" : "Cây công nghiệp" }
+20 Mar 2018, 00:28:02,445 Log to CategoryAgriTech : { "_id" : { "$oid" : "5aaff322292b123410fa19cf" }, "name" : "Cây ăn quả" }
+20 Mar 2018, 00:28:09,518 Log to CategoryAgriTech : { "_id" : { "$oid" : "5aaff329292b123410fa19d0" }, "name" : "Cây lâm nghiệp" }
+20 Mar 2018, 00:28:16,537 Log to CategoryAgriTech : { "_id" : { "$oid" : "5aaff330292b123410fa19d1" }, "name" : "Cây cảnh" }
+20 Mar 2018, 00:28:29,079 Log to CategoryAgriTech : { "_id" : { "$oid" : "5aaff33c292b123410fa19d2" }, "name" : "Cây rau" }
+20 Mar 2018, 00:28:36,435 Log to CategoryAgriTech : { "_id" : { "$oid" : "5aaff344292b123410fa19d3" }, "name" : "Gia súc" }
+20 Mar 2018, 00:28:42,183 Log to CategoryAgriTech : { "_id" : { "$oid" : "5aaff349292b123410fa19d4" }, "name" : "Gia cầm" }
+20 Mar 2018, 00:28:48,685 Log to CategoryAgriTech : { "_id" : { "$oid" : "5aaff350292b123410fa19d5" }, "name" : "Thủy sản" }
+20 Mar 2018, 00:29:55,116 Log to CategoryAgriTech : { "_id" : { "$oid" : "5aaff392292b123410fa19d6" }, "name" : "Demo" }
+20 Mar 2018, 00:34:10,666 Log to SubCategoryAgriTech : { "_id" : "5aaff492292b123410fa19d7", "idCate" : "5aaff2f3292b123410fa19cd", "nameSubCate" : "Lúa-gạo" }
+20 Mar 2018, 00:34:10,668 Error Request
+20 Mar 2018, 00:35:44,045 Logger is initialed
+20 Mar 2018, 00:35:44,139 APIConfig is initialed
+20 Mar 2018, 00:35:45,426 MongoPool is initialed
+20 Mar 2018, 00:35:45,427 Cloudinary is initialed
+20 Mar 2018, 00:35:46,041 start on port 8083
+20 Mar 2018, 00:35:46,041 start on port 8083
+20 Mar 2018, 00:35:46,041 start on port 8083
+20 Mar 2018, 00:35:46,041 start on port 8083
+20 Mar 2018, 00:35:46,041 start on port 8083
+20 Mar 2018, 00:35:46,041 start on port 8083
+20 Mar 2018, 00:35:46,041 start on port 8083
+20 Mar 2018, 00:35:46,041 start on port 8083
+20 Mar 2018, 00:35:46,041 start on port 8083
+20 Mar 2018, 00:35:46,041 start on port 8083
+20 Mar 2018, 00:35:46,041 start on port 8083
+20 Mar 2018, 00:35:46,041 start on port 8083
+20 Mar 2018, 00:35:46,041 start on port 8083
+20 Mar 2018, 00:35:46,041 start on port 8083
+20 Mar 2018, 00:35:46,041 start on port 8083
+20 Mar 2018, 00:35:46,041 start on port 8083
+20 Mar 2018, 00:35:46,047 Vert.x application is started!
+20 Mar 2018, 00:35:59,422 Log to SubCategoryAgriTech : { "_id" : "5aaff4ff292b120d108d7357", "idCate" : "5aaff2f3292b123410fa19cd", "nameSubCate" : "Lúa-gạo" }
+20 Mar 2018, 00:37:49,575 Logger is initialed
+20 Mar 2018, 00:37:49,670 APIConfig is initialed
+20 Mar 2018, 00:37:50,854 MongoPool is initialed
+20 Mar 2018, 00:37:50,855 Cloudinary is initialed
+20 Mar 2018, 00:37:51,491 start on port 8083
+20 Mar 2018, 00:37:51,491 start on port 8083
+20 Mar 2018, 00:37:51,491 start on port 8083
+20 Mar 2018, 00:37:51,491 start on port 8083
+20 Mar 2018, 00:37:51,491 start on port 8083
+20 Mar 2018, 00:37:51,491 start on port 8083
+20 Mar 2018, 00:37:51,491 start on port 8083
+20 Mar 2018, 00:37:51,491 start on port 8083
+20 Mar 2018, 00:37:51,491 start on port 8083
+20 Mar 2018, 00:37:51,491 start on port 8083
+20 Mar 2018, 00:37:51,491 start on port 8083
+20 Mar 2018, 00:37:51,491 start on port 8083
+20 Mar 2018, 00:37:51,491 start on port 8083
+20 Mar 2018, 00:37:51,491 start on port 8083
+20 Mar 2018, 00:37:51,491 start on port 8083
+20 Mar 2018, 00:37:51,491 start on port 8083
+20 Mar 2018, 00:37:51,495 Vert.x application is started!
+20 Mar 2018, 00:38:28,618 Log to SubCategoryAgriTech : { "_id" : "5aaff594292b122ec87e1ae5", "idCate" : "5aaff2f3292b123410fa19cd", "nameSubCate" : "Lúa-gạo" }
+20 Mar 2018, 00:40:02,016 Logger is initialed
+20 Mar 2018, 00:40:02,108 APIConfig is initialed
+20 Mar 2018, 00:40:03,404 MongoPool is initialed
+20 Mar 2018, 00:40:03,405 Cloudinary is initialed
+20 Mar 2018, 00:40:04,024 start on port 8083
+20 Mar 2018, 00:40:04,024 start on port 8083
+20 Mar 2018, 00:40:04,024 start on port 8083
+20 Mar 2018, 00:40:04,024 start on port 8083
+20 Mar 2018, 00:40:04,024 start on port 8083
+20 Mar 2018, 00:40:04,024 start on port 8083
+20 Mar 2018, 00:40:04,024 start on port 8083
+20 Mar 2018, 00:40:04,024 start on port 8083
+20 Mar 2018, 00:40:04,024 start on port 8083
+20 Mar 2018, 00:40:04,024 start on port 8083
+20 Mar 2018, 00:40:04,024 start on port 8083
+20 Mar 2018, 00:40:04,024 start on port 8083
+20 Mar 2018, 00:40:04,024 start on port 8083
+20 Mar 2018, 00:40:04,024 start on port 8083
+20 Mar 2018, 00:40:04,024 start on port 8083
+20 Mar 2018, 00:40:04,024 start on port 8083
+20 Mar 2018, 00:40:04,028 Vert.x application is started!
+20 Mar 2018, 00:40:16,299 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff600292b120b28e4a405" }, "idCate" : "5aaff2f3292b123410fa19cd", "nameSubCate" : "Lúa-gạo" }
+20 Mar 2018, 00:40:41,163 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff618292b120b28e4a406" }, "idCate" : "5aaff2f3292b123410fa19cd", "nameSubCate" : "Cây ngô" }
+20 Mar 2018, 00:41:01,029 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff62c292b120b28e4a407" }, "idCate" : "5aaff2f3292b123410fa19cd", "nameSubCate" : "Khoai-sắn" }
+20 Mar 2018, 00:42:05,394 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff66d292b120b28e4a408" }, "idCate" : "5aaff318292b123410fa19ce", "nameSubCate" : "Trồng bông" }
+20 Mar 2018, 00:42:12,898 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff674292b120b28e4a409" }, "idCate" : "5aaff318292b123410fa19ce", "nameSubCate" : "Trồng chè" }
+20 Mar 2018, 00:42:37,788 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff68d292b120b28e4a40a" }, "idCate" : "5aaff318292b123410fa19ce", "nameSubCate" : "Trồng cà phê" }
+20 Mar 2018, 00:42:45,328 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff695292b120b28e4a40b" }, "idCate" : "5aaff318292b123410fa19ce", "nameSubCate" : "Trồng cao su" }
+20 Mar 2018, 00:42:56,337 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff6a0292b120b28e4a40c" }, "idCate" : "5aaff322292b123410fa19cf", "nameSubCate" : "Trồng cao su" }
+20 Mar 2018, 00:43:37,059 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff6c8292b120b28e4a40d" }, "idCate" : "5aaff322292b123410fa19cf", "nameSubCate" : "Bưởi-cam-quýt" }
+20 Mar 2018, 00:43:58,487 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff6de292b120b28e4a40e" }, "idCate" : "5aaff322292b123410fa19cf", "nameSubCate" : "Dưa" }
+20 Mar 2018, 00:44:24,081 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff6f7292b120b28e4a40f" }, "idCate" : "5aaff322292b123410fa19cf", "nameSubCate" : "Nhãn" }
+20 Mar 2018, 00:45:11,374 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff727292b120b28e4a410" }, "idCate" : "5aaff329292b123410fa19d0", "nameSubCate" : "Bạch đàn" }
+20 Mar 2018, 00:45:24,151 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff733292b120b28e4a411" }, "idCate" : "5aaff329292b123410fa19d0", "nameSubCate" : "Cây keo" }
+20 Mar 2018, 00:46:02,129 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff759292b120b28e4a412" }, "idCate" : "5aaff330292b123410fa19d1", "nameSubCate" : "Hoa cảnh" }
+20 Mar 2018, 00:46:12,533 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff764292b120b28e4a413" }, "idCate" : "5aaff330292b123410fa19d1", "nameSubCate" : "Cây cảnh" }
+20 Mar 2018, 00:47:23,222 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff7aa292b120b28e4a414" }, "idCate" : "5aaff33c292b123410fa19d2", "nameSubCate" : "Nấm" }
+20 Mar 2018, 00:47:37,969 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff7b9292b120b28e4a415" }, "idCate" : "5aaff33c292b123410fa19d2", "nameSubCate" : "Cây rau ăn lá" }
+20 Mar 2018, 00:47:54,753 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff7ca292b120b28e4a416" }, "idCate" : "5aaff33c292b123410fa19d2", "nameSubCate" : "Rau củ quả" }
+20 Mar 2018, 00:48:07,424 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff7d7292b120b28e4a417" }, "idCate" : "5aaff33c292b123410fa19d2", "nameSubCate" : "Rau mầm" }
+20 Mar 2018, 00:48:22,722 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff7e6292b120b28e4a418" }, "idCate" : "5aaff33c292b123410fa19d2", "nameSubCate" : "Rau gia vị" }
+20 Mar 2018, 00:49:01,951 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff80d292b120b28e4a419" }, "idCate" : "5aaff344292b123410fa19d3", "nameSubCate" : "Lợn" }
+20 Mar 2018, 00:49:29,981 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff829292b120b28e4a41a" }, "idCate" : "5aaff344292b123410fa19d3", "nameSubCate" : "Chó" }
+20 Mar 2018, 00:49:35,357 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff82f292b120b28e4a41b" }, "idCate" : "5aaff344292b123410fa19d3", "nameSubCate" : "Bò" }
+20 Mar 2018, 00:49:41,758 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff835292b120b28e4a41c" }, "idCate" : "5aaff344292b123410fa19d3", "nameSubCate" : "Dê" }
+20 Mar 2018, 00:49:57,245 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff844292b120b28e4a41d" }, "idCate" : "5aaff349292b123410fa19d4", "nameSubCate" : "Gà" }
+20 Mar 2018, 00:50:03,826 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff84b292b120b28e4a41e" }, "idCate" : "5aaff349292b123410fa19d4", "nameSubCate" : "Vịt" }
+20 Mar 2018, 00:50:39,420 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff86f292b120b28e4a41f" }, "idCate" : "5aaff350292b123410fa19d5", "nameSubCate" : "Tôm" }
+20 Mar 2018, 00:50:44,991 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff874292b120b28e4a420" }, "idCate" : "5aaff350292b123410fa19d5", "nameSubCate" : "Cá" }
+20 Mar 2018, 00:50:56,177 Log to SubCategoryAgriTech : { "_id" : { "$oid" : "5aaff87f292b120b28e4a421" }, "idCate" : "5aaff350292b123410fa19d5", "nameSubCate" : "Lươn" }
+20 Mar 2018, 00:58:25,572 Error Request
+20 Mar 2018, 00:59:14,446 Logger is initialed
+20 Mar 2018, 00:59:14,537 APIConfig is initialed
+20 Mar 2018, 00:59:15,754 MongoPool is initialed
+20 Mar 2018, 00:59:15,755 Cloudinary is initialed
+20 Mar 2018, 00:59:16,368 start on port 8083
+20 Mar 2018, 00:59:16,368 start on port 8083
+20 Mar 2018, 00:59:16,368 start on port 8083
+20 Mar 2018, 00:59:16,368 start on port 8083
+20 Mar 2018, 00:59:16,368 start on port 8083
+20 Mar 2018, 00:59:16,368 start on port 8083
+20 Mar 2018, 00:59:16,368 start on port 8083
+20 Mar 2018, 00:59:16,368 start on port 8083
+20 Mar 2018, 00:59:16,368 start on port 8083
+20 Mar 2018, 00:59:16,368 start on port 8083
+20 Mar 2018, 00:59:16,368 start on port 8083
+20 Mar 2018, 00:59:16,368 start on port 8083
+20 Mar 2018, 00:59:16,368 start on port 8083
+20 Mar 2018, 00:59:16,368 start on port 8083
+20 Mar 2018, 00:59:16,368 start on port 8083
+20 Mar 2018, 00:59:16,368 start on port 8083
+20 Mar 2018, 00:59:16,372 Vert.x application is started!
+20 Mar 2018, 01:01:01,928 Logger is initialed
+20 Mar 2018, 01:01:02,035 APIConfig is initialed
+20 Mar 2018, 01:01:03,528 MongoPool is initialed
+20 Mar 2018, 01:01:03,529 Cloudinary is initialed
+20 Mar 2018, 01:01:04,273 start on port 8083
+20 Mar 2018, 01:01:04,273 start on port 8083
+20 Mar 2018, 01:01:04,274 start on port 8083
+20 Mar 2018, 01:01:04,276 start on port 8083
+20 Mar 2018, 01:01:04,276 start on port 8083
+20 Mar 2018, 01:01:04,273 start on port 8083
+20 Mar 2018, 01:01:04,273 start on port 8083
+20 Mar 2018, 01:01:04,273 start on port 8083
+20 Mar 2018, 01:01:04,273 start on port 8083
+20 Mar 2018, 01:01:04,273 start on port 8083
+20 Mar 2018, 01:01:04,277 start on port 8083
+20 Mar 2018, 01:01:04,274 start on port 8083
+20 Mar 2018, 01:01:04,274 start on port 8083
+20 Mar 2018, 01:01:04,274 start on port 8083
+20 Mar 2018, 01:01:04,274 start on port 8083
+20 Mar 2018, 01:01:04,274 start on port 8083
+20 Mar 2018, 01:01:04,282 Vert.x application is started!
+20 Mar 2018, 01:05:23,276 Logger is initialed
+20 Mar 2018, 01:05:23,366 APIConfig is initialed
+20 Mar 2018, 01:05:24,590 MongoPool is initialed
+20 Mar 2018, 01:05:24,591 Cloudinary is initialed
+20 Mar 2018, 01:05:25,193 start on port 8083
+20 Mar 2018, 01:05:25,193 start on port 8083
+20 Mar 2018, 01:05:25,193 start on port 8083
+20 Mar 2018, 01:05:25,193 start on port 8083
+20 Mar 2018, 01:05:25,193 start on port 8083
+20 Mar 2018, 01:05:25,193 start on port 8083
+20 Mar 2018, 01:05:25,193 start on port 8083
+20 Mar 2018, 01:05:25,193 start on port 8083
+20 Mar 2018, 01:05:25,193 start on port 8083
+20 Mar 2018, 01:05:25,193 start on port 8083
+20 Mar 2018, 01:05:25,193 start on port 8083
+20 Mar 2018, 01:05:25,193 start on port 8083
+20 Mar 2018, 01:05:25,193 start on port 8083
+20 Mar 2018, 01:05:25,193 start on port 8083
+20 Mar 2018, 01:05:25,193 start on port 8083
+20 Mar 2018, 01:05:25,193 start on port 8083
+20 Mar 2018, 01:05:25,198 Vert.x application is started!
+20 Mar 2018, 01:06:19,612 Logger is initialed
+20 Mar 2018, 01:06:19,701 APIConfig is initialed
+20 Mar 2018, 01:06:20,932 MongoPool is initialed
+20 Mar 2018, 01:06:20,933 Cloudinary is initialed
+20 Mar 2018, 01:06:21,533 start on port 8083
+20 Mar 2018, 01:06:21,533 start on port 8083
+20 Mar 2018, 01:06:21,533 start on port 8083
+20 Mar 2018, 01:06:21,533 start on port 8083
+20 Mar 2018, 01:06:21,533 start on port 8083
+20 Mar 2018, 01:06:21,533 start on port 8083
+20 Mar 2018, 01:06:21,533 start on port 8083
+20 Mar 2018, 01:06:21,533 start on port 8083
+20 Mar 2018, 01:06:21,533 start on port 8083
+20 Mar 2018, 01:06:21,533 start on port 8083
+20 Mar 2018, 01:06:21,533 start on port 8083
+20 Mar 2018, 01:06:21,533 start on port 8083
+20 Mar 2018, 01:06:21,533 start on port 8083
+20 Mar 2018, 01:06:21,533 start on port 8083
+20 Mar 2018, 01:06:21,533 start on port 8083
+20 Mar 2018, 01:06:21,533 start on port 8083
+20 Mar 2018, 01:06:21,537 Vert.x application is started!
+20 Mar 2018, 01:07:40,500 Logger is initialed
+20 Mar 2018, 01:07:40,587 APIConfig is initialed
+20 Mar 2018, 01:07:41,828 MongoPool is initialed
+20 Mar 2018, 01:07:41,829 Cloudinary is initialed
+20 Mar 2018, 01:07:42,442 start on port 8083
+20 Mar 2018, 01:07:42,442 start on port 8083
+20 Mar 2018, 01:07:42,442 start on port 8083
+20 Mar 2018, 01:07:42,442 start on port 8083
+20 Mar 2018, 01:07:42,442 start on port 8083
+20 Mar 2018, 01:07:42,442 start on port 8083
+20 Mar 2018, 01:07:42,442 start on port 8083
+20 Mar 2018, 01:07:42,442 start on port 8083
+20 Mar 2018, 01:07:42,442 start on port 8083
+20 Mar 2018, 01:07:42,442 start on port 8083
+20 Mar 2018, 01:07:42,442 start on port 8083
+20 Mar 2018, 01:07:42,442 start on port 8083
+20 Mar 2018, 01:07:42,442 start on port 8083
+20 Mar 2018, 01:07:42,442 start on port 8083
+20 Mar 2018, 01:07:42,442 start on port 8083
+20 Mar 2018, 01:07:42,442 start on port 8083
+20 Mar 2018, 01:07:42,447 Vert.x application is started!
+20 Mar 2018, 01:10:48,212 Logger is initialed
+20 Mar 2018, 01:10:48,295 APIConfig is initialed
+20 Mar 2018, 01:10:49,473 MongoPool is initialed
+20 Mar 2018, 01:10:49,474 Cloudinary is initialed
+20 Mar 2018, 01:10:50,069 start on port 8083
+20 Mar 2018, 01:10:50,070 start on port 8083
+20 Mar 2018, 01:10:50,070 start on port 8083
+20 Mar 2018, 01:10:50,070 start on port 8083
+20 Mar 2018, 01:10:50,070 start on port 8083
+20 Mar 2018, 01:10:50,070 start on port 8083
+20 Mar 2018, 01:10:50,070 start on port 8083
+20 Mar 2018, 01:10:50,070 start on port 8083
+20 Mar 2018, 01:10:50,070 start on port 8083
+20 Mar 2018, 01:10:50,070 start on port 8083
+20 Mar 2018, 01:10:50,070 start on port 8083
+20 Mar 2018, 01:10:50,069 start on port 8083
+20 Mar 2018, 01:10:50,069 start on port 8083
+20 Mar 2018, 01:10:50,069 start on port 8083
+20 Mar 2018, 01:10:50,069 start on port 8083
+20 Mar 2018, 01:10:50,069 start on port 8083
+20 Mar 2018, 01:10:50,074 Vert.x application is started!
+20 Mar 2018, 01:15:05,711 Logger is initialed
+20 Mar 2018, 01:15:05,794 APIConfig is initialed
+20 Mar 2018, 01:15:06,981 MongoPool is initialed
+20 Mar 2018, 01:15:06,982 Cloudinary is initialed
+20 Mar 2018, 01:15:07,581 start on port 8083
+20 Mar 2018, 01:15:07,581 start on port 8083
+20 Mar 2018, 01:15:07,582 start on port 8083
+20 Mar 2018, 01:15:07,582 start on port 8083
+20 Mar 2018, 01:15:07,582 start on port 8083
+20 Mar 2018, 01:15:07,582 start on port 8083
+20 Mar 2018, 01:15:07,582 start on port 8083
+20 Mar 2018, 01:15:07,582 start on port 8083
+20 Mar 2018, 01:15:07,581 start on port 8083
+20 Mar 2018, 01:15:07,581 start on port 8083
+20 Mar 2018, 01:15:07,581 start on port 8083
+20 Mar 2018, 01:15:07,581 start on port 8083
+20 Mar 2018, 01:15:07,581 start on port 8083
+20 Mar 2018, 01:15:07,581 start on port 8083
+20 Mar 2018, 01:15:07,581 start on port 8083
+20 Mar 2018, 01:15:07,581 start on port 8083
+20 Mar 2018, 01:15:07,586 Vert.x application is started!
+20 Mar 2018, 01:16:15,842 Log to CategoryAgriTech : { "_id" : { "$oid" : "5aaffe6f292b1233e4b0c67a" }, "name" : "Lúa - gạo" }
+20 Mar 2018, 01:18:54,997 Logger is initialed
+20 Mar 2018, 01:18:55,094 APIConfig is initialed
+20 Mar 2018, 01:18:56,394 MongoPool is initialed
+20 Mar 2018, 01:18:56,395 Cloudinary is initialed
+20 Mar 2018, 01:18:57,026 start on port 8083
+20 Mar 2018, 01:18:57,026 start on port 8083
+20 Mar 2018, 01:18:57,026 start on port 8083
+20 Mar 2018, 01:18:57,026 start on port 8083
+20 Mar 2018, 01:18:57,026 start on port 8083
+20 Mar 2018, 01:18:57,026 start on port 8083
+20 Mar 2018, 01:18:57,026 start on port 8083
+20 Mar 2018, 01:18:57,026 start on port 8083
+20 Mar 2018, 01:18:57,026 start on port 8083
+20 Mar 2018, 01:18:57,026 start on port 8083
+20 Mar 2018, 01:18:57,026 start on port 8083
+20 Mar 2018, 01:18:57,026 start on port 8083
+20 Mar 2018, 01:18:57,026 start on port 8083
+20 Mar 2018, 01:18:57,026 start on port 8083
+20 Mar 2018, 01:18:57,026 start on port 8083
+20 Mar 2018, 01:18:57,026 start on port 8083
+20 Mar 2018, 01:18:57,030 Vert.x application is started!
+20 Mar 2018, 01:21:47,977 Log to CategoryMarketPrice : { "_id" : { "$oid" : "5aafffbb292b122b646f820f" }, "name" : "Rau -củ-quả", "image" : null }
+20 Mar 2018, 01:22:57,034 Log to CategoryMarketPrice : { "_id" : { "$oid" : "5ab00000292b122b646f8210" }, "name" : "Trái cây", "image" : null }
+20 Mar 2018, 01:23:08,253 Log to CategoryMarketPrice : { "_id" : { "$oid" : "5ab0000c292b122b646f8211" }, "name" : "Rau củ", "image" : null }
+20 Mar 2018, 01:24:28,015 Log to CategoryMarketPrice : { "_id" : { "$oid" : "5ab0005b292b122b646f8212" }, "name" : "Trứng", "image" : null }
+20 Mar 2018, 01:24:32,443 Log to CategoryMarketPrice : { "_id" : { "$oid" : "5ab00060292b122b646f8213" }, "name" : "Cá", "image" : null }
+20 Mar 2018, 01:24:45,055 Log to CategoryMarketPrice : { "_id" : { "$oid" : "5ab0006c292b122b646f8214" }, "name" : "Thịt", "image" : null }
+20 Mar 2018, 01:25:16,739 Log to CategoryMarketPrice : { "_id" : { "$oid" : "5ab0008c292b122b646f8215" }, "name" : "Phân bón", "image" : null }
+20 Mar 2018, 01:25:31,841 Log to CategoryMarketPrice : { "_id" : { "$oid" : "5ab0009b292b122b646f8216" }, "name" : "Thức ăn chăn nuôi", "image" : null }
+20 Mar 2018, 01:25:43,673 Log to CategoryMarketPrice : { "_id" : { "$oid" : "5ab000a7292b122b646f8217" }, "name" : "Thủy sản", "image" : null }
+20 Mar 2018, 01:26:06,918 Log to CategoryMarketPrice : { "_id" : { "$oid" : "5ab000be292b122b646f8218" }, "name" : "Cây công nghiệp", "image" : null }
+20 Mar 2018, 01:30:49,341 Log to CategoryMarketPrice : { "_id" : { "$oid" : "5ab001d9292b122b646f8219" }, "name" : "demo", "image" : null }
