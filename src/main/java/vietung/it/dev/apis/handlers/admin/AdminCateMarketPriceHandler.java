@@ -17,7 +17,7 @@ public class AdminCateMarketPriceHandler extends BaseApiHandler {
             if(type.equals("add")){
                 String strName = request.getParam("name");
                 String strImage = request.getParam("image");
-                if(strName!=null && strImage!=null){
+                if(strName!=null){
                     return service.addCategoryMarketPrice(strName,strImage);
                 }
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");

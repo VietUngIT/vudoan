@@ -27,7 +27,7 @@ public class SubCategoryServiceImp implements SubCategoryService {
         JsonArray array = new JsonArray();
         while(cursor.hasNext()){
             SubCategory subCategory = cursor.next();
-            MongoCursor<Category> cursorCate = collectionCate.find("_id:#", subCategory.getIdCate()).as(Category.class);
+            MongoCursor<Category> cursorCate = collectionCate.find("{_id:#}", new ObjectId(subCategory.getIdCate())).as(Category.class);
             if(cursorCate.hasNext()){
                 subCategory.setNameCate(cursorCate.next().getName());
             }
@@ -49,19 +49,23 @@ public class SubCategoryServiceImp implements SubCategoryService {
         Jongo jongo = new Jongo(db);
         MongoCollection collection = jongo.getCollection(Variable.MG_SUB_CATEGORY_AGRI_TECH);
         MongoCollection collectionCate = jongo.getCollection(Variable.MG_CATEGORY_AGRI_TECH);
-        StringBuilder builder = new StringBuilder();
-        builder.append("{idCate:#}");
-        MongoCursor<SubCategory> cursor = collection.find(builder.toString(),id).as(SubCategory.class);
+
         String namecate = "";
-        MongoCursor<Category> cursorCate = collectionCate.find("_id:#", new ObjectId(id)).as(Category.class);
+        MongoCursor<Category> cursorCate = collectionCate.find("{_id:#}", new ObjectId(id)).as(Category.class);
         if(cursorCate.hasNext()){
             namecate = cursorCate.next().getName();
         }
+        StringBuilder builder = new StringBuilder();
+        builder.append("{idCate:#}");
+        collection.ensureIndex("idCate:1");
+        MongoCursor<SubCategory> cursor = collection.find(builder.toString(),id).as(SubCategory.class);
+        JsonArray array = new JsonArray();
         while(cursor.hasNext()){
             SubCategory subCategory = cursor.next();
             subCategory.setNameCate(namecate);
-            response.setData(subCategory.toJson());
+            array.add(subCategory.toJson());
         }
+        response.setArray(array);
         return response;
     }
 
@@ -82,7 +86,7 @@ public class SubCategoryServiceImp implements SubCategoryService {
         MongoCursor<SubCategory> cursor = collection.find(builder.toString(),new ObjectId(id)).limit(1).as(SubCategory.class);
         if(cursor.hasNext()){
             SubCategory subCategory = cursor.next();
-            MongoCursor<Category> cursorCate = collectionCate.find("_id:#", subCategory.getIdCate()).as(Category.class);
+            MongoCursor<Category> cursorCate = collectionCate.find("{_id:#}", new ObjectId(subCategory.getIdCate())).as(Category.class);
             if(cursorCate.hasNext()){
                 subCategory.setNameCate(cursorCate.next().getName());
             }
@@ -111,7 +115,7 @@ public class SubCategoryServiceImp implements SubCategoryService {
         DB db = MongoPool.getDBJongo();
         Jongo jongo = new Jongo(db);
         MongoCollection collectionCate = jongo.getCollection(Variable.MG_CATEGORY_AGRI_TECH);
-        MongoCursor<Category> cursorCate = collectionCate.find("_id:#", subCategory.getIdCate()).as(Category.class);
+        MongoCursor<Category> cursorCate = collectionCate.find("{_id:#}", new ObjectId(subCategory.getIdCate())).as(Category.class);
         if(cursorCate.hasNext()){
             subCategory.setNameCate(cursorCate.next().getName());
         }
@@ -138,7 +142,7 @@ public class SubCategoryServiceImp implements SubCategoryService {
             SubCategory subCategory = cursor.next();
             subCategory.setNameSubCate(name);
             collection.update("{_id:#}", new ObjectId(id)).with("{$set:{nameSubCate:#}}",name);
-            MongoCursor<Category> cursorCate = collectionCate.find("_id:#", subCategory.getIdCate()).as(Category.class);
+            MongoCursor<Category> cursorCate = collectionCate.find("{_id:#}", new ObjectId(subCategory.getIdCate())).as(Category.class);
             if(cursorCate.hasNext()){
                 subCategory.setNameCate(cursorCate.next().getName());
             }

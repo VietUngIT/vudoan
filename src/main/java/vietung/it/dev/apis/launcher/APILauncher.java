@@ -32,6 +32,7 @@ public class APILauncher {
                         if (event.succeeded()) {
                             logger.debug("Vert.x application is started!");
                         } else {
+
                             logger.error("Unable to start your application", event.cause());
                         }
                     });

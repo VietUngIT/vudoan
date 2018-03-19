@@ -3,6 +3,7 @@ package vietung.it.dev.core.models;
 import com.google.gson.JsonObject;
 import lombok.Data;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 
 @Data
@@ -14,7 +15,7 @@ public class SubCategory extends MongoLog {
     @Override
     public Document toDocument() {
         Document doc = new Document();
-        doc.append("_id",_id);
+        doc.append("_id",new ObjectId(_id));
         doc.append("idCate",idCate);
         doc.append("nameSubCate",nameSubCate);
         return doc;

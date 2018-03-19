@@ -60,7 +60,10 @@ public class CategoryMarketPriceServiceImp implements CategoryMarketPriceService
         CategoryMarketPriceResponse response = new CategoryMarketPriceResponse();
         UploadService service = new UploadServiceImp();
         try{
-            String urlImage = service.uploadImage(image);
+            String urlImage = null;
+            if(image!=null){
+                urlImage = service.uploadImage(image);
+            }
             CategoryMarketPrice category = new CategoryMarketPrice();
             ObjectId _id = new ObjectId();
             category.set_id(_id.toHexString());
