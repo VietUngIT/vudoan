@@ -114,3 +114,69 @@
 19 Mar 2018, 11:24:19,855 start on port 8083
 19 Mar 2018, 11:24:19,855 start on port 8083
 19 Mar 2018, 11:24:19,863 Vert.x application is started!
+19 thg 3 2018, 14:41:05,895 Logger is initialed
+19 thg 3 2018, 14:41:06,015 APIConfig is initialed
+19 thg 3 2018, 14:41:06,687 MongoPool is initialed
+19 thg 3 2018, 14:41:06,687 Cloudinary is initialed
+19 thg 3 2018, 14:41:07,028 start on port 8083
+19 thg 3 2018, 14:41:07,032 start on port 8083
+19 thg 3 2018, 14:41:07,033 start on port 8083
+19 thg 3 2018, 14:41:07,034 start on port 8083
+19 thg 3 2018, 14:41:07,034 start on port 8083
+19 thg 3 2018, 14:41:07,034 start on port 8083
+19 thg 3 2018, 14:41:07,034 start on port 8083
+19 thg 3 2018, 14:41:07,036 start on port 8083
+19 thg 3 2018, 14:41:07,036 Vert.x application is started!
+19 thg 3 2018, 17:06:04,257 Logger is initialed
+19 thg 3 2018, 17:06:04,304 APIConfig is initialed
+19 thg 3 2018, 17:06:04,680 MongoPool is initialed
+19 thg 3 2018, 17:06:04,684 Cloudinary is initialed
+19 thg 3 2018, 17:06:05,002 start on port 8083
+19 thg 3 2018, 17:06:05,003 start on port 8083
+19 thg 3 2018, 17:06:05,003 start on port 8083
+19 thg 3 2018, 17:06:05,004 start on port 8083
+19 thg 3 2018, 17:06:05,004 start on port 8083
+19 thg 3 2018, 17:06:05,004 start on port 8083
+19 thg 3 2018, 17:06:05,004 start on port 8083
+19 thg 3 2018, 17:06:05,004 start on port 8083
+19 thg 3 2018, 17:06:05,005 Vert.x application is started!
+19 thg 3 2018, 17:12:19,177 Log to CategoryAgriTech : { "_id" : { "$oid" : "5aaf8d024f99cf1128db3088" }, "name" : "Cây trồng" }
+19 thg 3 2018, 17:13:09,476 Log to CategoryAgriTech : { "_id" : { "$oid" : "5aaf8d354f99cf1128db3089" }, "name" : "Chăn nuôi" }
+19 thg 3 2018, 17:14:40,874 Log to CategoryAgriTech : { "_id" : { "$oid" : "5aaf8d904f99cf1128db308a" }, "name" : "Khác" }
+19 thg 3 2018, 17:16:13,100 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf8dec4f99cf1128db308b" }, "name" : "Cây trồng" }
+19 thg 3 2018, 17:16:23,023 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf8df64f99cf1128db308c" }, "name" : "Chăn nuôi" }
+19 thg 3 2018, 17:16:30,274 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf8dfe4f99cf1128db308d" }, "name" : "Khác" }
+19 thg 3 2018, 17:17:19,216 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf8e2e4f99cf1128db308e" }, "name" : "Demo" }
+19 thg 3 2018, 17:25:40,909 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf90244f99cf1128db308f" }, "name" : "Gia súc" }
+19 thg 3 2018, 17:26:04,626 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf903c4f99cf1128db3090" }, "name" : "Gia cầm" }
+19 thg 3 2018, 17:26:29,437 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf90554f99cf1128db3091" }, "name" : "Thủy sản" }
+19 thg 3 2018, 17:26:43,786 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf90634f99cf1128db3092" }, "name" : "Cây lương thực" }
+19 thg 3 2018, 17:26:52,038 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf906b4f99cf1128db3093" }, "name" : "Cây công nghiệp" }
+19 thg 3 2018, 17:26:59,809 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf90734f99cf1128db3094" }, "name" : "Cây lâm nghiệp" }
+19 thg 3 2018, 17:27:24,589 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf908c4f99cf1128db3095" }, "name" : "Cây ăn quả" }
+19 thg 3 2018, 17:27:41,987 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf909d4f99cf1128db3096" }, "name" : "Cây cảnh" }
+19 thg 3 2018, 17:27:52,954 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf90a84f99cf1128db3097" }, "name" : "Cây rau" }
+19 thg 3 2018, 17:28:44,787 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf90dc4f99cf1128db3098" }, "name" : "Khác" }
+19 thg 3 2018, 17:35:14,273 Logger is initialed
+19 thg 3 2018, 17:35:42,718 Logger is initialed
+19 thg 3 2018, 17:35:42,769 APIConfig is initialed
+19 thg 3 2018, 17:35:43,139 MongoPool is initialed
+19 thg 3 2018, 17:35:43,146 Cloudinary is initialed
+19 thg 3 2018, 17:35:43,510 start on port 8083
+19 thg 3 2018, 17:35:43,512 start on port 8083
+19 thg 3 2018, 17:35:43,512 start on port 8083
+19 thg 3 2018, 17:35:43,512 start on port 8083
+19 thg 3 2018, 17:35:43,513 start on port 8083
+19 thg 3 2018, 17:35:43,513 start on port 8083
+19 thg 3 2018, 17:35:43,513 start on port 8083
+19 thg 3 2018, 17:35:43,513 start on port 8083
+19 thg 3 2018, 17:35:43,518 Vert.x application is started!
+19 thg 3 2018, 17:36:44,187 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf92bb4f99cf0508efa728" }, "name" : "Thị trường chung" }
+19 thg 3 2018, 17:37:04,856 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf92d04f99cf0508efa729" }, "name" : "Lúa gạo" }
+19 thg 3 2018, 17:37:30,692 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf92ea4f99cf0508efa72a" }, "name" : "Cà phê" }
+19 thg 3 2018, 17:37:42,988 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf92f64f99cf0508efa72b" }, "name" : "Hồ tiêu" }
+19 thg 3 2018, 17:38:04,834 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf930c4f99cf0508efa72c" }, "name" : "Mía đường" }
+19 thg 3 2018, 17:38:28,121 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf93234f99cf0508efa72d" }, "name" : "Thủy sản" }
+19 thg 3 2018, 17:38:34,241 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf93294f99cf0508efa72e" }, "name" : "Rau quả" }
+19 thg 3 2018, 17:38:40,540 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf93304f99cf0508efa72f" }, "name" : "Chăn nuôi" }
+19 thg 3 2018, 17:39:16,059 Log to CategoryMarketInfo : { "_id" : { "$oid" : "5aaf93534f99cf0508efa730" }, "name" : "Vật tư - Phân bón" }

@@ -7,18 +7,18 @@ import vietung.it.dev.core.services.CategoryService;
 import vietung.it.dev.core.services.imp.CategoryServiceImp;
 import vietung.it.dev.core.utils.Utils;
 
-public class CategoryNewsHandler extends BaseApiHandler {
+public class CategoryMarketInfoHandler extends BaseApiHandler {
     @Override
     public BaseResponse handle(HttpServerRequest request) throws Exception {
         CategoryService service = new CategoryServiceImp();
         String type = request.getParam("t");
         if(type!=null){
             if(type.equals("getall")){
-                return service.getAllCategoryNews();
+                return service.getAllCategoryMarketInfo();
             }else if(type.equals("get")){
                 String id = request.getParam("id");
                 if(id!=null){
-                    return service.getCategoryNewsById(id);
+                    return service.getCategoryMarketInfoById(id);
                 }
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
             }else{
