@@ -29,16 +29,64 @@
       "roles":[],
       "method":"POST"
     },{
-      "path":"/category",
+      "path":"/categorynews",
       "handler":"vietung.it.dev.apis.handlers.CategoryNewsHandler",
       "isPublic":false,
       "roles":[],
       "method":"GET"
     },{
-      "path":"/admincategory",
+      "path":"/admincatenews",
       "handler":"vietung.it.dev.apis.handlers.admin.AdminCategoryNewsHandler",
       "isPublic":false,
+      "roles":[2,3],
+      "method":"GET"
+    },{
+      "path":"/catemarketinfo",
+      "handler":"vietung.it.dev.apis.handlers.CategoryMarketInfoHandler",
+      "isPublic":false,
       "roles":[],
+      "method":"GET"
+    },{
+      "path":"/admincatemarketinfo",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminCateMarketInfoHandler",
+      "isPublic":false,
+      "roles":[2,3],
+      "method":"GET"
+    },{
+      "path":"/cateagritech",
+      "handler":"vietung.it.dev.apis.handlers.CategoryAgriTechHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
+    },{
+      "path":"/admincateagritech",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminCateAgriTechHandler",
+      "isPublic":false,
+      "roles":[2,3],
+      "method":"GET"
+    },{
+      "path":"/catesubagritech",
+      "handler":"vietung.it.dev.apis.handlers.CategorySubAgriTechHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
+    },{
+      "path":"/admincatesubagritech",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminCateSubAgriTechHandler",
+      "isPublic":false,
+      "roles":[2,3],
+      "method":"GET"
+    },{
+      "path":"/catemarketprice",
+      "handler":"vietung.it.dev.apis.handlers.CategoryMarketPriceHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
+    },{
+      "path":"/admincatemarketprice",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminCateMarketPriceHandler",
+      "isPublic":false,
+      "roles":[2,3],
       "method":"GET"
     },
     {
