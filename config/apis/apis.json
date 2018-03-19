@@ -28,6 +28,18 @@
       "isPublic":false,
       "roles":[],
       "method":"POST"
+    },{
+      "path":"/category",
+      "handler":"vietung.it.dev.apis.handlers.CategoryNewsHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
+    },{
+      "path":"/admincategory",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminCategoryNewsHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
     },
     {
       "path":"/news",
