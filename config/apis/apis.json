@@ -88,17 +88,27 @@
       "isPublic":false,
       "roles":[2,3],
       "method":"GET"
-    },
-    {
+    },{
       "path":"/news",
       "handler":"vietung.it.dev.apis.handlers.NewsHandler",
       "isPublic":false,
       "roles":[],
       "method":"GET"
-    },
-    {
+    },{
       "path":"/adminnews",
       "handler":"vietung.it.dev.apis.handlers.admin.AdminNewsHandler",
+      "isPublic":false,
+      "roles":[2,3],
+      "method":"POST"
+    },{
+      "path":"/marketinfo",
+      "handler":"vietung.it.dev.apis.handlers.MarketInfoHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
+    },{
+      "path":"/adminmarketinfo",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminMarketInfoHandler",
       "isPublic":false,
       "roles":[2,3],
       "method":"POST"

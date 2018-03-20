@@ -54,7 +54,7 @@ public class VertxHttpConfigServer extends AbstractVerticle implements Handler<H
             logger.error("Error Request", e.toString());
             response = new SimpleResponse();
             response.setError(ErrorCode.SYSTEM_ERROR);
-            response.setMsg("Lỗi hệ thống.");
+            response.setMsg(e.getMessage());
             makeHttpResponse(request, response);
         }
     }

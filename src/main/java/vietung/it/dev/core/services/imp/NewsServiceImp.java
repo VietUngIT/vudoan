@@ -135,16 +135,11 @@ public class NewsServiceImp implements NewsService {
         DB db = MongoPool.getDBJongo();
         Jongo jongo = new Jongo(db);
         MongoCollection collection = jongo.getCollection(News.class.getSimpleName());
-        MongoCollection collectionCate = jongo.getCollection(Variable.MG_CATEGORY_NEWS);
         StringBuilder builder = new StringBuilder();
         builder.append("{_id:#}");
         MongoCursor<News> cursor = collection.find(builder.toString(), new ObjectId(idNews)).as(News.class);
         if(cursor.hasNext()){
             News news = cursor.next();
-            MongoCursor<Category> cursorCate = collectionCate.find(builder.toString(), new ObjectId(news.getIdCateNews())).as(Category.class);
-            if(cursorCate.hasNext()){
-                news.setNameCateNews(cursorCate.next().getName());
-            }
             response.setData(news.toJson());
         }else {
             response.setError(ErrorCode.ID_NOT_EXIST);
