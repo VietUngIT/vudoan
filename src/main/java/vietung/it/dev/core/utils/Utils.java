@@ -29,6 +29,13 @@ public class Utils {
     public static String toJsonStringGson(Object obj) {
         return gson.toJson(obj);
     }
+    public static JsonArray toJsonArray(String json) {
+        try {
+            return gson.fromJson(json, JsonArray.class);
+        } catch (Exception e) {
+            return null;
+        }
+    }
     public static Users getUserByPhone(String phone) {
         DB db =  MongoPool.getDBJongo();
         Jongo jongo = new Jongo(db);

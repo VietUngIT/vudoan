@@ -8,9 +8,12 @@ public interface NewsService {
     int commentNews(String idNews, Boolean isCmt);
     NewsResponse deleteNews(String idNews);
     NewsResponse getNewsById(String idNews);
-    NewsResponse getAllNews(long tlast, int offer);
-    NewsResponse getAllNewsByType(long tlast, int offer, String idType);
-    NewsResponse createNews(String title, String shortDescription, String author, String image, String source, String tags, String typeNews,String nameTypeNews, String content);
-    NewsResponse editNews(String idNews,String title, String shortDescription, String author, String image, String source, String tags, String typeNews,String nameTypeNews, String content);
+    NewsResponse getAllNewsByCateWithNewest(int page, int ofset, String idcate);
+    NewsResponse getAllNewsByCateWithFavorite(int page, int ofset, String idcate);
+    NewsResponse getAllNewsByCateWithPopular(int page, int ofset, String idcate);
+    NewsResponse createNews(String title, String shortDescription, String author, String image, String source, String tags, String idCateNews, String content) throws Exception;
+    NewsResponse editNews(String idNews,String title, String shortDescription, String author,String source, String idCateNews,String content);
+    NewsResponse editImageNews(String idNews,String image);
+    NewsResponse editTagsNews(String idNews,String tags);
 
 }

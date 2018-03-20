@@ -14,24 +14,32 @@ public class NewsHandler extends BaseApiHandler {
         NewsService service = new NewsServiceImp();
         String type = request.getParam("t");
         if(type!=null){
-            if(type.equals("getall")){
-                String timelast = request.getParam("timelast");
-                String offer = request.getParam("offer");
-                return getAllNewsHandler(timelast,offer,service);
-            }if(type.equals("getbytype")){
-                String timelast = request.getParam("timelast");
-                String idtype = request.getParam("idtype");
-                String offer = request.getParam("offer");
-                return getAllNewsByTypeHandler(timelast,idtype,offer,service);
+            if(type.equals("getbycate")){
+                String idcate = request.getParam("idcate");
+                String ofset = request.getParam("ofset");
+                String with = request.getParam("with");
+                String strpage = request.getParam("page");
+                if(with!=null){
+                    if(with.equals("popular")){
+                        return getAllNewsByCateWithPopularHandler(strpage,idcate,ofset,service);
+                    }else if(with.equals("favorite")){
+                        return getAllNewsByCateWithFavoriteHandler(strpage,idcate,ofset,service);
+                    }else{
+                        return getAllNewsByCateWithNewestHandler(strpage,idcate,ofset,service);
+                    }
+                }else {
+                    return getAllNewsByCateWithNewestHandler(strpage,idcate,ofset,service);
+                }
+
             }else if(type.equals("get")){
-                String idNews = request.getParam("idn");
+                String idNews = request.getParam("id");
                 return getNewsByIdHandler(idNews,service);
             }else if(type.equals("like")){
                 String like = request.getParam("like");
-                String idNews = request.getParam("idn");
+                String idNews = request.getParam("id");
                 return likeNewsHandler(like,idNews,service);
             }else if(type.equals("view")){
-                String idNews = request.getParam("idn");
+                String idNews = request.getParam("id");
                 return viewNewsHandler(idNews,service);
             }else {
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
@@ -41,13 +49,15 @@ public class NewsHandler extends BaseApiHandler {
         }
     }
 
-
-    private BaseResponse getAllNewsByTypeHandler(String timelast, String idtype, String offer, NewsService service) {
-        if(timelast!=null && offer!=null && idtype!=null){
+    private BaseResponse getAllNewsByCateWithPopularHandler(String strpage, String idcate, String ofset, NewsService service) {
+        if(ofset!=null && idcate!=null){
+            if(strpage==null){
+                strpage="0";
+            }
             try {
-                long tlast = Long.parseLong(timelast);
-                int of = Integer.parseInt(offer);
-                return service.getAllNewsByType(tlast,of,idtype);
+                int page = Integer.parseInt(strpage);
+                int of = Integer.parseInt(ofset);
+                return service.getAllNewsByCateWithPopular(page,of,idcate);
             }catch (NumberFormatException e){
                 e.printStackTrace();
                 return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");
@@ -58,12 +68,34 @@ public class NewsHandler extends BaseApiHandler {
         }
     }
 
-    private BaseResponse getAllNewsHandler(String timelast, String offer, NewsService service) {
-        if(timelast!=null && offer!=null){
+    private BaseResponse getAllNewsByCateWithFavoriteHandler(String strpage, String idcate, String ofset, NewsService service) {
+        if(ofset!=null && idcate!=null){
+            if(strpage==null){
+                strpage="0";
+            }
             try {
-                long tlast = Long.parseLong(timelast);
-                int of = Integer.parseInt(offer);
-                return service.getAllNews(tlast,of);
+                int page = Integer.parseInt(strpage);
+                int of = Integer.parseInt(ofset);
+                return service.getAllNewsByCateWithFavorite(page,of,idcate);
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+                return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");
+            }
+
+        }else {
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
+        }
+    }
+
+    private BaseResponse getAllNewsByCateWithNewestHandler(String strpage, String idcate, String ofset, NewsService service) {
+        if(ofset!=null && idcate!=null){
+            if(strpage==null){
+                strpage="0";
+            }
+            try {
+                int page = Integer.parseInt(strpage);
+                int of = Integer.parseInt(ofset);
+                return service.getAllNewsByCateWithNewest(page,of,idcate);
             }catch (NumberFormatException e){
                 e.printStackTrace();
                 return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");

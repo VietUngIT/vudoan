@@ -92,13 +92,13 @@
     {
       "path":"/news",
       "handler":"vietung.it.dev.apis.handlers.NewsHandler",
-      "isPublic":true,
+      "isPublic":false,
       "roles":[],
       "method":"GET"
     },
     {
-      "path":"/create-news",
-      "handler":"vietung.it.dev.apis.handlers.CreateNewsHandler",
+      "path":"/adminnews",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminNewsHandler",
       "isPublic":false,
       "roles":[2,3],
       "method":"POST"

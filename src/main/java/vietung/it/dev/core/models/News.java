@@ -1,26 +1,30 @@
 package vietung.it.dev.core.models;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.Data;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import vietung.it.dev.core.utils.Utils;
+
+import java.util.List;
 
 @Data
 public class News extends MongoLog{
     private String _id;
-    private String title;
-    private String shortDescription;
-    private String content;
-    private String author;
-    private String image;
-    private String source;
-    private String tags;
-    private int views;
-    private int likes;
-    private int comments;
+    private String idCateNews;
+    private String nameCateNews;
     private long timeCreate;
-    private ObjectId typeNews;
-    private String nameTypeNews;
+    private String image;
+    private String title;
+    private String author;
+    private String shortDescription;
+    private String source;
+    private List<String> tags;
+    private int numView;
+    private int numLike;
+    private int numComment;
+    private String content;
     @Override
     public Document toDocument() {
         Document document = new Document();
@@ -30,11 +34,11 @@ public class News extends MongoLog{
         document.append("author",author);
         document.append("image",image);
         document.append("source",source);
-        document.append("tags",tags);
-        document.append("views",views);
-        document.append("likes",likes);
-        document.append("comments",comments);
-        document.append("typeNews",typeNews);
+        document.append("tags", tags);
+        document.append("numView",numView);
+        document.append("numLike",numLike);
+        document.append("numComment",numComment);
+        document.append("idCateNews",idCateNews);
         document.append("timeCreate",timeCreate);
         document.append("content",content);
         return document;
@@ -50,12 +54,12 @@ public class News extends MongoLog{
         jsonObject.addProperty("author",author);
         jsonObject.addProperty("image",image);
         jsonObject.addProperty("source",source);
-        jsonObject.addProperty("tags",tags);
-        jsonObject.addProperty("views",views);
-        jsonObject.addProperty("likes",likes);
-        jsonObject.addProperty("comments",comments);
-        jsonObject.addProperty("typeNews",String.valueOf(typeNews));
-        jsonObject.addProperty("nameTypeNews",nameTypeNews);
+        jsonObject.addProperty("tags",tags.toString());
+        jsonObject.addProperty("views",numView);
+        jsonObject.addProperty("likes",numLike);
+        jsonObject.addProperty("comments",numComment);
+        jsonObject.addProperty("idCateNews",idCateNews);
+        jsonObject.addProperty("nameCateNews",nameCateNews);
         jsonObject.addProperty("timeCreate",timeCreate);
         jsonObject.addProperty("content",content);
         return jsonObject;
