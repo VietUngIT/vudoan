@@ -69,7 +69,7 @@ public class AdminAgriTechHandler extends BaseApiHandler {
         }
     }
 
-    private BaseResponse editImageNewsAgriTechHandler(String id, String image, AgriTechService service) {
+    private BaseResponse editImageNewsAgriTechHandler(String id, String image, AgriTechService service) throws Exception {
         if(id!=null && image!=null){
             return service.editImageNewsAgriTech(id,image);
         }else {
@@ -90,7 +90,7 @@ public class AdminAgriTechHandler extends BaseApiHandler {
         }
     }
 
-    private BaseResponse createNewsAgriTechHandler(String title, String author, String image, String tags, String idSubCate, String content, AgriTechService service) {
+    private BaseResponse createNewsAgriTechHandler(String title, String author, String image, String tags, String idSubCate, String content, AgriTechService service) throws Exception {
         if(title!=null && content!=null && idSubCate!=null){
             if(tags==null){
                 tags="[]";

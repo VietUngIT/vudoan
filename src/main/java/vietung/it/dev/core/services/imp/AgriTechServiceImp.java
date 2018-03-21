@@ -250,7 +250,7 @@ public class AgriTechServiceImp implements AgriTechService {
         StringBuilder builder = new StringBuilder();
         MongoCursor<AgriTech> cursor = null;
         MongoCollection collection = jongo.getCollection(AgriTech.class.getSimpleName());
-        builder.append("{$and: [{idCateNews: #}]}");
+        builder.append("{$and: [{idSubCate: #}]}");
         cursor = collection.find(builder.toString(),idsubcate).sort("{timeCreate:-1}").skip(page*ofs).limit(ofs).as(AgriTech.class);
         JsonArray jsonArray = new JsonArray();
         while(cursor.hasNext()){
