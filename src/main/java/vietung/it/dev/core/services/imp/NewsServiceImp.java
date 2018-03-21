@@ -101,7 +101,7 @@ public class NewsServiceImp implements NewsService {
                 news.setNumComment(cmt-1);
             }
 
-            collection.update("{_id:#}", new ObjectId(idNews)).with("{$set:{comments:#}}",news.getNumComment());
+            collection.update("{_id:#}", new ObjectId(idNews)).with("{$set:{numComment:#}}",news.getNumComment());
             return news.getNumComment();
         }
         return 0;
@@ -315,7 +315,15 @@ public class NewsServiceImp implements NewsService {
         MongoCursor<News> cursor = collection.find(builder.toString(),new ObjectId(idNews)).limit(1).as(News.class);
         if(cursor.hasNext()){
             News news = cursor.next();
-
+            if(idCateNews!=null){
+                if (!ObjectId.isValid(idCateNews)) {
+                    response.setError(ErrorCode.NOT_A_OBJECT_ID);
+                    response.setMsg("Id danh mục tin tức không đúng.");
+                    return response;
+                }
+                collection.update("{_id:#}", new ObjectId(idNews)).with("{$set:{idCateNews:#}}",idCateNews);
+                news.setIdCateNews(idCateNews);
+            }
             if(title!=null){
                 collection.update("{_id:#}", new ObjectId(idNews)).with("{$set:{title:#}}",title);
                 news.setTitle(title);
@@ -332,15 +340,7 @@ public class NewsServiceImp implements NewsService {
                 collection.update("{_id:#}", new ObjectId(idNews)).with("{$set:{source:#}}",source);
                 news.setSource(source);
             }
-            if(idCateNews!=null){
-                if (!ObjectId.isValid(idCateNews)) {
-                    response.setError(ErrorCode.NOT_A_OBJECT_ID);
-                    response.setMsg("Id danh mục tin tức không đúng.");
-                    return response;
-                }
-                collection.update("{_id:#}", new ObjectId(idNews)).with("{$set:{idCateNews:#}}",idCateNews);
-                news.setIdCateNews(idCateNews);
-            }
+
             if(content!=null){
                 collection.update("{_id:#}", new ObjectId(idNews)).with("{$set:{content:#}}",content);
                 news.setContent(content);

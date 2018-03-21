@@ -4,6 +4,8 @@ import vietung.it.dev.apis.response.BaseResponse;
 import vietung.it.dev.apis.response.MarketInfoResponse;
 
 public interface MarketInfoService {
+    int commentNews(String idNews, Boolean isCmt);
+
     MarketInfoResponse deleteNewsMarketInfo(String id) throws Exception;
 
     MarketInfoResponse editTagsNewsMarketInfo(String id, String tags) throws Exception;
