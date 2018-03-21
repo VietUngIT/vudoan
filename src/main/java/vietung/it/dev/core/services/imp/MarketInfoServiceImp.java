@@ -23,6 +23,29 @@ import java.util.List;
 
 public class MarketInfoServiceImp implements MarketInfoService {
     @Override
+    public int commentNews(String idNews, Boolean isCmt) {
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(MarketInfo.class.getSimpleName());
+        StringBuilder builder = new StringBuilder();
+        builder.append("{_id:#}");
+        MongoCursor<MarketInfo> cursor = collection.find(builder.toString(), new ObjectId(idNews)).as(MarketInfo.class);
+        if(cursor.hasNext()){
+            MarketInfo marketInfo = cursor.next();
+            int cmt = marketInfo.getNumComment()>=0?marketInfo.getNumComment():0;
+            if(isCmt){
+                marketInfo.setNumComment(cmt+1);
+            }else {
+                marketInfo.setNumComment(cmt-1);
+            }
+
+            collection.update("{_id:#}", new ObjectId(idNews)).with("{$set:{numComment:#}}",marketInfo.getNumComment());
+            return marketInfo.getNumComment();
+        }
+        return 0;
+    }
+
+    @Override
     public MarketInfoResponse deleteNewsMarketInfo(String id) throws Exception {
         MarketInfoResponse response = new MarketInfoResponse();
         if (!ObjectId.isValid(id)) {
@@ -127,7 +150,15 @@ public class MarketInfoServiceImp implements MarketInfoService {
         MongoCursor<MarketInfo> cursor = collection.find(builder.toString(),new ObjectId(id)).limit(1).as(MarketInfo.class);
         if(cursor.hasNext()){
             MarketInfo marketInfo = cursor.next();
-
+            if(idCateNews!=null){
+                if (!ObjectId.isValid(idCateNews)) {
+                    response.setError(ErrorCode.NOT_A_OBJECT_ID);
+                    response.setMsg("Id danh mục tin tức thị trường không đúng.");
+                    return response;
+                }
+                collection.update("{_id:#}", new ObjectId(id)).with("{$set:{idCateNews:#}}",idCateNews);
+                marketInfo.setIdCateNews(idCateNews);
+            }
             if(title!=null){
                 collection.update("{_id:#}", new ObjectId(id)).with("{$set:{title:#}}",title);
                 marketInfo.setTitle(title);
@@ -140,15 +171,7 @@ public class MarketInfoServiceImp implements MarketInfoService {
                 collection.update("{_id:#}", new ObjectId(id)).with("{$set:{source:#}}",source);
                 marketInfo.setSource(source);
             }
-            if(idCateNews!=null){
-                if (!ObjectId.isValid(idCateNews)) {
-                    response.setError(ErrorCode.NOT_A_OBJECT_ID);
-                    response.setMsg("Id danh mục tin tức thị trường không đúng.");
-                    return response;
-                }
-                collection.update("{_id:#}", new ObjectId(id)).with("{$set:{idCateNews:#}}",idCateNews);
-                marketInfo.setIdCateNews(idCateNews);
-            }
+
             if(content!=null){
                 collection.update("{_id:#}", new ObjectId(id)).with("{$set:{content:#}}",content);
                 marketInfo.setContent(content);

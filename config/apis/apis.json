@@ -112,6 +112,24 @@
       "isPublic":false,
       "roles":[2,3],
       "method":"POST"
+    },{
+      "path":"/marketprice",
+      "handler":"vietung.it.dev.apis.handlers.MarketPriceHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
+    },{
+      "path":"/adminmarketprice",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminMarketPriceHandler",
+      "isPublic":false,
+      "roles":[2,3],
+      "method":"POST"
+    },{
+      "path":"/comment",
+      "handler":"vietung.it.dev.apis.handlers.CommentHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"POST"
     },
     {
       "path":"/type-news",
@@ -144,13 +162,6 @@
     {
       "path":"/handbook",
       "handler":"vietung.it.dev.apis.handlers.HandBookHandler",
-      "isPublic":true,
-      "roles":[],
-      "method":"GET"
-    },
-    {
-      "path":"/pricemarket",
-      "handler":"vietung.it.dev.apis.handlers.PriceMarketHandler",
       "isPublic":true,
       "roles":[],
       "method":"GET"
