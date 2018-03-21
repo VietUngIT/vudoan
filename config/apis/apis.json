@@ -112,6 +112,18 @@
       "isPublic":false,
       "roles":[2,3],
       "method":"POST"
+    },{
+      "path":"/agritech",
+      "handler":"vietung.it.dev.apis.handlers.AgriTechHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
+    },{
+      "path":"/adminagritech",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminAgriTechHandler",
+      "isPublic":false,
+      "roles":[2,3],
+      "method":"POST"
     },
     {
       "path":"/type-news",
