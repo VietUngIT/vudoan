@@ -22,7 +22,7 @@ import java.util.List;
 
 public class NewsServiceImp implements NewsService {
     @Override
-    public NewsResponse likeNews(String idNews, Boolean isLike){
+    public NewsResponse likeNews(String idNews, Boolean isLike,String phone){
         NewsResponse response = new NewsResponse();
         if (!ObjectId.isValid(idNews)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
@@ -41,9 +41,11 @@ public class NewsServiceImp implements NewsService {
             if(isLike){
                 news.setNumLike(like+1);
                 collection.update("{_id:#}", new ObjectId(idNews)).with("{$set:{numLike:#}}",news.getNumLike());
+                collection.update("{_id:#}", new ObjectId(idNews)).with("{ $push: {userLike:#}}",phone);
             }else {
                 news.setNumLike(like-1);
                 collection.update("{_id:#}", new ObjectId(idNews)).with("{$set:{numLike:#}}",news.getNumLike());
+                collection.update("{_id:#}", new ObjectId(idNews)).with("{ $pull: {userLike:#}}",phone);
             }
             JsonObject object = new JsonObject();
             object.addProperty("numLike",news.getNumLike());
@@ -125,7 +127,7 @@ public class NewsServiceImp implements NewsService {
     }
 
     @Override
-    public NewsResponse getNewsById(String idNews) {
+    public NewsResponse getNewsById(String idNews,String phone) {
         NewsResponse response = new NewsResponse();
         if (!ObjectId.isValid(idNews)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
@@ -140,6 +142,12 @@ public class NewsServiceImp implements NewsService {
         MongoCursor<News> cursor = collection.find(builder.toString(), new ObjectId(idNews)).as(News.class);
         if(cursor.hasNext()){
             News news = cursor.next();
+            List<String> userLike = news.getUserLike();
+            if(userLike.contains(phone)){
+                news.setIsLiked(true);
+            }else{
+                news.setIsLiked(false);
+            }
             response.setData(news.toJson());
         }else {
             response.setError(ErrorCode.ID_NOT_EXIST);

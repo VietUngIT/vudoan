@@ -3,11 +3,11 @@ package vietung.it.dev.core.services;
 import vietung.it.dev.apis.response.NewsResponse;
 
 public interface NewsService {
-    NewsResponse likeNews(String idNews,Boolean isLike) throws Exception;
+    NewsResponse likeNews(String idNews,Boolean isLike, String phone) throws Exception;
     NewsResponse viewNews(String idNews) throws Exception;
     int commentNews(String idNews, Boolean isCmt);
     NewsResponse deleteNews(String idNews);
-    NewsResponse getNewsById(String idNews);
+    NewsResponse getNewsById(String idNews,String phone);
     NewsResponse getAllNewsByCateWithNewest(int page, int ofset, String idcate);
     NewsResponse getAllNewsByCateWithFavorite(int page, int ofset, String idcate);
     NewsResponse getAllNewsByCateWithPopular(int page, int ofset, String idcate);

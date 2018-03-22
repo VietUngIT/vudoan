@@ -32,12 +32,14 @@ public class NewsHandler extends BaseApiHandler {
                 }
 
             }else if(type.equals("get")){
+                String phone = request.getParam("ph");
                 String idNews = request.getParam("id");
-                return getNewsByIdHandler(idNews,service);
+                return getNewsByIdHandler(idNews,phone,service);
             }else if(type.equals("like")){
+                String phone = request.getParam("ph");
                 String like = request.getParam("like");
                 String idNews = request.getParam("id");
-                return likeNewsHandler(like,idNews,service);
+                return likeNewsHandler(like,idNews,phone,service);
             }else if(type.equals("view")){
                 String idNews = request.getParam("id");
                 return viewNewsHandler(idNews,service);
@@ -106,10 +108,10 @@ public class NewsHandler extends BaseApiHandler {
         }
     }
 
-    private BaseResponse getNewsByIdHandler(String idNews, NewsService service) {
+    private BaseResponse getNewsByIdHandler(String idNews,String phone, NewsService service) {
         if(idNews!=null){
             try{
-                return service.getNewsById(idNews);
+                return service.getNewsById(idNews,phone);
             }catch (Exception e){
                 e.printStackTrace();
                 return Utils.notifiError(ErrorCode.SYSTEM_ERROR,"Lỗi hệ thống."+e.getMessage());
@@ -134,11 +136,11 @@ public class NewsHandler extends BaseApiHandler {
         }
     }
 
-    private BaseResponse likeNewsHandler(String like, String idNews,NewsService service){
+    private BaseResponse likeNewsHandler(String like, String idNews,String phone, NewsService service){
         if(like!=null && idNews!=null){
             Boolean isLike = Boolean.parseBoolean(like);
             try{
-                return service.likeNews(idNews,isLike);
+                return service.likeNews(idNews,isLike,phone);
             }catch (Exception e){
                 e.printStackTrace();
                 return Utils.notifiError(ErrorCode.SYSTEM_ERROR,"Lỗi hệ thống."+e.getMessage());
