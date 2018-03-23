@@ -9,6 +9,7 @@ import vietung.it.dev.apis.response.UserResponse;
 import vietung.it.dev.core.config.CloudinaryConfig;
 import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.consts.ErrorCode;
+import vietung.it.dev.core.models.Expert;
 import vietung.it.dev.core.models.Users;
 import vietung.it.dev.core.services.UploadService;
 import vietung.it.dev.core.utils.Utils;
@@ -34,6 +35,10 @@ public class UploadServiceImp implements UploadService {
                 Jongo jongo = new Jongo(db);
                 MongoCollection collection = jongo.getCollection(Users.class.getSimpleName());
                 collection.update("{phone: #}",phone).with("{$set: {avatar: #}}",urlAvatar);
+                if(users.getRoles()==1){
+                    MongoCollection collectionExpert = jongo.getCollection(Expert.class.getSimpleName());
+                    collectionExpert.update("{phone: #}",phone).with("{$set: {avatar: #}}",urlAvatar);
+                }
                 users.setAvatar(urlAvatar);
                 response.setUsers(users);
             }else {

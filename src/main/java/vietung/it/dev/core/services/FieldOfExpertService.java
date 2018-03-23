@@ -1,11 +1,12 @@
 package vietung.it.dev.core.services;
 
+import vietung.it.dev.apis.response.CategoryResponse;
 import vietung.it.dev.apis.response.FieldOfExpertResponse;
 
 public interface FieldOfExpertService {
-    FieldOfExpertResponse getAllField();
-    FieldOfExpertResponse getFieldByID( int id);
-    FieldOfExpertResponse addFieldOfExpert( String nameField);
-    FieldOfExpertResponse editFieldOfExpert( int id, String nameField);
-    FieldOfExpertResponse deleteFieldOfExpert( int id);
+    CategoryResponse getAllField() throws Exception;
+    CategoryResponse getFieldByID( String id) throws Exception;
+    CategoryResponse addFieldOfExpert(String nameField) throws Exception;
+    CategoryResponse editFieldOfExpert( String id, String nameField) throws Exception;
+    CategoryResponse deleteFieldOfExpert( String id) throws Exception;
 }

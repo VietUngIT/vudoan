@@ -22,27 +22,17 @@ public class AdminFieldOfExpertHandler extends BaseApiHandler {
                     return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
                 }
             }else if(type.equals("ed")){
-                String strId = request.getParam("id");
+                String id = request.getParam("id");
                 String nameField = request.getParam("name");
-                if(strId!=null && nameField!=null){
-                    try{
-                        int id = Integer.parseInt(strId);
-                        return service.editFieldOfExpert(id,nameField);
-                    }catch (NumberFormatException e){
-                        return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu.");
-                    }
+                if(id!=null && nameField!=null){
+                    return service.editFieldOfExpert(id,nameField);
                 }else {
                     return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
                 }
             }else if(type.equals("del")){
-                String strId = request.getParam("id");
-                if(strId!=null){
-                    try{
-                        int id = Integer.parseInt(strId);
-                        return service.deleteFieldOfExpert(id);
-                    }catch (NumberFormatException e){
-                        return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu.");
-                    }
+                String id = request.getParam("id");
+                if(id!=null){
+                    return service.deleteFieldOfExpert(id);
                 }else {
                     return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
                 }

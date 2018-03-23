@@ -142,6 +142,36 @@
       "isPublic":false,
       "roles":[],
       "method":"POST"
+    },{
+      "path":"/fieldofexpert",
+      "handler":"vietung.it.dev.apis.handlers.FieldOfExpertHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
+    },{
+      "path":"/adminfieldofexpert",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminFieldOfExpertHandler",
+      "isPublic":false,
+      "roles":[2,3],
+      "method":"GET"
+    },{
+      "path":"/expert",
+      "handler":"vietung.it.dev.apis.handlers.ExpertHandler",
+      "isPublic":false,
+      "roles":[1],
+      "method":"GET"
+    },{
+      "path":"/adminexpert",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminExpertHandler",
+      "isPublic":false,
+      "roles":[2,3],
+      "method":"POST"
+    },{
+      "path":"/expertinfo",
+      "handler":"vietung.it.dev.apis.handlers.admin.ExpertInfoHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
     },
     {
       "path":"/type-news",
@@ -177,20 +207,7 @@
       "isPublic":true,
       "roles":[],
       "method":"GET"
-    },
-    {
-      "path":"/fieldofexpert",
-      "handler":"vietung.it.dev.apis.handlers.FieldOfExpertHandler",
-      "isPublic":false,
-      "roles":[],
-      "method":"GET"
-    },
-    {
-      "path":"/adminfieldofexpert",
-      "handler":"vietung.it.dev.apis.handlers.admin.AdminFieldOfExpertHandler",
-      "isPublic":false,
-      "roles":[2,3],
-      "method":"GET"
     }
+
   ]
 }

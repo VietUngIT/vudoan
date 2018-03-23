@@ -9,6 +9,7 @@ public class Variable {
     public static final String MG_COMMENTS_NEWS = "CommentsNews";
     public static final String MG_COMMENTS_MARKET_INFO = "CommentsMarketInfo";
     public static final String MG_COMMENTS_AGRI_TECH = "CommentsAgriTech";
+    public static final String MG_CATEGORY_FIELD_EXPERT = "CategoryFieldExpert";
     public static final int COMMENTS_NEWS = 1;
     public static final int COMMENTS_MARKET_INFO = 2;
     public static final int COMMENTS_AGRI_TECH = 3;

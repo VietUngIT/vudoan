@@ -18,6 +18,7 @@ public class Users extends MongoLog {
     @Override
     public Document toDocument() {
         Document doc = new Document();
+        doc.append("_id", _id);
         doc.append("name", name);
         doc.append("phone", phone);
         doc.append("password", password);
@@ -30,6 +31,7 @@ public class Users extends MongoLog {
 
     public JsonObject toJson(){
         JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", _id);
         jsonObject.addProperty("name", name);
         jsonObject.addProperty("phone", phone);
         jsonObject.addProperty("password", password);

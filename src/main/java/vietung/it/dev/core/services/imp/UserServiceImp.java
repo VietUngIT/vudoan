@@ -24,6 +24,7 @@ public class UserServiceImp implements UserService {
         if(users == null){
             Calendar calendar = Calendar.getInstance();
             Users user = new Users();
+
             user.setName(name);
             user.setPhone(phone);
             user.setPassword(Utils.sha256(pass));
