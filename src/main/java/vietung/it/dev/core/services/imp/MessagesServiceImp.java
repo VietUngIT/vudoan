@@ -34,19 +34,12 @@ public class MessagesServiceImp implements MessagesService {
         Jongo jongo = new Jongo(db);
         StringBuilder builder = new StringBuilder();
         MongoCursor<Messages> cursor = null;
-        MongoCollection collection = jongo.getCollection(News.class.getSimpleName());
+        MongoCollection collection = jongo.getCollection(Messages.class.getSimpleName());
         builder.append("{$and: [{idRoom: #}]}");
         cursor = collection.find(builder.toString(),idroom).sort("{create_at:-1}").skip(page*ofset).limit(ofset).as(Messages.class);
-//        MongoCollection collectionCate = jongo.getCollection(Variable.MG_CATEGORY_NEWS);
-//        MongoCursor<Category> cursorCate = collectionCate.find("{_id:#}", new ObjectId(idcate)).as(Category.class);
-//        String nameType = "";
-//        if(cursorCate.hasNext()){
-//            nameType = cursorCate.next().getName();
-//        }
         JsonArray jsonArray = new JsonArray();
         while(cursor.hasNext()){
             Messages messages = cursor.next();
-//            news.setNameCateNews(nameType);
             jsonArray.add(messages.toJson());
         }
         response.setDatas(jsonArray);

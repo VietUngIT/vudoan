@@ -9,6 +9,12 @@ import java.util.List;
 
 @Data
 public class Room extends MongoLog{
+
+    public static final int TYPE_ROOM_TWO = 0;
+    public static final int TYPE_ROOM_GROUP = 1;
+    public static final int STATUS_ROOM_ACTIVATED = 0;
+    public static final int STATUS_ROOM_NOT_ACTIVATED = 1;
+
     private String _id;
     private String name;
     private List<String> user;
