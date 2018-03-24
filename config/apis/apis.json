@@ -166,12 +166,6 @@
       "isPublic":false,
       "roles":[2,3],
       "method":"POST"
-    },{
-      "path":"/expertinfo",
-      "handler":"vietung.it.dev.apis.handlers.admin.ExpertInfoHandler",
-      "isPublic":false,
-      "roles":[],
-      "method":"GET"
     },
     {
       "path":"/type-news",
@@ -205,6 +199,13 @@
       "path":"/handbook",
       "handler":"vietung.it.dev.apis.handlers.HandBookHandler",
       "isPublic":true,
+      "roles":[],
+      "method":"GET"
+    },
+    {
+      "path":"/messages",
+      "handler":"vietung.it.dev.apis.handlers.MessagesHandler",
+      "isPublic":false,
       "roles":[],
       "method":"GET"
     }

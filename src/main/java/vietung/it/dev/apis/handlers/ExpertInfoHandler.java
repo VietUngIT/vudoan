@@ -14,5 +14,6 @@ public class ExpertInfoHandler extends BaseApiHandler {
         }else {
             return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }
+        return null;
     }
 }

@@ -36,6 +36,7 @@ public class APILauncher {
                             logger.error("Unable to start your application", event.cause());
                         }
                     });
+            Chat.init();
         }catch (Exception e){
             e.printStackTrace();
         }
