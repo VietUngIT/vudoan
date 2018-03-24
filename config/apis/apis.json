@@ -205,7 +205,7 @@
     {
       "path":"/messages",
       "handler":"vietung.it.dev.apis.handlers.MessagesHandler",
-      "isPublic":false,
+      "isPublic":true,
       "roles":[],
       "method":"GET"
     }
