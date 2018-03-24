@@ -1,6 +1,7 @@
 package vietung.it.dev.core.services.imp;
 
 import com.mongodb.DB;
+import org.bson.types.ObjectId;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
@@ -24,7 +25,8 @@ public class UserServiceImp implements UserService {
         if(users == null){
             Calendar calendar = Calendar.getInstance();
             Users user = new Users();
-
+            ObjectId id = new ObjectId();
+            user.set_id(id.toHexString());
             user.setName(name);
             user.setPhone(phone);
             user.setPassword(Utils.sha256(pass));
