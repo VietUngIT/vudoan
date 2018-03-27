@@ -11,20 +11,15 @@ public class MessagesResponse extends BaseResponse {
     private JsonObject data;
     private JsonArray datas;
     private int numByMessages = -1;
+
     @Override
     public String toJonString() {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("e",getError());
-        jsonObject.addProperty("msg",getMsg());
-        if (numByMessages!=-1){
-            jsonObject.addProperty("numByMessages",numByMessages);
-        }
-        if(data!=null){
-            jsonObject.add("data",data);
-        }
-        if(datas!=null){
-            jsonObject.add("array",datas);
-        }
+        jsonObject.addProperty("e", getError());
+        jsonObject.addProperty("msg", getMsg());
+        jsonObject.addProperty("numByMessages", numByMessages);
+        jsonObject.add("data", data);
+        jsonObject.add("array", datas);
         return jsonObject.toString();
     }
 }

@@ -9,6 +9,11 @@ import java.util.List;
 
 @Data
 public class Messages extends MongoLog{
+    public static final int TYPE_MESSAGE_TEXT = 0;
+    public static final int TYPE_MESSAGE_IMAGE = 1;
+    public static final int TYPE_MESSAGE_MICRO = 2;
+    public static final int TYPE_MESSAGE_LIKE = 3;
+
     private String _id;
     private String idRoom;
     private String idUser;
