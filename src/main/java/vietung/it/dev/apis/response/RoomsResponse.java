@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import lombok.Data;
 
 @Data
-public class RoomResponse extends BaseResponse {
+public class RoomsResponse extends BaseResponse {
     private JsonObject data;
     private JsonArray datas;
     private int numByRoom = -1;

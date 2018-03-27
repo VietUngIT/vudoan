@@ -216,7 +216,7 @@
       "method":"GET"
     },
     {
-      "path":"/messages",
+      "path":"/room",
       "handler":"vietung.it.dev.apis.handlers.RoomHandler",
       "isPublic":false,
       "roles":[],

@@ -6,18 +6,13 @@ import org.bson.types.ObjectId;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
-import vietung.it.dev.apis.response.MessagesResponse;
-import vietung.it.dev.apis.response.NewsResponse;
-import vietung.it.dev.apis.response.RoomResponse;
+import vietung.it.dev.apis.response.RoomsResponse;
 import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.consts.ErrorCode;
-import vietung.it.dev.core.consts.Variable;
 import vietung.it.dev.core.models.*;
-import vietung.it.dev.core.services.MessagesService;
 import vietung.it.dev.core.services.RoomService;
 import vietung.it.dev.core.utils.Utils;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -25,8 +20,8 @@ import java.util.List;
 public class RoomServiceImp implements RoomService {
 
     @Override
-    public RoomResponse createRoom(String name, String user, int type) {
-        RoomResponse response = new RoomResponse();
+    public RoomsResponse createRoom(String name, String user, int type) {
+        RoomsResponse response = new RoomsResponse();
         int typeRoom = Room.TYPE_ROOM_TWO;
         if (typeRoom != Room.TYPE_ROOM_TWO && typeRoom != Room.TYPE_ROOM_GROUP) {
             response.setError(ErrorCode.INVALID_PARAMS);
@@ -34,10 +29,8 @@ public class RoomServiceImp implements RoomService {
             return response;
         }
         try {
-            String urlImage = null;
             DB db = MongoPool.getDBJongo();
             Jongo jongo = new Jongo(db);
-
 
             JsonArray array = Utils.toJsonArray(user);
             List<String> lstUser = new ArrayList<>();
@@ -47,16 +40,27 @@ public class RoomServiceImp implements RoomService {
                     response.setMsg("Id User không đúng.");
                     return response;
                 }
-                MongoCollection collectionIdCate = jongo.getCollection(Users.class.getSimpleName());
-                MongoCursor<Users> cursorUsers = collectionIdCate.find("{_id:#}", new ObjectId(array.get(i).getAsString())).as(Users.class);
+                MongoCollection collectionIdUser = jongo.getCollection(Users.class.getSimpleName());
+                MongoCursor<Users> cursorUsers = collectionIdUser.find("{_id:#}", array.get(i).getAsString()).as(Users.class);
                 if (cursorUsers.hasNext()) {
                     lstUser.add(array.get(i).getAsString());
                 } else {
-                    response.setError(ErrorCode.NOT_A_OBJECT_ID);
+                    response.setError(ErrorCode.INVALID_PARAMS);
                     response.setMsg("Id User không tôn tại.");
                     return response;
                 }
+
             }
+            if(typeRoom == Room.TYPE_ROOM_TWO){
+                MongoCollection collectionRoom = jongo.getCollection(Room.class.getSimpleName());
+                MongoCursor<Room> cursorRoomUser = collectionRoom.find("{user:{$all:#}}",lstUser).as(Room.class);
+                if (cursorRoomUser.hasNext()) {
+                    response.setError(ErrorCode.INVALID_PARAMS);
+                    response.setMsg("Room đã tôn tại.");
+                    return response;
+                }
+            }
+
             Room room = new Room();
             ObjectId _id = new ObjectId();
             room.set_id(_id.toHexString());
@@ -76,14 +80,14 @@ public class RoomServiceImp implements RoomService {
     }
 
     @Override
-    public RoomResponse editRoom(String idroom, String name, String user, int type) {
-        RoomResponse response = new RoomResponse();
+    public RoomsResponse editRoom(String idroom, String name, String user, int type) {
+        RoomsResponse response = new RoomsResponse();
         return response;
     }
 
     @Override
-    public RoomResponse deleteRoom(String idroom) {
-        RoomResponse response = new RoomResponse();
+    public RoomsResponse deleteRoom(String idroom) {
+        RoomsResponse response = new RoomsResponse();
         if (!ObjectId.isValid(idroom)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
             response.setMsg("Id không đúng.");
@@ -94,13 +98,12 @@ public class RoomServiceImp implements RoomService {
         Jongo jongo = new Jongo(db);
         MongoCollection collection = jongo.getCollection(Room.class.getSimpleName());
         collection.remove(new ObjectId(idroom));
-
         return response;
     }
 
     @Override
-    public RoomResponse getAllRoomByIdUserWithRoom(int page, int ofset, String iduser) {
-        RoomResponse response = new RoomResponse();
+    public RoomsResponse getAllRoomByIdUserWithRoom(int page, int ofset, String iduser) {
+        RoomsResponse response = new RoomsResponse();
         if (!ObjectId.isValid(iduser)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
             response.setMsg("Id không đúng.");
@@ -111,8 +114,8 @@ public class RoomServiceImp implements RoomService {
         StringBuilder builder = new StringBuilder();
         MongoCursor<Room> cursor = null;
         MongoCollection collection = jongo.getCollection(Room.class.getSimpleName());
-        builder.append("{$and: [{idRoom: #}]}");
-        cursor = collection.find(builder.toString(), iduser).sort("{create_at:-1}").skip(page * ofset).limit(ofset).as(Room.class);
+        builder.append("{$and: [{user: #}]}");
+        cursor = collection.find(builder.toString(),iduser).sort("{create_at:-1}").skip(page * ofset).limit(ofset).as(Room.class);
         JsonArray jsonArray = new JsonArray();
         while (cursor.hasNext()) {
             Room room = cursor.next();

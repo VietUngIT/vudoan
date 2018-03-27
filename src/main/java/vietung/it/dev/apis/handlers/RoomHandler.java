@@ -30,7 +30,7 @@ public class RoomHandler extends BaseApiHandler {
             }if(type.equals("delete")){
                 String idroom = request.getParam("idroom");
                 return deleteRoom(idroom,service);
-            }if(type.equals("getbyroom")){
+            }if(type.equals("room_getbyiduser")){
                 String iduser = request.getParam("iduser");
                 String ofset = request.getParam("ofset");
                 String strpage = request.getParam("page");
