@@ -13,12 +13,8 @@ public class HandBookResponse extends BaseResponse {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("e",getError());
         jsonObject.addProperty("msg",getMsg());
-        if(data!=null){
-            jsonObject.add("data",data);
-        }
-        if(datas!=null){
-            jsonObject.add("array",datas);
-        }
+        jsonObject.add("data",data);
+        jsonObject.add("array",datas);
         return jsonObject.toString();
     }
 }

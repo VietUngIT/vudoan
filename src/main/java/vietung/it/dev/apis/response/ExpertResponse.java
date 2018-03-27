@@ -13,12 +13,8 @@ public class ExpertResponse extends BaseResponse {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("e",getError());
         jsonObject.addProperty("msg",getMsg());
-        if(data!=null){
-            jsonObject.add("data",data);
-        }
-        if(array!=null){
-            jsonObject.add("array",array);
-        }
+        jsonObject.add("data",data);
+        jsonObject.add("array",array);
         return jsonObject.toString();
     }
 }

@@ -12,9 +12,7 @@ public class UserResponse extends BaseResponse {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("e",getError());
         jsonObject.addProperty("msg",getMsg());
-        if(users!=null){
-            jsonObject.add("data",users.toJson());
-        }
+        jsonObject.add("data",users!=null?users.toJson():null);
         return jsonObject.toString();
     }
 }

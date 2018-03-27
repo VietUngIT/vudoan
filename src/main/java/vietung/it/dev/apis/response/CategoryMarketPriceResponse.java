@@ -13,12 +13,8 @@ public class CategoryMarketPriceResponse extends BaseResponse {
         JsonObject object = new JsonObject();
         object.addProperty("e",getError());
         object.addProperty("msg",getMsg());
-        if(data!=null){
-            object.add("data",data);
-        }
-        if(array!=null){
-            object.add("array",array);
-        }
+        object.add("data",data);
+        object.add("array",array);
         return object.toString();
     }
 }
