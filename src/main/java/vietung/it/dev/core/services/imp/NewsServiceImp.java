@@ -143,7 +143,7 @@ public class NewsServiceImp implements NewsService {
         if(cursor.hasNext()){
             News news = cursor.next();
             List<String> userLike = news.getUserLike();
-            if(userLike.contains(phone)){
+            if(userLike!=null && userLike.contains(phone)){
                 news.setIsLiked(true);
             }else{
                 news.setIsLiked(false);
@@ -172,16 +172,10 @@ public class NewsServiceImp implements NewsService {
         MongoCollection collection = jongo.getCollection(News.class.getSimpleName());
         builder.append("{$and: [{idCateNews: #}]}");
         cursor = collection.find(builder.toString(),idcate).sort("{timeCreate:-1}").skip(page*ofset).limit(ofset).as(News.class);
-//        MongoCollection collectionCate = jongo.getCollection(Variable.MG_CATEGORY_NEWS);
-//        MongoCursor<Category> cursorCate = collectionCate.find("{_id:#}", new ObjectId(idcate)).as(Category.class);
-//        String nameType = "";
-//        if(cursorCate.hasNext()){
-//            nameType = cursorCate.next().getName();
-//        }
         JsonArray jsonArray = new JsonArray();
+        response.setTotal(cursor.count());
         while(cursor.hasNext()){
             News news = cursor.next();
-//            news.setNameCateNews(nameType);
             jsonArray.add(news.toJson());
         }
         response.setDatas(jsonArray);
@@ -418,11 +412,23 @@ public class NewsServiceImp implements NewsService {
         MongoCursor<News> cursor = collection.find(builder.toString(),new ObjectId(idNews)).limit(1).as(News.class);
         if(cursor.hasNext()){
             News news = cursor.next();
-            JsonArray array = Utils.toJsonArray(tags);
+
             List<String> lstTag = new ArrayList<>();
-            for (int i=0;i<array.size();i++){
-                lstTag.add(array.get(i).getAsString());
+            if(tags.indexOf("[")==-1){
+                String temp[]=tags.split(",");
+                for(int i=0;i<temp.length;i++){
+                    lstTag.add(temp[i]);
+                }
+            }else{
+                String temp = tags.replace("List ","");
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append(temp);
+                JsonArray array = Utils.toJsonArray(stringBuilder.toString());
+                for (int i=0;i<array.size();i++){
+                    lstTag.add(array.get(i).getAsString());
+                }
             }
+
             collection.update("{_id:#}", new ObjectId(idNews)).with("{$set:{tags:#}}",lstTag);
             news.setTags(lstTag);
 

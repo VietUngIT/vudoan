@@ -54,8 +54,8 @@ public class AdminAgriTechHandler extends BaseApiHandler {
     }
 
     private BaseResponse editTagsNewsAgriTechHandler(String id, String tags, AgriTechService service) {
-        if(id!=null){
-            if(tags==null){
+        if(id!=null && !id.trim().equals("") ){
+            if(tags==null || tags.trim().equals("") ){
                 tags="[]";
             }
             try {
@@ -78,7 +78,7 @@ public class AdminAgriTechHandler extends BaseApiHandler {
     }
 
     private BaseResponse editNewsAgriTechHandler(String id, String title, String author, String idSubCate, String content, AgriTechService service) {
-        if(id!=null){
+        if(id!=null && !id.trim().equals("")){
             try {
                 return service.editNewsAgriTech(id,title,author,idSubCate,content);
             } catch (Exception e) {
@@ -92,7 +92,7 @@ public class AdminAgriTechHandler extends BaseApiHandler {
 
     private BaseResponse createNewsAgriTechHandler(String title, String author, String image, String tags, String idSubCate, String content, AgriTechService service) throws Exception {
         if(title!=null && content!=null && idSubCate!=null){
-            if(tags==null){
+            if(tags==null || tags.trim().equals("")){
                 tags="[]";
             }
             return service.createNewsAgriTech(title,author,image,tags,idSubCate,content);

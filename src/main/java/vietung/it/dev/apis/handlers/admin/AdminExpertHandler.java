@@ -20,19 +20,21 @@ public class AdminExpertHandler extends BaseApiHandler{
                 String desc = request.getFormAttribute("desc");
                 String email = request.getFormAttribute("email");
                 String address = request.getFormAttribute("address");
-                String location = request.getFormAttribute("location");
+                String strlat = request.getFormAttribute("lat");
+                String strlon = request.getFormAttribute("long");
                 String field = request.getFormAttribute("field");
                 String tags = request.getFormAttribute("tags");
                 String degree = request.getFormAttribute("degree");
-                return addExpertHandle(name,phone,desc,email,address,location,field,tags,degree,service);
+                return addExpertHandle(name,phone,desc,email,address,strlat,strlon,field,tags,degree,service);
             }else if(type.equals("edit")){
                 String phone = request.getFormAttribute("phone");
                 String desc = request.getFormAttribute("desc");
-                String location = request.getFormAttribute("location");
+                String strlat = request.getFormAttribute("lat");
+                String strlon = request.getFormAttribute("long");
                 String degree = request.getFormAttribute("degree");
                 String field = request.getFormAttribute("field");
                 String tags = request.getFormAttribute("tags");
-                return editExpertHandle(phone,desc,location,degree,tags,field,service);
+                return editExpertHandle(phone,desc,strlat,strlon,degree,tags,field,service);
             } else if(type.equals("del")){
                 String phone = request.getFormAttribute("id");
                 return delExpertHandle(phone,service);
@@ -44,9 +46,15 @@ public class AdminExpertHandler extends BaseApiHandler{
         }
     }
 
-    private BaseResponse editExpertHandle(String phone, String desc, String location, String degree,String tags,String field, ExpertService service) throws Exception {
+    private BaseResponse editExpertHandle(String phone, String desc, String strLat, String strLon, String degree,String tags,String field, ExpertService service) throws Exception {
         if(phone!=null){
-            return service.editExpert(phone,desc,location,degree,tags,field);
+            try{
+                Double lat = Double.parseDouble(strLat);
+                Double lon = Double.parseDouble(strLon);
+                return service.editExpert(phone,desc,lat,lon,degree,tags,field);
+            }catch (Exception e){
+                return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu."+e.getMessage());
+            }
         }else{
             return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }
@@ -61,15 +69,21 @@ public class AdminExpertHandler extends BaseApiHandler{
     }
 
 
-    private BaseResponse addExpertHandle(String name, String phone, String desc, String email, String address, String location, String field, String tags, String degree, ExpertService service) throws Exception {
-        if(name!=null && phone!=null && desc!=null && email!=null && address!=null && location!=null && field!=null){
+    private BaseResponse addExpertHandle(String name, String phone, String desc, String email, String address, String strLat, String strLon, String field, String tags, String degree, ExpertService service) throws Exception {
+        if(name!=null && phone!=null && desc!=null && email!=null && address!=null && strLat!=null && strLon!=null && field!=null){
             if(tags==null){
                 tags="[]";
             }
             if(degree==null){
                 degree="[]";
             }
-            return service.addExpert(name,phone,desc,email,address,location,field,tags,degree);
+            try{
+                Double lat = Double.parseDouble(strLat);
+                Double lon = Double.parseDouble(strLon);
+                return service.addExpert(name,phone,desc,email,address,lat,lon,field,tags,degree);
+            }catch (Exception e){
+                return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu."+e.getMessage());
+            }
         }else {
             return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }

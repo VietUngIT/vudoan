@@ -15,12 +15,8 @@ public class TypeNewsResponse extends BaseResponse {
         JsonObject object = new JsonObject();
         object.addProperty("e",getError());
         object.addProperty("msg",getMsg());
-        if(typeNews!=null){
-            object.add("data", typeNews.toJson());
-        }
-        if(arrTypeNews!=null){
-            object.add("array",arrTypeNews);
-        }
+        object.add("data", typeNews.toJson());
+        object.add("array",arrTypeNews);
         return object.toString();
     }
 }

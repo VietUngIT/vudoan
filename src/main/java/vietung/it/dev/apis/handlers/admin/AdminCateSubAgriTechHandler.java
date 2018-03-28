@@ -17,7 +17,7 @@ public class AdminCateSubAgriTechHandler extends BaseApiHandler {
             if(type.equals("add")){
                 String idCate = request.getParam("idcate");
                 String strName = request.getParam("name");
-                if(strName!=null){
+                if(strName!=null && idCate!=null && !strName.trim().equals("") && !idCate.trim().equals("") ){
                     return service.addSubCategoryAgritech(idCate,strName);
                 }
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");

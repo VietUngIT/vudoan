@@ -14,12 +14,8 @@ public class FieldOfExpertResponse extends BaseResponse {
         JsonObject object = new JsonObject();
         object.addProperty("e",getError());
         object.addProperty("msg",getMsg());
-        if(fieldOfExpert!=null){
-            object.add("data",fieldOfExpert.toJson());
-        }
-        if(listFieldOfExpert!=null){
-            object.add("array",listFieldOfExpert);
-        }
+        object.add("data",fieldOfExpert.toJson());
+        object.add("array",listFieldOfExpert);
         return object.toString();
     }
 }
