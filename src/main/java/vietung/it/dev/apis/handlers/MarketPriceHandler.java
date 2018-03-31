@@ -18,7 +18,9 @@ public class MarketPriceHandler extends BaseApiHandler {
                 return getAllCateMarketPriceHandler(strOfset,service);
             }else if(type.equals("getbycate")){
                 String idCate = request.getParam("idcate");
-                return getMarketPriceByCateHandler(idCate,service);
+                String strOfset = request.getParam("ofset");
+                String strPage = request.getParam("page");
+                return getMarketPriceByCateHandler(idCate,strOfset,strPage,service);
             }else {
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
             }
@@ -41,9 +43,16 @@ public class MarketPriceHandler extends BaseApiHandler {
         }
     }
 
-    private BaseResponse getMarketPriceByCateHandler(String idCate, MarketPriceService service) throws Exception{
-        if(idCate!=null){
-            return service.getMarketPriceByCate(idCate);
+    private BaseResponse getMarketPriceByCateHandler(String idCate,String strOfset,String strPage, MarketPriceService service) throws Exception{
+        if(idCate!=null && strOfset!=null && strPage!=null){
+            try{
+                int ofset = Integer.parseInt(strOfset);
+                int page = Integer.parseInt(strPage);
+                return service.getMarketPriceByCate(idCate,ofset,page);
+            }catch (Exception e){
+                e.printStackTrace();
+                return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");
+            }
         }else {
             return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }

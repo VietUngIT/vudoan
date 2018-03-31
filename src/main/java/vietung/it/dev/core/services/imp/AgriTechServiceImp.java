@@ -23,6 +23,29 @@ import java.util.List;
 
 public class AgriTechServiceImp implements AgriTechService {
     @Override
+    public int commentNews(String idNews, Boolean isCmt) {
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(AgriTech.class.getSimpleName());
+        StringBuilder builder = new StringBuilder();
+        builder.append("{_id:#}");
+        MongoCursor<AgriTech> cursor = collection.find(builder.toString(), new ObjectId(idNews)).as(AgriTech.class);
+        if(cursor.hasNext()){
+            AgriTech agriTech = cursor.next();
+            int cmt = agriTech.getNumComment()>=0?agriTech.getNumComment():0;
+            if(isCmt){
+                agriTech.setNumComment(cmt+1);
+            }else {
+                agriTech.setNumComment(cmt-1);
+            }
+
+            collection.update("{_id:#}", new ObjectId(idNews)).with("{$set:{numComment:#}}",agriTech.getNumComment());
+            return agriTech.getNumComment();
+        }
+        return 0;
+    }
+
+    @Override
     public AgriTechResponse deleteNewsAgriTech(String id) throws Exception{
         AgriTechResponse response = new AgriTechResponse();
         if (!ObjectId.isValid(id)) {
@@ -253,6 +276,7 @@ public class AgriTechServiceImp implements AgriTechService {
         builder.append("{$and: [{idSubCate: #}]}");
         cursor = collection.find(builder.toString(),idsubcate).sort("{timeCreate:-1}").skip(page*ofs).limit(ofs).as(AgriTech.class);
         JsonArray jsonArray = new JsonArray();
+        response.setTotal(cursor.count());
         while(cursor.hasNext()){
             AgriTech agriTech = cursor.next();
             jsonArray.add(agriTech.toJson());

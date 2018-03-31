@@ -33,7 +33,7 @@ public class CommentHandler extends BaseApiHandler {
                 return editCommentNewsHandler(idCmnt,phone,content,tCmt,service);
             }else if(type.equals("getbynews")){
                 String idNews = request.getFormAttribute("idnews");
-                String offset = request.getFormAttribute("off");
+                String offset = request.getFormAttribute("ofset");
                 String strPage = request.getFormAttribute("page");
                 String tCmt = request.getFormAttribute("typecmt");
                 return getCommentbyNewsHandler(idNews,offset,strPage,tCmt,service);
