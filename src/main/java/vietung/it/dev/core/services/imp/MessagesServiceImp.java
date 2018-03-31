@@ -36,13 +36,17 @@ public class MessagesServiceImp implements MessagesService {
         MongoCursor<Messages> cursor = null;
         MongoCollection collection = jongo.getCollection(Messages.class.getSimpleName());
         builder.append("{$and: [{idRoom: #}]}");
-        cursor = collection.find(builder.toString(),idroom).sort("{create_at:-1}").skip(page*ofset).limit(ofset).as(Messages.class);
+        cursor = collection.find(builder.toString(),idroom).sort("{create_at:-1}").skip(page).limit(ofset).as(Messages.class);
         JsonArray jsonArray = new JsonArray();
         while(cursor.hasNext()){
             Messages messages = cursor.next();
             jsonArray.add(messages.toJson());
         }
-        response.setDatas(jsonArray);
+        JsonArray jsonArray1 = new JsonArray();
+        for (int i = 0 ; i < jsonArray.size() ; i ++){
+            jsonArray1.add(jsonArray.get(jsonArray.size()-1-i));
+        }
+        response.setDatas(jsonArray1);
 
         return response;
     }

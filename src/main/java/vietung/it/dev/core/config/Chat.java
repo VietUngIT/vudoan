@@ -5,6 +5,9 @@ import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.DataListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import vietung.it.dev.apis.launcher.APILauncher;
 import vietung.it.dev.apis.response.MessagesResponse;
 import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.models.Messages;
@@ -35,11 +38,14 @@ public class Chat {
                         System.out.println(urlImage);
                         data.setMessage(urlImage);
                         MongoPool.log(Messages.class.getSimpleName(),data.toDocument());
+                        response.setData(data);
                     } catch (IOException e) {
                         response.setError(ErrorCode.UPLOAD_IMAGE_ERROR);
                     }
+                } else {
+                    MongoPool.log(Messages.class.getSimpleName(),data.toDocument());
+                    response.setData(data);
                 }
-                response.setData(data.toJson());
                 server.getBroadcastOperations().sendEvent("chatevent", response);
             }
         });

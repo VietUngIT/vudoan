@@ -1,6 +1,7 @@
 package vietung.it.dev.core.services.imp;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.mongodb.DB;
 import org.bson.types.ObjectId;
 import org.jongo.Jongo;
@@ -115,10 +116,26 @@ public class RoomServiceImp implements RoomService {
         MongoCursor<Room> cursor = null;
         MongoCollection collection = jongo.getCollection(Room.class.getSimpleName());
         builder.append("{$and: [{user: #}]}");
-        cursor = collection.find(builder.toString(),iduser).sort("{create_at:-1}").skip(page * ofset).limit(ofset).as(Room.class);
+        cursor = collection.find(builder.toString(),iduser).sort("{create_at:-1}").skip(page).limit(ofset).as(Room.class);
         JsonArray jsonArray = new JsonArray();
         while (cursor.hasNext()) {
             Room room = cursor.next();
+            List<String> user = room.getUser();
+            JsonArray users = new JsonArray();
+            for(int i =0 ; i < user.size() ; i ++){
+                MongoCollection collectionIdUser = jongo.getCollection(Users.class.getSimpleName());
+                MongoCursor<Users> cursorUsers = collectionIdUser.find("{_id:#}", user.get(i)).as(Users.class);
+                while (cursorUsers.hasNext()) {
+                    users.add( cursorUsers.next().toJson());
+                }
+            }
+            room.setUsers(users);
+            MongoCollection collectionMessages = jongo.getCollection(Messages.class.getSimpleName());
+            MongoCursor<Messages> cursorMessages = collectionMessages.find("{$and: [{idRoom: #}]}",room.get_id()).sort("{create_at:-1}").skip(0).limit(1).as(Messages.class);
+            while (cursorMessages.hasNext()) {
+                room.setMessages(cursorMessages.next().getMessage());
+                room.setTime( cursorMessages.next().getCreate_at());
+            }
             jsonArray.add(room.toJson());
         }
         response.setDatas(jsonArray);
