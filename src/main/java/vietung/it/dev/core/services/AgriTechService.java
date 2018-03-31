@@ -4,6 +4,7 @@ import vietung.it.dev.apis.response.AgriTechResponse;
 import vietung.it.dev.apis.response.BaseResponse;
 
 public interface AgriTechService {
+    int commentNews(String idNews, Boolean isCmt);
     AgriTechResponse deleteNewsAgriTech(String id) throws Exception;
 
     AgriTechResponse editTagsNewsAgriTech(String id, String tags) throws Exception;

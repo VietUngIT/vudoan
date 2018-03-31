@@ -172,6 +172,24 @@
       "isPublic":false,
       "roles":[],
       "method":"GET"
+    },{
+      "path":"/adminforumquestion",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminForumQuestionHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"POST"
+    },{
+      "path":"/forumquestion",
+      "handler":"vietung.it.dev.apis.handlers.ForumQuestionHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
+    },{
+      "path":"/forumanswer",
+      "handler":"vietung.it.dev.apis.handlers.ForumAnswerHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
     },
     {
       "path":"/type-news",

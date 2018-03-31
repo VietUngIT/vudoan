@@ -12,6 +12,7 @@ import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.consts.Variable;
 import vietung.it.dev.core.models.CommentsNews;
 import vietung.it.dev.core.models.Users;
+import vietung.it.dev.core.services.AgriTechService;
 import vietung.it.dev.core.services.CommentService;
 import vietung.it.dev.core.services.MarketInfoService;
 import vietung.it.dev.core.services.NewsService;
@@ -43,8 +44,8 @@ public class CommentServiceImp implements CommentService {
             service.commentNews(idNews,true);
             response.setData(commentsNews.toJson());
         }else if(collection == Variable.COMMENTS_AGRI_TECH){
-            MongoPool.log(Variable.MG_COMMENTS_AGRI_TECH,commentsNews.toDocument());//------------
-            NewsService service = new NewsServiceImp();
+            MongoPool.log(Variable.MG_COMMENTS_AGRI_TECH,commentsNews.toDocument());
+            AgriTechService service = new AgriTechServiceImp();
             service.commentNews(idNews,true);
             response.setData(commentsNews.toJson());
         }else if(collection == Variable.COMMENTS_MARKET_INFO){
@@ -64,6 +65,7 @@ public class CommentServiceImp implements CommentService {
         CommentResponse response = new CommentResponse();
         NewsService newsService = new NewsServiceImp();
         MarketInfoService marketInfoService = new MarketInfoServiceImp();
+        AgriTechService service = new AgriTechServiceImp();
         if (!ObjectId.isValid(idCmnt)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
             response.setMsg("Id không đúng.");
@@ -91,7 +93,7 @@ public class CommentServiceImp implements CommentService {
                     newsService.commentNews(commentsNews.getIdNews(),false);
                     mgcollection.remove(new ObjectId(idCmnt));
                 }else if(collection== Variable.COMMENTS_AGRI_TECH){
-                    newsService.commentNews(commentsNews.getIdNews(),false);//-----------
+                    service.commentNews(commentsNews.getIdNews(),false);
                     mgcollection.remove(new ObjectId(idCmnt));
                 }else if(collection== Variable.COMMENTS_MARKET_INFO){
                     marketInfoService.commentNews(commentsNews.getIdNews(),false);
@@ -138,8 +140,8 @@ public class CommentServiceImp implements CommentService {
         builder.append("{_id:#}");
         MongoCursor<CommentsNews> cursor = mgcollection.find(builder.toString(), new ObjectId(idCmnt)).as(CommentsNews.class);
         if(cursor.hasNext()){
-            CommentsNews commentsNews = new CommentsNews();
-            if(commentsNews.getPhone()==users.getPhone()){
+            CommentsNews commentsNews = cursor.next();
+            if(commentsNews.getPhone().equals(users.getPhone())){
                 mgcollection.update("{_id:#}", new ObjectId(idCmnt)).with("{$set:{content:#}}",content);
             }else {
                 response.setError(ErrorCode.NO_ROLE_DELETE);

@@ -50,6 +50,7 @@ public class MarketPriceServiceImp implements MarketPriceService {
         MarketPrice marketPrice = new MarketPrice();
         ObjectId _id = new ObjectId();
         marketPrice.set_id(_id.toHexString());
+        marketPrice.setIdCate(idCate);
         marketPrice.setName(name);
         marketPrice.setPrice(price);
         marketPrice.setUnit(unit);
@@ -106,7 +107,7 @@ public class MarketPriceServiceImp implements MarketPriceService {
     }
 
     @Override
-    public MarketPriceResponse getMarketPriceByCate(String idCate) throws Exception {
+    public MarketPriceResponse getMarketPriceByCate(String idCate, int ofset, int page) throws Exception {
         MarketPriceResponse response = new MarketPriceResponse();
         if (!ObjectId.isValid(idCate)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
@@ -116,7 +117,9 @@ public class MarketPriceServiceImp implements MarketPriceService {
         DB db = MongoPool.getDBJongo();
         Jongo jongo = new Jongo(db);
         MongoCollection collection = jongo.getCollection(MarketPrice.class.getSimpleName());
-        MongoCursor<MarketPrice> cursor = collection.find().as(MarketPrice.class);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("{$and: [{idCate: #}]}");
+        MongoCursor<MarketPrice> cursor = collection.find(stringBuilder.toString(),idCate).sort("{timeCreate:-1}").skip(page*ofset).limit(ofset).as(MarketPrice.class);
         JsonArray array = new JsonArray();
         while (cursor.hasNext()){
             array.add(cursor.next().toJson());

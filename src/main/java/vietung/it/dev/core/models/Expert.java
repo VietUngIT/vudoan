@@ -6,6 +6,7 @@ import lombok.Data;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -57,14 +58,25 @@ public class Expert extends MongoLog {
         object.addProperty("desc",desc);
         object.addProperty("email",email);
         object.addProperty("address",address);
-        object.addProperty("tags", tags.toString());
+        List<String> rTags = new ArrayList<>();
+        for (int i=0;i<tags.size();i++){
+            StringBuilder stringBuilder = new StringBuilder("\"");
+            stringBuilder.append(tags.get(i)).append("\"");
+            rTags.add(stringBuilder.toString());
+        }
+        object.addProperty("tags", rTags.toString());
         object.addProperty("numRate",numRate);
         object.addProperty("rate",rate);
-        object.addProperty("idFields",idFields.toString());
         if(nameFields!=null){
             object.add("arrayField",nameFields);
         }
-        object.addProperty("degree",degree.toString());
+        List<String> rDegree = new ArrayList<>();
+        for (int i=0;i<degree.size();i++){
+            StringBuilder stringBuilder = new StringBuilder("\"");
+            stringBuilder.append(degree.get(i)).append("\"");
+            rDegree.add(stringBuilder.toString());
+        }
+        object.addProperty("degree",rDegree.toString());
         object.addProperty("avatar",avatar);
         object.addProperty("isOnline",isOnline);
         return object;

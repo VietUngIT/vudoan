@@ -282,6 +282,7 @@ public class MarketInfoServiceImp implements MarketInfoService {
         builder.append("{$and: [{idCateNews: #}]}");
         cursor = collection.find(builder.toString(),idcate).sort("{timeCreate:-1}").skip(page*ofs).limit(ofs).as(MarketInfo.class);
         JsonArray jsonArray = new JsonArray();
+        response.setTotal(cursor.count());
         while(cursor.hasNext()){
             MarketInfo marketInfo = cursor.next();
             jsonArray.add(marketInfo.toJson());

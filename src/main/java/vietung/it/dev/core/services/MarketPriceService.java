@@ -9,7 +9,7 @@ public interface MarketPriceService {
 
     MarketPriceResponse getAllTypeMarketPrice(int ofset) throws Exception;
 
-    MarketPriceResponse getMarketPriceByCate(String idCate) throws Exception;
+    MarketPriceResponse getMarketPriceByCate(String idCate, int ofset, int page) throws Exception;
 
     MarketPriceResponse editMarketPrice(String id,String idCate, String name, String price, String place, String unit, String note) throws Exception;
 }
