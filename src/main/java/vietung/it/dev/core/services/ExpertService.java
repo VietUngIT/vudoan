@@ -23,4 +23,6 @@ public interface ExpertService {
     ExpertResponse getInfoExpert(String id) throws Exception;
 
     ExpertResponse getListExpertNearest(Double lat, Double lon, int numExpert, String field) throws Exception;
+
+    ExpertResponse editTagsExpert(String phone, String tags) throws Exception;
 }

@@ -256,7 +256,7 @@ public class NewsServiceImp implements NewsService {
             JsonArray array = Utils.toJsonArray(tags);
             List<String> lstTag = new ArrayList<>();
             for (int i=0;i<array.size();i++){
-                lstTag.add(array.get(i).getAsString());
+                lstTag.add(array.get(i).getAsString().toLowerCase());
             }
             News news = new News();
             ObjectId _id = new ObjectId();
@@ -408,7 +408,7 @@ public class NewsServiceImp implements NewsService {
             if(tags.indexOf("[")==-1){
                 String temp[]=tags.split(",");
                 for(int i=0;i<temp.length;i++){
-                    lstTag.add(temp[i]);
+                    lstTag.add(temp[i].toLowerCase());
                 }
             }else{
                 String temp = tags.replace("List ","");
@@ -416,7 +416,7 @@ public class NewsServiceImp implements NewsService {
                 stringBuilder.append(temp);
                 JsonArray array = Utils.toJsonArray(stringBuilder.toString());
                 for (int i=0;i<array.size();i++){
-                    lstTag.add(array.get(i).getAsString());
+                    lstTag.add(array.get(i).getAsString().toLowerCase());
                 }
             }
 

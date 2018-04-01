@@ -48,10 +48,10 @@ public class ExpertServiceImp implements ExpertService {
                 }
             }
             for (int i=0;i<arrayTags.size();i++){
-                lstTags.add(arrayTags.get(i).getAsString());
+                lstTags.add(arrayTags.get(i).getAsString().toLowerCase());
             }
             for (int i=0;i<arrayDegree.size();i++){
-                lstDegree.add(arrayDegree.get(i).getAsString());
+                lstDegree.add(arrayDegree.get(i).getAsString().toLowerCase());
             }
 
             Expert expert = new Expert();
@@ -124,7 +124,7 @@ public class ExpertServiceImp implements ExpertService {
                     JsonArray arrayDegree = Utils.toJsonArray(degree);
                     List<String> lstDegree = new ArrayList<>();
                     for (int i=0;i<arrayDegree.size();i++){
-                        lstDegree.add(arrayDegree.get(i).getAsString());
+                        lstDegree.add(arrayDegree.get(i).getAsString().toLowerCase());
                     }
                     collection.update("{phone:#}",phone).with("{$set:{degree:#}}",lstDegree);
                     expert.setDegree(lstDegree);
@@ -133,7 +133,7 @@ public class ExpertServiceImp implements ExpertService {
                     JsonArray arrayTags = Utils.toJsonArray(tags);
                     List<String> lsttags = new ArrayList<>();
                     for (int i=0;i<arrayTags.size();i++){
-                        lsttags.add(arrayTags.get(i).getAsString());
+                        lsttags.add(arrayTags.get(i).getAsString().toLowerCase());
                     }
                     collection.update("{phone:#}",phone).with("{$set:{tags:#}}",lsttags);
                     expert.setTags(lsttags);
@@ -321,6 +321,30 @@ public class ExpertServiceImp implements ExpertService {
             array.add(lstExpert.get(i).toJson());
         }
         response.setArray(array);
+        return response;
+    }
+
+    @Override
+    public ExpertResponse editTagsExpert(String phone, String tags) throws Exception {
+        ExpertResponse response = new ExpertResponse();
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(Expert.class.getSimpleName());
+        MongoCursor<Expert> cursor = collection.find("{phone:#}",phone).limit(1).as(Expert.class);
+        if(cursor.hasNext()){
+            Expert expert = cursor.next();
+            JsonArray arrayTags = Utils.toJsonArray(tags);
+            List<String> lsttags = new ArrayList<>();
+            for (int i=0;i<arrayTags.size();i++){
+                lsttags.add(arrayTags.get(i).getAsString().toLowerCase());
+            }
+            collection.update("{phone:#}",phone).with("{$set:{tags:#}}",lsttags);
+            expert.setTags(lsttags);
+            response.setData(expert.toJson());
+        }else{
+            response.setError(ErrorCode.USER_NOT_EXIST);
+            response.setMsg("Chuyên gia này không tồn tại.");
+        }
         return response;
     }
 

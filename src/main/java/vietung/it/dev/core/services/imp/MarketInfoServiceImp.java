@@ -80,7 +80,7 @@ public class MarketInfoServiceImp implements MarketInfoService {
             JsonArray array = Utils.toJsonArray(tags);
             List<String> lstTag = new ArrayList<>();
             for (int i=0;i<array.size();i++){
-                lstTag.add(array.get(i).getAsString());
+                lstTag.add(array.get(i).getAsString().toLowerCase());
             }
             collection.update("{_id:#}", new ObjectId(id)).with("{$set:{tags:#}}",lstTag);
             marketInfo.setTags(lstTag);
@@ -211,7 +211,7 @@ public class MarketInfoServiceImp implements MarketInfoService {
             JsonArray array = Utils.toJsonArray(tags);
             List<String> lstTag = new ArrayList<>();
             for (int i=0;i<array.size();i++){
-                lstTag.add(array.get(i).getAsString());
+                lstTag.add(array.get(i).getAsString().toLowerCase());
             }
             MarketInfo marketInfo = new MarketInfo();
             ObjectId _id = new ObjectId();
