@@ -131,10 +131,11 @@ public class RoomServiceImp implements RoomService {
             }
             room.setUsers(users);
             MongoCollection collectionMessages = jongo.getCollection(Messages.class.getSimpleName());
-            MongoCursor<Messages> cursorMessages = collectionMessages.find("{$and: [{idRoom: #}]}",room.get_id()).sort("{create_at:-1}").skip(0).limit(1).as(Messages.class);
+            MongoCursor<Messages> cursorMessages = collectionMessages.find("{idRoom: #}",room.get_id()).sort("{create_at:-1}").skip(0).limit(1).as(Messages.class);
             while (cursorMessages.hasNext()) {
-                room.setMessages(cursorMessages.next().getMessage());
-                room.setTime( cursorMessages.next().getCreate_at());
+                Messages messages = cursorMessages.next();
+                room.setMessages(messages.getMessage());
+                room.setTime( messages.getCreate_at());
             }
             jsonArray.add(room.toJson());
         }
