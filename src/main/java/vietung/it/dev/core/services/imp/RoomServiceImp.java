@@ -8,6 +8,7 @@ import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
 import vietung.it.dev.apis.response.RoomsResponse;
+import vietung.it.dev.core.config.Chat;
 import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.models.*;
@@ -61,7 +62,6 @@ public class RoomServiceImp implements RoomService {
                     return response;
                 }
             }
-
             Room room = new Room();
             ObjectId _id = new ObjectId();
             room.set_id(_id.toHexString());
@@ -73,7 +73,7 @@ public class RoomServiceImp implements RoomService {
             room.setUpdate_at(Calendar.getInstance().getTimeInMillis());
             MongoPool.log(Room.class.getSimpleName(), room.toDocument());
             response.setData(room.toJson());
-
+            Chat.addNamespace(room);
         } catch (Exception e) {
             e.printStackTrace();
         }
