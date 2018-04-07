@@ -45,6 +45,17 @@ public class ExpertHandler extends BaseApiHandler {
                 }else{
                     return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
                 }
+            }else if(type.equals("edittags")){
+                String phone = request.getParam("ph");
+                String tags = request.getParam("tags");
+                if(phone!=null){
+                    if(tags==null || tags.trim().equals("")){
+                        tags="[]";
+                    }
+                    return service.editTagsExpert(phone,tags);
+                }else{
+                    return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
+                }
             }else{
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
             }

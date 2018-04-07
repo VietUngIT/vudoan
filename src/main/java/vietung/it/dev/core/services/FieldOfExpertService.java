@@ -4,9 +4,9 @@ import vietung.it.dev.apis.response.CategoryResponse;
 import vietung.it.dev.apis.response.FieldOfExpertResponse;
 
 public interface FieldOfExpertService {
-    CategoryResponse getAllField() throws Exception;
-    CategoryResponse getFieldByID( String id) throws Exception;
-    CategoryResponse addFieldOfExpert(String nameField) throws Exception;
-    CategoryResponse editFieldOfExpert( String id, String nameField) throws Exception;
-    CategoryResponse deleteFieldOfExpert( String id) throws Exception;
+    FieldOfExpertResponse getAllField() throws Exception;
+    FieldOfExpertResponse getFieldByID( String id) throws Exception;
+    FieldOfExpertResponse addFieldOfExpert(String nameField, String tags) throws Exception;
+    FieldOfExpertResponse editFieldOfExpert( String id, String nameField, String tags) throws Exception;
+    FieldOfExpertResponse deleteFieldOfExpert( String id) throws Exception;
 }

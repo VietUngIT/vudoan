@@ -190,55 +190,6 @@
       "isPublic":false,
       "roles":[],
       "method":"GET"
-    },
-    {
-      "path":"/type-news",
-      "handler":"vietung.it.dev.apis.handlers.TypeNewsHandler",
-      "isPublic":true,
-      "roles":[],
-      "method":"GET"
-    },
-    {
-      "path":"/create-type-news",
-      "handler":"vietung.it.dev.apis.handlers.CreateTypeNewsHandler",
-      "isPublic":false,
-      "roles":[2,3],
-      "method":"POST"
-    },
-    {
-      "path":"/comment-news",
-      "handler":"vietung.it.dev.apis.handlers.CommentNewsNewsHandler",
-      "isPublic":false,
-      "roles":[],
-      "method":"POST"
-    },
-    {
-      "path":"/manager-handbook",
-      "handler":"vietung.it.dev.apis.handlers.ManagerHandBookHandler",
-      "isPublic":false,
-      "roles":[2,3],
-      "method":"POST"
-    },
-    {
-      "path":"/handbook",
-      "handler":"vietung.it.dev.apis.handlers.HandBookHandler",
-      "isPublic":true,
-      "roles":[],
-      "method":"GET"
-    },
-    {
-      "path":"/messages",
-      "handler":"vietung.it.dev.apis.handlers.MessagesHandler",
-      "isPublic":false,
-      "roles":[],
-      "method":"GET"
-    },
-    {
-      "path":"/room",
-      "handler":"vietung.it.dev.apis.handlers.RoomHandler",
-      "isPublic":false,
-      "roles":[],
-      "method":"GET"
     }
 
   ]

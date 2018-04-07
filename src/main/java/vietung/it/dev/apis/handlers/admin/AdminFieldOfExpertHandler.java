@@ -14,18 +14,26 @@ public class AdminFieldOfExpertHandler extends BaseApiHandler {
         FieldOfExpertService service = new FieldOfExpertServiceImp();
         String type = request.getParam("t");
         if(type!=null){
-            if(type.equals("ad")){
+            if(type.equals("add")){
                 String nameField = request.getParam("name");
+                String tags = request.getParam("tags");
                 if(nameField!=null){
-                    return service.addFieldOfExpert(nameField);
+                    if(tags==null || tags.trim().equals("")){
+                        tags="[]";
+                    }
+                    return service.addFieldOfExpert(nameField,tags);
                 }else {
                     return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
                 }
-            }else if(type.equals("ed")){
+            }else if(type.equals("edit")){
                 String id = request.getParam("id");
                 String nameField = request.getParam("name");
+                String tags = request.getParam("tags");
                 if(id!=null && nameField!=null){
-                    return service.editFieldOfExpert(id,nameField);
+                    if(tags==null || tags.trim().equals("")){
+                        tags="[]";
+                    }
+                    return service.editFieldOfExpert(id,nameField,tags);
                 }else {
                     return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
                 }

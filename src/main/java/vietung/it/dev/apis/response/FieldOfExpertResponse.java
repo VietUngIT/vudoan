@@ -7,15 +7,15 @@ import vietung.it.dev.core.models.FieldOfExpert;
 
 @Data
 public class FieldOfExpertResponse extends BaseResponse {
-    private FieldOfExpert fieldOfExpert;
-    private JsonArray listFieldOfExpert;
+    private JsonObject data;
+    private JsonArray array;
     @Override
     public String toJonString() {
         JsonObject object = new JsonObject();
         object.addProperty("e",getError());
         object.addProperty("msg",getMsg());
-        object.add("data",fieldOfExpert.toJson());
-        object.add("array",listFieldOfExpert);
+        object.add("data",data);
+        object.add("array",array);
         return object.toString();
     }
 }
