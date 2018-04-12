@@ -24,7 +24,7 @@ import java.util.List;
 
 public class ExpertServiceImp implements ExpertService {
     @Override
-    public ExpertResponse addExpert(String name, String phone, String desc, String email, String address, Double lat,Double lon, String field, String tags, String degree) throws Exception {
+    public ExpertResponse addExpert(String name, String phone, String desc, String email, String address,String idParentField, Double lat,Double lon, String field, String tags, String degree) throws Exception {
         ExpertResponse response = new ExpertResponse();
         UserResponse userResponse = new UserResponse();
         UserService service = new UserServiceImp();
@@ -34,6 +34,11 @@ public class ExpertServiceImp implements ExpertService {
         if(arrayField.size()<=0){
             response.setError(ErrorCode.INVALID_PARAMS);
             response.setMsg("Phải thêm lĩnh vực làm iệc cho chuyên gia");
+            return response;
+        }
+        if (!ObjectId.isValid(idParentField)) {
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("Id field không đúng.");
             return response;
         }
         userResponse = service.register(name,phone,"123456",1);
@@ -62,6 +67,7 @@ public class ExpertServiceImp implements ExpertService {
             expert.setDesc(desc);
             expert.setEmail(email);
             expert.setAddress(address);
+            expert.setIdParentField(idParentField);
             expert.setLat(lat);
             expert.setLon(lon);
             expert.setIdFields(lstIdField);
@@ -101,8 +107,13 @@ public class ExpertServiceImp implements ExpertService {
     }
 
     @Override
-    public ExpertResponse editExpert(String phone, String desc, Double lat,Double lon, String degree, String tags,String field) throws Exception {
+    public ExpertResponse editExpert(String phone, String desc, Double lat,Double lon, String email, String idParentField) throws Exception {
         ExpertResponse response = new ExpertResponse();
+        if (!ObjectId.isValid(idParentField)) {
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("Id không đúng.");
+            return response;
+        }
         DB db = MongoPool.getDBJongo();
         Jongo jongo = new Jongo(db);
         MongoCollection collection = jongo.getCollection(Expert.class.getSimpleName());
@@ -120,36 +131,13 @@ public class ExpertServiceImp implements ExpertService {
                     expert.setLat(lat);
                     expert.setLon(lon);
                 }
-                if(degree!=null){
-                    JsonArray arrayDegree = Utils.toJsonArray(degree);
-                    List<String> lstDegree = new ArrayList<>();
-                    for (int i=0;i<arrayDegree.size();i++){
-                        lstDegree.add(arrayDegree.get(i).getAsString().toLowerCase());
-                    }
-                    collection.update("{phone:#}",phone).with("{$set:{degree:#}}",lstDegree);
-                    expert.setDegree(lstDegree);
+                if(lat!=null && lon!=null){
+                    collection.update("{phone:#}",phone).with("{$set:{email:#}}",email);
+                    expert.setLat(lat);
+                    expert.setLon(lon);
                 }
-                if(tags!=null){
-                    JsonArray arrayTags = Utils.toJsonArray(tags);
-                    List<String> lsttags = new ArrayList<>();
-                    for (int i=0;i<arrayTags.size();i++){
-                        lsttags.add(arrayTags.get(i).getAsString().toLowerCase());
-                    }
-                    collection.update("{phone:#}",phone).with("{$set:{tags:#}}",lsttags);
-                    expert.setTags(lsttags);
-                }
-                if(field!=null){
-                    JsonArray arrayField = Utils.toJsonArray(field);
-                    List<String> lstField = new ArrayList<>();
-                    for (int i=0;i<arrayField.size();i++){
-                        String idField = arrayField.get(i).getAsString();
-                        if (ObjectId.isValid(idField)) {
-                            lstField.add(idField);
-                        }
-                    }
-                    collection.update("{phone:#}",phone).with("{$set:{idFields:#}}",lstField);
-                    expert.setIdFields(lstField);
-                }
+                collection.update("{phone:#}",phone).with("{$set:{idParentField:#}}",idParentField);
+                expert.setIdParentField(idParentField);
                 response.setData(expert.toJson());
             }else {
                 response.setError(ErrorCode.USER_NOT_EXIST);
@@ -164,88 +152,6 @@ public class ExpertServiceImp implements ExpertService {
     }
 
     @Override
-    public ExpertResponse editnameExpert(String phone, String nName) throws Exception {
-        ExpertResponse response = new ExpertResponse();
-        UserService service = new UserServiceImp();
-        DB db = MongoPool.getDBJongo();
-        Jongo jongo = new Jongo(db);
-        MongoCollection collection = jongo.getCollection(Expert.class.getSimpleName());
-        MongoCursor<Expert> cursor = collection.find("{phone:#}",phone).limit(1).as(Expert.class);
-        if(cursor.hasNext()){
-            Expert expert = cursor.next();
-            collection.update("{phone:#}",phone).with("{$set:{name:#}}",nName);
-            expert.setName(nName);
-            service.changeName(phone,nName);
-            response.setData(expert.toJson());
-        }else{
-            response.setError(ErrorCode.USER_NOT_EXIST);
-            response.setMsg("Chuyên gia này không tồn tại.");
-        }
-        return response;
-    }
-
-    @Override
-    public ExpertResponse editPhoneExpert(String phone, String nPhone) throws Exception {
-        ExpertResponse response = new ExpertResponse();
-        UserService service = new UserServiceImp();
-        DB db = MongoPool.getDBJongo();
-        Jongo jongo = new Jongo(db);
-        MongoCollection collection = jongo.getCollection(Expert.class.getSimpleName());
-        MongoCursor<Expert> cursor = collection.find("{phone:#}",phone).limit(1).as(Expert.class);
-        if(cursor.hasNext()){
-            Expert expert = cursor.next();
-            collection.update("{phone:#}",phone).with("{$set:{phone:#}}",nPhone);
-            expert.setPhone(nPhone);
-            service.changePhone(phone,nPhone);
-            response.setData(expert.toJson());
-        }else{
-            response.setError(ErrorCode.USER_NOT_EXIST);
-            response.setMsg("Chuyên gia này không tồn tại.");
-        }
-        return response;
-    }
-
-    @Override
-    public ExpertResponse editEmailExpert(String phone, String email) throws Exception {
-        ExpertResponse response = new ExpertResponse();
-        DB db = MongoPool.getDBJongo();
-        Jongo jongo = new Jongo(db);
-        MongoCollection collection = jongo.getCollection(Expert.class.getSimpleName());
-        MongoCursor<Expert> cursor = collection.find("{phone:#}",phone).limit(1).as(Expert.class);
-        if(cursor.hasNext()){
-            Expert expert = cursor.next();
-            collection.update("{phone:#}",phone).with("{$set:{email:#}}",email);
-            expert.setEmail(email);
-            response.setData(expert.toJson());
-        }else{
-            response.setError(ErrorCode.USER_NOT_EXIST);
-            response.setMsg("Chuyên gia này không tồn tại.");
-        }
-        return response;
-    }
-
-    @Override
-    public ExpertResponse editAddressExpert(String phone, String address) throws Exception {
-        ExpertResponse response = new ExpertResponse();
-        UserService service = new UserServiceImp();
-        DB db = MongoPool.getDBJongo();
-        Jongo jongo = new Jongo(db);
-        MongoCollection collection = jongo.getCollection(Expert.class.getSimpleName());
-        MongoCursor<Expert> cursor = collection.find("{phone:#}",phone).limit(1).as(Expert.class);
-        if(cursor.hasNext()){
-            Expert expert = cursor.next();
-            collection.update("{phone:#}",phone).with("{$set:{address:#}}",address);
-            expert.setAddress(address);
-            service.changeAddress(phone,address);
-            response.setData(expert.toJson());
-        }else{
-            response.setError(ErrorCode.USER_NOT_EXIST);
-            response.setMsg("Chuyên gia này không tồn tại.");
-        }
-        return response;
-    }
-
-    @Override
     public ExpertResponse updateStatusOnlineExpert(Boolean isOnline, String id) throws Exception {
         ExpertResponse response = new ExpertResponse();
         if (!ObjectId.isValid(id)) {
@@ -253,6 +159,7 @@ public class ExpertServiceImp implements ExpertService {
             response.setMsg("Id không đúng.");
             return response;
         }
+
         DB db = MongoPool.getDBJongo();
         Jongo jongo = new Jongo(db);
         MongoCollection collection = jongo.getCollection(Expert.class.getSimpleName());
@@ -293,9 +200,9 @@ public class ExpertServiceImp implements ExpertService {
     }
 
     @Override
-    public ExpertResponse getListExpertNearest(Double lat, Double lon, int numExpert, String field) throws Exception {
+    public ExpertResponse getListExpertNearest(Double lat, Double lon, int numExpert, String idparentfieldExpert) throws Exception {
         ExpertResponse response = new ExpertResponse();
-        if (!ObjectId.isValid(field)) {
+        if (!ObjectId.isValid(idparentfieldExpert)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
             response.setMsg("Id không đúng.");
             return response;
@@ -304,8 +211,9 @@ public class ExpertServiceImp implements ExpertService {
         Jongo jongo = new Jongo(db);
         MongoCollection collection = jongo.getCollection(Expert.class.getSimpleName());
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("{ idFields: { $elemMatch: { $eq:# } } }");
-        MongoCursor<Expert> cursor = collection.find(stringBuilder.toString(),field).as(Expert.class);
+//        stringBuilder.append("{ idFields: { $elemMatch: { $eq:# } } }");
+        stringBuilder.append("{ idParentField: # }");
+        MongoCursor<Expert> cursor = collection.find(stringBuilder.toString(),idparentfieldExpert).as(Expert.class);
         List<Expert> lstExpert = new ArrayList<>();
         while(cursor.hasNext()){
             Expert expert = cursor.next();
@@ -340,6 +248,77 @@ public class ExpertServiceImp implements ExpertService {
             }
             collection.update("{phone:#}",phone).with("{$set:{tags:#}}",lsttags);
             expert.setTags(lsttags);
+            response.setData(expert.toJson());
+        }else{
+            response.setError(ErrorCode.USER_NOT_EXIST);
+            response.setMsg("Chuyên gia này không tồn tại.");
+        }
+        return response;
+    }
+
+    @Override
+    public ExpertResponse editDegreeExpert(String phone, String degree) throws Exception {
+        ExpertResponse response = new ExpertResponse();
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(Expert.class.getSimpleName());
+        MongoCursor<Expert> cursor = collection.find("{phone:#}",phone).limit(1).as(Expert.class);
+        if(cursor.hasNext()){
+            Expert expert = cursor.next();
+            JsonArray arrayTags = Utils.toJsonArray(degree);
+            List<String> lstdegree = new ArrayList<>();
+            for (int i=0;i<arrayTags.size();i++){
+                lstdegree.add(arrayTags.get(i).getAsString().toLowerCase());
+            }
+            collection.update("{phone:#}",phone).with("{$set:{degree:#}}",lstdegree);
+            expert.setDegree(lstdegree);
+            response.setData(expert.toJson());
+        }else{
+            response.setError(ErrorCode.USER_NOT_EXIST);
+            response.setMsg("Chuyên gia này không tồn tại.");
+        }
+        return response;
+    }
+
+    @Override
+    public ExpertResponse editFieldExpert(String phone, String idfield) throws Exception {
+        ExpertResponse response = new ExpertResponse();
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(Expert.class.getSimpleName());
+        MongoCursor<Expert> cursor = collection.find("{phone:#}",phone).limit(1).as(Expert.class);
+        if(cursor.hasNext()){
+            Expert expert = cursor.next();
+            JsonArray arrayTags = Utils.toJsonArray(idfield);
+            List<String> lstIdField = new ArrayList<>();
+            for (int i=0;i<arrayTags.size();i++){
+                lstIdField.add(arrayTags.get(i).getAsString().toLowerCase());
+            }
+            collection.update("{phone:#}",phone).with("{$set:{idFields:#}}",lstIdField);
+            expert.setIdFields(lstIdField);
+            response.setData(expert.toJson());
+        }else{
+            response.setError(ErrorCode.USER_NOT_EXIST);
+            response.setMsg("Chuyên gia này không tồn tại.");
+        }
+        return response;
+    }
+
+    @Override
+    public ExpertResponse rateExpert(String phone, int rate) throws Exception {
+        ExpertResponse response = new ExpertResponse();
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(Expert.class.getSimpleName());
+        MongoCursor<Expert> cursor = collection.find("{phone:#}",phone).limit(1).as(Expert.class);
+        if(cursor.hasNext()){
+            Expert expert = cursor.next();
+            int numRate = expert.getNumRate();
+            float rateOld = expert.getRate();
+            float newRate = (rateOld*numRate+rate)/(numRate+1);
+            collection.update("{phone:#}",phone).with("{$set:{numRate:#,rate:#}}",(++numRate),newRate);
+            expert.setNumRate(numRate);
+            expert.setRate(rate);
             response.setData(expert.toJson());
         }else{
             response.setError(ErrorCode.USER_NOT_EXIST);

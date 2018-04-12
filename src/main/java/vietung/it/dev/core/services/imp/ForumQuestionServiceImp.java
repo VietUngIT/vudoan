@@ -173,4 +173,41 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
 
         return response;
     }
+
+    @Override
+    public ForumQuestionResponse getQuestionByID(String id, String phone) throws Exception {
+        ForumQuestionResponse response = new ForumQuestionResponse();
+        if (!ObjectId.isValid(id)) {
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("Id không đúng.");
+            return response;
+        }
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        StringBuilder builder = new StringBuilder();
+        MongoCursor<ForumQuestion> cursor = null;
+        MongoCollection collection = jongo.getCollection(ForumQuestion.class.getSimpleName());
+        builder.append("{$and: [{_id: #}]}");
+        cursor = collection.find(builder.toString(),new ObjectId(id)).limit(1).as(ForumQuestion.class);
+        if(cursor.hasNext()){
+            ForumQuestion forumQuestion = cursor.next();
+            Users users = Utils.getUserByPhone(forumQuestion.getPhone());
+            if(users!=null){
+                forumQuestion.setAvatar(users.getAvatar());
+                forumQuestion.setNameUser(users.getName());
+            }
+            List<String> userLike = forumQuestion.getUserLike();
+            if(userLike!=null && userLike.contains(phone)){
+                forumQuestion.setIsLiked(true);
+            }else{
+                forumQuestion.setIsLiked(false);
+            }
+            response.setData(forumQuestion.toJson());
+        }else{
+            response.setError(ErrorCode.ID_NOT_EXIST);
+            response.setMsg("Id không tồn tại.");
+        }
+
+        return response;
+    }
 }

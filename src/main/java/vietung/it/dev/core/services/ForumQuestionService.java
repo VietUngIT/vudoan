@@ -13,4 +13,6 @@ public interface ForumQuestionService {
     int commentQuestion(String id, Boolean isCmt) throws Exception;
 
     ForumQuestionResponse getQuestionByField(int page, int ofset, String id, String phone) throws Exception;
+
+    ForumQuestionResponse getQuestionByID(String id, String phone) throws Exception;
 }

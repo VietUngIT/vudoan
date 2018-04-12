@@ -9,6 +9,7 @@ import vietung.it.dev.apis.response.UserResponse;
 import vietung.it.dev.core.config.MongoConfig;
 import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.consts.ErrorCode;
+import vietung.it.dev.core.models.Expert;
 import vietung.it.dev.core.models.Users;
 import vietung.it.dev.core.services.UploadService;
 import vietung.it.dev.core.services.UserService;
@@ -113,9 +114,17 @@ public class UserServiceImp implements UserService {
             DB db =  MongoPool.getDBJongo();
             Jongo jongo = new Jongo(db);
             MongoCollection collection = jongo.getCollection(Users.class.getSimpleName());
-            collection.update("{phone: #}",oldPhone).with("{$set: {phone: #}}",newPhone);
-            users.setPhone(newPhone);
-            response.setUsers(users);
+            MongoCursor<Users> cursor = collection.find("{phone:#}",oldPhone).limit(1).as(Users.class);
+            if(cursor.hasNext()){
+                MongoCollection collectionExpert = jongo.getCollection(Expert.class.getSimpleName());
+                collection.update("{phone: #}",oldPhone).with("{$set: {phone: #}}",newPhone);
+                collectionExpert.update("{phone: #}",oldPhone).with("{$set: {phone: #}}",newPhone);
+                users.setPhone(newPhone);
+                response.setUsers(users);
+            }else{
+                response.setError(ErrorCode.USER_NOT_EXIST);
+                response.setMsg("Người dùng này không tồn tại.");
+            }
         }else {
             response.setError(ErrorCode.USER_NOT_EXIST);
             response.setMsg("Số điện thoại này chưa được đăng ký.");
@@ -131,9 +140,17 @@ public class UserServiceImp implements UserService {
             DB db =  MongoPool.getDBJongo();
             Jongo jongo = new Jongo(db);
             MongoCollection collection = jongo.getCollection(Users.class.getSimpleName());
-            collection.update("{phone: #}",phone).with("{$set: {name: #}}",name);
-            users.setName(name);
-            response.setUsers(users);
+            MongoCursor<Users> cursor = collection.find("{phone:#}",phone).limit(1).as(Users.class);
+            if(cursor.hasNext()){
+                MongoCollection collectionExpert = jongo.getCollection(Expert.class.getSimpleName());
+                collection.update("{phone: #}",phone).with("{$set: {name: #}}",name);
+                collectionExpert.update("{phone: #}",phone).with("{$set: {name: #}}",name);
+                users.setName(name);
+                response.setUsers(users);
+            }else{
+                response.setError(ErrorCode.USER_NOT_EXIST);
+                response.setMsg("Người dùng này không tồn tại.");
+            }
         }else {
             response.setError(ErrorCode.USER_NOT_EXIST);
             response.setMsg("Số điện thoại này chưa được đăng ký.");
@@ -149,9 +166,17 @@ public class UserServiceImp implements UserService {
             DB db =  MongoPool.getDBJongo();
             Jongo jongo = new Jongo(db);
             MongoCollection collection = jongo.getCollection(Users.class.getSimpleName());
-            collection.update("{phone: #}",phone).with("{$set: {address: #}}",address);
-            users.setAddress(address);
-            response.setUsers(users);
+            MongoCursor<Users> cursor = collection.find("{phone:#}",phone).limit(1).as(Users.class);
+            if(cursor.hasNext()){
+                MongoCollection collectionExpert = jongo.getCollection(Expert.class.getSimpleName());
+                collection.update("{phone: #}",phone).with("{$set: {address: #}}",address);
+                collectionExpert.update("{phone: #}",phone).with("{$set: {address: #}}",address);
+                users.setAddress(address);
+                response.setUsers(users);
+            }else{
+                response.setError(ErrorCode.USER_NOT_EXIST);
+                response.setMsg("Người dùng này không tồn tại.");
+            }
         }else {
             response.setError(ErrorCode.USER_NOT_EXIST);
             response.setMsg("Số điện thoại này chưa được đăng ký.");

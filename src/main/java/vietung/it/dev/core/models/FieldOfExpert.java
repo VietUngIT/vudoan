@@ -3,6 +3,7 @@ package vietung.it.dev.core.models;
 import com.google.gson.JsonObject;
 import lombok.Data;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,13 +11,14 @@ import java.util.List;
 @Data
 public class FieldOfExpert extends MongoLog {
     private String _id;
-    private int idField;
+    private String idParentField;
     private String nameField;
     private List<String> tags = new ArrayList<>();
     @Override
     public Document toDocument() {
         Document document = new Document();
-        document.append("idField",idField);
+        document.append("_id",new ObjectId(_id));
+        document.append("idParentField",idParentField);
         document.append("nameField",nameField);
         document.append("tags",tags);
         return document;
@@ -24,7 +26,8 @@ public class FieldOfExpert extends MongoLog {
 
     public JsonObject toJson(){
         JsonObject object = new JsonObject();
-        object.addProperty("idField",idField);
+        object.addProperty("id",_id);
+        object.addProperty("idParentField",idParentField);
         object.addProperty("nameField",nameField);
         List<String> rTags = new ArrayList<>();
         for (int i=0;i<tags.size();i++){

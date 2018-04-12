@@ -35,9 +35,21 @@ public class ForumQuestionHandler extends BaseApiHandler {
                 String strpage = request.getParam("page");
                 String phone = request.getParam("ph");
                 return getQuestionByFieldHandle(id,phone,strofset,strpage,service);
+            } else if(type.equals("getbyid")){
+                String id = request.getFormAttribute("id");
+                String phone = request.getParam("ph");
+                return getQuestionByIDHandle(id,phone,service);
             }  else{
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
             }
+        }else {
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
+        }
+    }
+
+    private BaseResponse getQuestionByIDHandle(String id, String phone, ForumQuestionService service) throws Exception {
+        if(id!=null && phone!=null && !id.trim().equals("") && !phone.trim().equals("")){
+            return service.getQuestionByID(id,phone);
         }else {
             return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }
@@ -64,8 +76,8 @@ public class ForumQuestionHandler extends BaseApiHandler {
 
     private BaseResponse likeQuestionHandler(String like, String id, String phone, ForumQuestionService service) throws Exception {
         if(like!=null && id!=null && !like.trim().equals("") && !id.trim().equals("")){
-            Boolean isLike = Boolean.parseBoolean(like);
             try{
+                Boolean isLike = Boolean.parseBoolean(like);
                 return service.likeQuestion(id,isLike,phone);
             }catch (Exception e){
                 e.printStackTrace();
@@ -85,7 +97,7 @@ public class ForumQuestionHandler extends BaseApiHandler {
         }
     }
 
-    private BaseResponse editQuestionHandle(String phone,String id, String content, ForumQuestionService service) throws Exception{
+    private BaseResponse editQuestionHandle(String phone,String id, String content,ForumQuestionService service) throws Exception{
         if(phone!=null && content!=null && id!=null && !phone.trim().equals("") && !content.trim().equals("") && !id.trim().equals("")){
             return service.editQuestion(phone,id,content);
         }else{

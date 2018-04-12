@@ -190,6 +190,42 @@
       "isPublic":false,
       "roles":[],
       "method":"GET"
+    },{
+      "path":"/parentfiledexpert",
+      "handler":"vietung.it.dev.apis.handlers.ParentFieldExpertHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
+    },{
+      "path":"/adminparentfiledexpert",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminParentFieldExpertHandler",
+      "isPublic":false,
+      "roles":[2,3],
+      "method":"GET"
+    },{
+      "path":"/adminqaquestion",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminQAQuestionHandler",
+      "isPublic":false,
+      "roles":[2,3],
+      "method":"GET"
+    },{
+      "path":"/qaquestion",
+      "handler":"vietung.it.dev.apis.handlers.QAQuestionHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
+    },{
+      "path":"/adminqaanswer",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminQAAnswerHandler",
+      "isPublic":false,
+      "roles":[2,3],
+      "method":"GET"
+    },{
+      "path":"/qaanswer",
+      "handler":"vietung.it.dev.apis.handlers.QAAnswerHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
     }
 
   ]

@@ -13,6 +13,7 @@ import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.models.ForumAnswer;
 import vietung.it.dev.core.models.Users;
 import vietung.it.dev.core.services.ForumAnswerService;
+import vietung.it.dev.core.services.ForumQuestionService;
 import vietung.it.dev.core.services.UploadService;
 import vietung.it.dev.core.utils.Utils;
 
@@ -97,6 +98,7 @@ public class ForumAnswerServiceImp implements ForumAnswerService{
     @Override
     public ForumAnswerResponse delAnswer(String phone, String id) throws Exception {
         ForumAnswerResponse response = new ForumAnswerResponse();
+        ForumQuestionService service = new ForumQuestionServiceImp();
         if (!ObjectId.isValid(id)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
             response.setMsg("Id không đúng.");
@@ -111,6 +113,7 @@ public class ForumAnswerServiceImp implements ForumAnswerService{
             ForumAnswer forumAnswer = cursor.next();
             if(phone.trim().equals(forumAnswer.getPhone())){
                 collection.remove(new ObjectId(id));
+                service.commentQuestion(id,false);
             }else {
                 response.setError(ErrorCode.LESS_ROLE);
                 response.setMsg("Không có quyền xóa.");
@@ -155,6 +158,7 @@ public class ForumAnswerServiceImp implements ForumAnswerService{
 
     @Override
     public ForumAnswerResponse addAnswer(String id,String phone, String content) throws Exception {
+        ForumQuestionService service = new ForumQuestionServiceImp();
         ForumAnswerResponse response = new ForumAnswerResponse();
         if (!ObjectId.isValid(id)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
@@ -178,6 +182,7 @@ public class ForumAnswerServiceImp implements ForumAnswerService{
         forumAnswer.setNameUser(users.getName());
         MongoPool.log(ForumAnswer.class.getSimpleName(),forumAnswer.toDocument());
         response.setData(forumAnswer.toJson());
+        service.commentQuestion(id,true);
         return  response;
     }
 }
