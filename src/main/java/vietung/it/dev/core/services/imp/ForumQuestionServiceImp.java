@@ -11,13 +11,61 @@ import vietung.it.dev.apis.response.ForumQuestionResponse;
 import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.models.ForumQuestion;
+import vietung.it.dev.core.models.Messages;
 import vietung.it.dev.core.models.Users;
 import vietung.it.dev.core.services.ForumQuestionService;
+import vietung.it.dev.core.services.UploadService;
 import vietung.it.dev.core.utils.Utils;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class ForumQuestionServiceImp implements ForumQuestionService {
+    @Override
+    public ForumQuestionResponse addQuestion(String idUser, String phone, String idField, int numExperts, String content, JsonArray images) throws Exception {
+        ForumQuestionResponse response = new ForumQuestionResponse();
+        if (!ObjectId.isValid(idUser)) {
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("Id không đúng.");
+            return response;
+        }
+        if(idField!= null && !ObjectId.isValid(idField)){
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("Id không đúng.");
+            return response;
+        }
+        UploadService service = new UploadServiceImp();
+        List<String> urlImages = new ArrayList<>();
+        for(int i = 0 ; i < images.size() ; i++){
+            try {
+                String urlImage = service.uploadImage(images.get(i).getAsString());
+                urlImages.add(urlImage);
+            } catch (IOException e) {
+                response.setError(ErrorCode.UPLOAD_IMAGE_ERROR);
+                return response;
+            }
+        }
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(ForumQuestion.class.getSimpleName());
+        Calendar calendar = Calendar.getInstance();
+        ForumQuestion forumQuestion = new ForumQuestion();
+        ObjectId id = new ObjectId();
+        forumQuestion.set_id(id.toHexString());
+        forumQuestion.setIdUser(idUser);
+        forumQuestion.setPhone(phone);
+        forumQuestion.setIdField(idField);
+        forumQuestion.setNumExperts(numExperts);
+        forumQuestion.setContent(content);
+        forumQuestion.setImages(urlImages);
+        forumQuestion.setTimeCreate(calendar.getTimeInMillis());
+        MongoPool.log(ForumQuestion.class.getSimpleName(), forumQuestion.toDocument());
+        response.setData(forumQuestion.toJson());
+        return response;
+    }
+
     @Override
     public ForumQuestionResponse delQuestion(String phone, String id) throws Exception {
         ForumQuestionResponse response = new ForumQuestionResponse();
@@ -152,6 +200,37 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         MongoCollection collection = jongo.getCollection(ForumQuestion.class.getSimpleName());
         builder.append("{$and: [{idField: #}]}");
         cursor = collection.find(builder.toString(),id).sort("{timeCreate:-1}").skip(page*ofset).limit(ofset).as(ForumQuestion.class);
+        JsonArray jsonArray = new JsonArray();
+        response.setTotal(cursor.count());
+        while(cursor.hasNext()){
+            ForumQuestion forumQuestion = cursor.next();
+            Users users = Utils.getUserByPhone(forumQuestion.getPhone());
+            if(users!=null){
+                forumQuestion.setAvatar(users.getAvatar());
+                forumQuestion.setNameUser(users.getName());
+            }
+            List<String> userLike = forumQuestion.getUserLike();
+            if(userLike!=null && userLike.contains(phone)){
+                forumQuestion.setIsLiked(true);
+            }else{
+                forumQuestion.setIsLiked(false);
+            }
+            jsonArray.add(forumQuestion.toJson());
+        }
+        response.setArray(jsonArray);
+
+        return response;
+    }
+
+    @Override
+    public ForumQuestionResponse getQuestionAll(int page, int ofset,String phone) throws Exception {
+        ForumQuestionResponse response = new ForumQuestionResponse();
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        StringBuilder builder = new StringBuilder();
+        MongoCursor<ForumQuestion> cursor = null;
+        MongoCollection collection = jongo.getCollection(ForumQuestion.class.getSimpleName());
+        cursor = collection.find().sort("{timeCreate:-1}").skip(page).limit(ofset).as(ForumQuestion.class);
         JsonArray jsonArray = new JsonArray();
         response.setTotal(cursor.count());
         while(cursor.hasNext()){

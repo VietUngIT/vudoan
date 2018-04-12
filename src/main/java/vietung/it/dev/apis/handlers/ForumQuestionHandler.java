@@ -1,7 +1,9 @@
 package vietung.it.dev.apis.handlers;
 
+import com.google.gson.JsonArray;
 import io.vertx.core.http.HttpServerRequest;
 import vietung.it.dev.apis.response.BaseResponse;
+import vietung.it.dev.apis.response.ForumQuestionResponse;
 import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.services.ForumQuestionService;
 import vietung.it.dev.core.services.imp.ForumQuestionServiceImp;
@@ -11,11 +13,22 @@ public class ForumQuestionHandler extends BaseApiHandler {
     @Override
     public BaseResponse handle(HttpServerRequest request) throws Exception {
         ForumQuestionService service = new ForumQuestionServiceImp();
-        String type = request.getFormAttribute("t");
+        String type = request.getParam("t");
         if(type!=null){
-            if(type.equals("ad")){
-                return null;
-            }else if(type.equals("edit")){
+            if(type.equals("add")){
+                String idUser =  request.getParam("idUser");
+                String phone = request.getParam("ph");
+                String idField = request.getParam("idField");
+                String numExperts =  request.getParam("numExperts");
+                String content = request.getParam("content");
+                String images = request.getParam("images");
+                return addQuestionHandle(idUser,phone,idField,numExperts,content,images,service);
+            }else if(type.equals("getall")){
+                String strofset = request.getParam("ofset");
+                String strpage = request.getParam("page");
+                String phone = request.getParam("ph");
+                return getQuestionAllHandle(phone,strofset,strpage,service);
+            } else if(type.equals("edit")){
                 String id = request.getFormAttribute("id");
                 String phone = request.getFormAttribute("ph");
                 String content = request.getFormAttribute("content");
@@ -38,6 +51,40 @@ public class ForumQuestionHandler extends BaseApiHandler {
             }  else{
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
             }
+        }else {
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
+        }
+    }
+    private BaseResponse addQuestionHandle(String idUser, String phone, String idField, String numExperts,String content ,String images,ForumQuestionService service) throws Exception {
+        if(idUser!=null && phone!=null && numExperts != null && content != null && images != null){
+            try {
+                int _numExperts = Integer.parseInt(numExperts);
+                JsonArray _images = Utils.toJsonArray(images);
+                return service.addQuestion(idUser,phone,idField,_numExperts,content,_images);
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+                return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");
+            }
+
+        }else {
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
+        }
+    }
+
+    private BaseResponse getQuestionAllHandle(String phone,String strofset, String strpage, ForumQuestionService service) throws Exception {
+        if(strofset!=null){
+            if(strpage==null){
+                strpage="0";
+            }
+            try {
+                int page = Integer.parseInt(strpage);
+                int ofset = Integer.parseInt(strofset);
+                return service.getQuestionAll(page,ofset,phone);
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+                return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");
+            }
+
         }else {
             return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }
