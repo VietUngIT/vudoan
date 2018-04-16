@@ -10,7 +10,7 @@ public class ExpertInfoHandler extends BaseApiHandler {
     public BaseResponse handle(HttpServerRequest request) throws Exception {
         String type = request.getParam("t");
         if(type!=null){
-            
+
         }else {
             return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }
