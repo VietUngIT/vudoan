@@ -8,6 +8,8 @@ public class SimpleResponse extends BaseResponse {
         JsonObject object = new JsonObject();
         object.addProperty("e",getError());
         object.addProperty("msg",getMsg());
+        object.addProperty("data","");
+        object.addProperty("array","");
         return object.toString();
     }
 }

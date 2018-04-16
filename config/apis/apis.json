@@ -168,43 +168,62 @@
       "method":"POST"
     },{
       "path":"/expertinfo",
-      "handler":"vietung.it.dev.apis.handlers.admin.ExpertInfoHandler",
+      "handler":"vietung.it.dev.apis.handlers.ExpertInfoHandler",
       "isPublic":false,
       "roles":[],
       "method":"GET"
-    },
-    {
-      "path":"/type-news",
-      "handler":"vietung.it.dev.apis.handlers.TypeNewsHandler",
-      "isPublic":true,
+    },{
+      "path":"/adminforumquestion",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminForumQuestionHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"POST"
+    },{
+      "path":"/forumquestion",
+      "handler":"vietung.it.dev.apis.handlers.ForumQuestionHandler",
+      "isPublic":false,
       "roles":[],
       "method":"GET"
-    },
-    {
-      "path":"/create-type-news",
-      "handler":"vietung.it.dev.apis.handlers.CreateTypeNewsHandler",
-      "isPublic":false,
-      "roles":[2,3],
-      "method":"POST"
-    },
-    {
-      "path":"/comment-news",
-      "handler":"vietung.it.dev.apis.handlers.CommentNewsNewsHandler",
+    },{
+      "path":"/forumanswer",
+      "handler":"vietung.it.dev.apis.handlers.ForumAnswerHandler",
       "isPublic":false,
       "roles":[],
-      "method":"POST"
-    },
-    {
-      "path":"/manager-handbook",
-      "handler":"vietung.it.dev.apis.handlers.ManagerHandBookHandler",
+      "method":"GET"
+    },{
+      "path":"/parentfiledexpert",
+      "handler":"vietung.it.dev.apis.handlers.ParentFieldExpertHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
+    },{
+      "path":"/adminparentfiledexpert",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminParentFieldExpertHandler",
       "isPublic":false,
       "roles":[2,3],
-      "method":"POST"
-    },
-    {
-      "path":"/handbook",
-      "handler":"vietung.it.dev.apis.handlers.HandBookHandler",
-      "isPublic":true,
+      "method":"GET"
+    },{
+      "path":"/adminqaquestion",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminQAQuestionHandler",
+      "isPublic":false,
+      "roles":[2,3],
+      "method":"GET"
+    },{
+      "path":"/qaquestion",
+      "handler":"vietung.it.dev.apis.handlers.QAQuestionHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
+    },{
+      "path":"/adminqaanswer",
+      "handler":"vietung.it.dev.apis.handlers.admin.AdminQAAnswerHandler",
+      "isPublic":false,
+      "roles":[2,3],
+      "method":"GET"
+    },{
+      "path":"/qaanswer",
+      "handler":"vietung.it.dev.apis.handlers.QAAnswerHandler",
+      "isPublic":false,
       "roles":[],
       "method":"GET"
     }

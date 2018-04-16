@@ -6,47 +6,46 @@ import org.bson.types.ObjectId;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
-import vietung.it.dev.apis.response.CategoryResponse;
 import vietung.it.dev.apis.response.FieldOfExpertResponse;
 import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.consts.ErrorCode;
-import vietung.it.dev.core.consts.Variable;
-import vietung.it.dev.core.models.Category;
 import vietung.it.dev.core.models.Expert;
 import vietung.it.dev.core.models.FieldOfExpert;
-import vietung.it.dev.core.models.News;
 import vietung.it.dev.core.services.FieldOfExpertService;
 import vietung.it.dev.core.utils.Utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FieldOfExpertServiceImp implements FieldOfExpertService {
     @Override
-    public CategoryResponse getAllField() {
-        CategoryResponse response = new CategoryResponse();
+    public FieldOfExpertResponse getAllField() {
+        FieldOfExpertResponse response = new FieldOfExpertResponse();
         DB db = MongoPool.getDBJongo();
         Jongo jongo = new Jongo(db);
-        MongoCollection collection = jongo.getCollection(Variable.MG_CATEGORY_FIELD_EXPERT);
-        MongoCursor<Category> cursor = collection.find().as(Category.class);
+        MongoCollection collection = jongo.getCollection(FieldOfExpert.class.getSimpleName());
+        MongoCursor<FieldOfExpert> cursor = collection.find().as(FieldOfExpert.class);
         JsonArray jsonArray = new JsonArray();
         while (cursor.hasNext()){
-            Category category = cursor.next();
-            jsonArray.add(category.toJson());
+            FieldOfExpert fieldOfExpert = cursor.next();
+            jsonArray.add(fieldOfExpert.toJson());
         }
         response.setArray(jsonArray);
         return response;
     }
 
     @Override
-    public CategoryResponse getFieldByID(String id) {
-        CategoryResponse response = new CategoryResponse();
+    public FieldOfExpertResponse getFieldByID(String id) {
+        FieldOfExpertResponse response = new FieldOfExpertResponse();
         DB db = MongoPool.getDBJongo();
         Jongo jongo = new Jongo(db);
-        MongoCollection collection = jongo.getCollection(Variable.MG_CATEGORY_FIELD_EXPERT);
+        MongoCollection collection = jongo.getCollection(FieldOfExpert.class.getSimpleName());
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("{_id: #}");
-        MongoCursor<Category> cursor = collection.find(stringBuilder.toString(),new ObjectId(id)).limit(1).as(Category.class);
+        MongoCursor<FieldOfExpert> cursor = collection.find(stringBuilder.toString(),new ObjectId(id)).limit(1).as(FieldOfExpert.class);
         if (cursor.hasNext()){
-            Category category = cursor.next();
-            response.setData(category.toJson());
+            FieldOfExpert fieldOfExpert = cursor.next();
+            response.setData(fieldOfExpert.toJson());
         }else {
             response.setError(ErrorCode.ID_NOT_EXIST);
             response.setMsg("ID không tồn tại.");
@@ -55,36 +54,78 @@ public class FieldOfExpertServiceImp implements FieldOfExpertService {
     }
 
     @Override
-    public CategoryResponse addFieldOfExpert(String nameField) throws Exception{
-        CategoryResponse response = new CategoryResponse();
-        Category category = new Category();
+    public FieldOfExpertResponse getByIdParentField(String id) throws Exception {
+        FieldOfExpertResponse response = new FieldOfExpertResponse();
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(FieldOfExpert.class.getSimpleName());
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("{idParentField: #}");
+        MongoCursor<FieldOfExpert> cursor = collection.find(stringBuilder.toString(),id).as(FieldOfExpert.class);
+        JsonArray jsonArray = new JsonArray();
+        while (cursor.hasNext()){
+            FieldOfExpert fieldOfExpert = cursor.next();
+            jsonArray.add(fieldOfExpert.toJson());
+        }
+        response.setArray(jsonArray);
+        return response;
+    }
+
+    @Override
+    public FieldOfExpertResponse addFieldOfExpert(String nameField, String tags, String idParentField) throws Exception{
+        FieldOfExpertResponse response = new FieldOfExpertResponse();
+        FieldOfExpert fieldOfExpert = new FieldOfExpert();
+        if (!ObjectId.isValid(idParentField)) {
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("idParentField không đúng.");
+            return response;
+        }
         ObjectId objectId = new ObjectId();
-        category.set_id(objectId.toHexString());
-        category.setName(nameField);
-        MongoPool.log(Variable.MG_CATEGORY_FIELD_EXPERT,category.toDocument());
-        response.setData(category.toJson());
+        fieldOfExpert.set_id(objectId.toHexString());
+        fieldOfExpert.setIdParentField(idParentField);
+        fieldOfExpert.setNameField(nameField);
+        JsonArray arrayTags = Utils.toJsonArray(tags);
+        List<String> lsttags = new ArrayList<>();
+        for (int i=0;i<arrayTags.size();i++){
+            lsttags.add(arrayTags.get(i).getAsString().toLowerCase());
+        }
+        fieldOfExpert.setTags(lsttags);
+        MongoPool.log(FieldOfExpert.class.getSimpleName(),fieldOfExpert.toDocument());
+        response.setData(fieldOfExpert.toJson());
         return response;
     }
 
     @Override
-    public CategoryResponse editFieldOfExpert(String id, String nameField) throws Exception {
-        CategoryResponse response = new CategoryResponse();
+    public FieldOfExpertResponse editFieldOfExpert(String id, String nameField,String tags, String idParentField) throws Exception {
+        FieldOfExpertResponse response = new FieldOfExpertResponse();
         if (!ObjectId.isValid(id)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
             response.setMsg("Id không đúng.");
             return response;
         }
+        if (!ObjectId.isValid(idParentField)) {
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("idParentField không đúng.");
+            return response;
+        }
         DB db = MongoPool.getDBJongo();
         Jongo jongo = new Jongo(db);
-        MongoCollection collection = jongo.getCollection(Variable.MG_CATEGORY_FIELD_EXPERT);
+        MongoCollection collection = jongo.getCollection(FieldOfExpert.class.getSimpleName());
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("{_id: #}");
-        MongoCursor<Category> cursor = collection.find(stringBuilder.toString(),new ObjectId(id)).limit(1).as(Category.class);
+        MongoCursor<FieldOfExpert> cursor = collection.find(stringBuilder.toString(),new ObjectId(id)).limit(1).as(FieldOfExpert.class);
         if (cursor.hasNext()){
-            Category category = cursor.next();
-            collection.update("{_id: #}",new ObjectId(id)).with("{$set: {name: #}}",nameField);
-            category.setName(nameField);
-            response.setData(category.toJson());
+            FieldOfExpert fieldOfExpert = cursor.next();
+            JsonArray arrayTags = Utils.toJsonArray(tags);
+            List<String> lsttags = new ArrayList<>();
+            for (int i=0;i<arrayTags.size();i++){
+                lsttags.add(arrayTags.get(i).getAsString().toLowerCase());
+            }
+            collection.update("{_id: #}",new ObjectId(id)).with("{$set: {idParentField: #,nameField: #,tags: #}}",idParentField,nameField,lsttags);
+            fieldOfExpert.setIdParentField(idParentField);
+            fieldOfExpert.setNameField(nameField);
+            fieldOfExpert.setTags(lsttags);
+            response.setData(fieldOfExpert.toJson());
         }else {
             response.setError(ErrorCode.ID_NOT_EXIST);
             response.setMsg("ID không tồn tại.");
@@ -93,8 +134,8 @@ public class FieldOfExpertServiceImp implements FieldOfExpertService {
     }
 
     @Override
-    public CategoryResponse deleteFieldOfExpert(String id) {
-        CategoryResponse response = new CategoryResponse();
+    public FieldOfExpertResponse deleteFieldOfExpert(String id) {
+        FieldOfExpertResponse response = new FieldOfExpertResponse();
         if (!ObjectId.isValid(id)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
             response.setMsg("Id không đúng.");
@@ -102,14 +143,14 @@ public class FieldOfExpertServiceImp implements FieldOfExpertService {
         }
         DB db = MongoPool.getDBJongo();
         Jongo jongo = new Jongo(db);
-        MongoCollection collection = jongo.getCollection(Variable.MG_CATEGORY_FIELD_EXPERT);
+        MongoCollection collection = jongo.getCollection(FieldOfExpert.class.getSimpleName());
         MongoCollection collectionExpert = jongo.getCollection(Expert.class.getSimpleName());
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("{_id: #}");
-        MongoCursor<Category> cursor = collection.find(stringBuilder.toString(),new ObjectId(id)).limit(1).as(Category.class);
+        MongoCursor<FieldOfExpert> cursor = collection.find(stringBuilder.toString(),new ObjectId(id)).limit(1).as(FieldOfExpert.class);
         if (cursor.hasNext()){
-            Category category = cursor.next();
-            collection.remove(new ObjectId(category.get_id()));
+            FieldOfExpert fieldOfExpert = cursor.next();
+            collection.remove(new ObjectId(fieldOfExpert.get_id()));
             collectionExpert.update("{}").multi().with("{ $pull: {idFields:#}}",id);
         }else {
             response.setError(ErrorCode.ID_NOT_EXIST);

@@ -48,21 +48,20 @@ public class SubCategoryServiceImp implements SubCategoryService {
         DB db = MongoPool.getDBJongo();
         Jongo jongo = new Jongo(db);
         MongoCollection collection = jongo.getCollection(Variable.MG_SUB_CATEGORY_AGRI_TECH);
-        MongoCollection collectionCate = jongo.getCollection(Variable.MG_CATEGORY_AGRI_TECH);
+//        MongoCollection collectionCate = jongo.getCollection(Variable.MG_CATEGORY_AGRI_TECH);
 
-        String namecate = "";
-        MongoCursor<Category> cursorCate = collectionCate.find("{_id:#}", new ObjectId(id)).as(Category.class);
-        if(cursorCate.hasNext()){
-            namecate = cursorCate.next().getName();
-        }
+//        String namecate = "";
+//        MongoCursor<Category> cursorCate = collectionCate.find("{_id:#}", new ObjectId(id)).as(Category.class);
+//        if(cursorCate.hasNext()){
+//            namecate = cursorCate.next().getName();
+//        }
         StringBuilder builder = new StringBuilder();
         builder.append("{idCate:#}");
-        collection.ensureIndex("idCate:1");
         MongoCursor<SubCategory> cursor = collection.find(builder.toString(),id).as(SubCategory.class);
         JsonArray array = new JsonArray();
         while(cursor.hasNext()){
             SubCategory subCategory = cursor.next();
-            subCategory.setNameCate(namecate);
+//            subCategory.setNameCate(namecate);
             array.add(subCategory.toJson());
         }
         response.setArray(array);

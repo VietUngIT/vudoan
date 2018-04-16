@@ -15,6 +15,13 @@ public class FieldOfExpertHandler extends BaseApiHandler {
         if(type!=null){
             if(type.equals("getall")){
                 return service.getAllField();
+            }else if(type.equals("getbyparentfield")){
+                String id = request.getParam("idparent");
+                if(id!=null){
+                    return service.getByIdParentField(id);
+                }else {
+                    return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
+                }
             }else if(type.equals("get")){
                 String id = request.getParam("id");
                 if(id!=null){

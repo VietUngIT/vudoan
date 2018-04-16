@@ -5,20 +5,21 @@ import com.google.gson.JsonObject;
 import lombok.Data;
 
 @Data
-public class HandBookResponse extends BaseResponse {
+public class QAAnswerResponse extends BaseResponse {
     private JsonObject data;
-    private JsonArray datas;
+    private JsonArray array;
+    private int total = -1;
     @Override
     public String toJonString() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("e",getError());
         jsonObject.addProperty("msg",getMsg());
-        if(data!=null){
-            jsonObject.add("data",data);
+        if(total!=-1){
+            jsonObject.addProperty("total",total);
         }
-        if(datas!=null){
-            jsonObject.add("array",datas);
-        }
+        jsonObject.add("data",data);
+        jsonObject.add("array",array);
+
         return jsonObject.toString();
     }
 }

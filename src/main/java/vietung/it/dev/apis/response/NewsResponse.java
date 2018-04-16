@@ -9,20 +9,20 @@ public class NewsResponse extends BaseResponse {
     private JsonObject data;
     private JsonArray datas;
     private int numCmtByNew = -1;
+    private int total = -1;
+    private int pages = 0;
     @Override
     public String toJonString() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("e",getError());
         jsonObject.addProperty("msg",getMsg());
-        if (numCmtByNew!=-1){
-            jsonObject.addProperty("numCmtByNew",numCmtByNew);
+        jsonObject.addProperty("numCmtByNew",numCmtByNew);
+        if(total>-1){
+            jsonObject.addProperty("total",total);
         }
-        if(data!=null){
-            jsonObject.add("data",data);
-        }
-        if(datas!=null){
-            jsonObject.add("array",datas);
-        }
+        jsonObject.add("data",data);
+        jsonObject.add("array",datas);
+
         return jsonObject.toString();
     }
 }

@@ -8,17 +8,17 @@ import lombok.Data;
 public class MarketInfoResponse extends BaseResponse {
     private JsonObject data;
     private JsonArray array;
+    private int total = -1;
     @Override
     public String toJonString() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("e",getError());
         jsonObject.addProperty("msg",getMsg());
-        if(data!=null){
-            jsonObject.add("data",data);
+        if(total>-1){
+            jsonObject.addProperty("total",total);
         }
-        if(array!=null){
-            jsonObject.add("array",array);
-        }
+        jsonObject.add("data",data);
+        jsonObject.add("array",array);
         return jsonObject.toString();
     }
 }

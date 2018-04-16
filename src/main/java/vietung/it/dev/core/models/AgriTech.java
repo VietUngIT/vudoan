@@ -5,6 +5,7 @@ import lombok.Data;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -42,7 +43,13 @@ public class AgriTech extends MongoLog {
         jsonObject.addProperty("title",title);
         jsonObject.addProperty("author",author);
         jsonObject.addProperty("image",image);
-        jsonObject.addProperty("tags",tags.toString());
+        List<String> rTags = new ArrayList<>();
+        for (int i=0;i<tags.size();i++){
+            StringBuilder stringBuilder = new StringBuilder("\"");
+            stringBuilder.append(tags.get(i)).append("\"");
+            rTags.add(stringBuilder.toString());
+        }
+        jsonObject.addProperty("tags",rTags.toString());
         jsonObject.addProperty("comments",numComment);
         jsonObject.addProperty("idSubCate",idSubCate);
         jsonObject.addProperty("nameSubCate",nameSubCate);

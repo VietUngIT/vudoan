@@ -14,18 +14,28 @@ public class AdminFieldOfExpertHandler extends BaseApiHandler {
         FieldOfExpertService service = new FieldOfExpertServiceImp();
         String type = request.getParam("t");
         if(type!=null){
-            if(type.equals("ad")){
+            if(type.equals("add")){
+                String idParentField = request.getParam("idparentfield");
                 String nameField = request.getParam("name");
-                if(nameField!=null){
-                    return service.addFieldOfExpert(nameField);
+                String tags = request.getParam("tags");
+                if(nameField!=null && idParentField!=null){
+                    if(tags==null || tags.trim().equals("")){
+                        tags="[]";
+                    }
+                    return service.addFieldOfExpert(nameField,tags,idParentField);
                 }else {
                     return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
                 }
-            }else if(type.equals("ed")){
+            }else if(type.equals("edit")){
                 String id = request.getParam("id");
+                String idParentField = request.getParam("idparentfield");
                 String nameField = request.getParam("name");
-                if(id!=null && nameField!=null){
-                    return service.editFieldOfExpert(id,nameField);
+                String tags = request.getParam("tags");
+                if(id!=null && nameField!=null && idParentField!=null){
+                    if(tags==null || tags.trim().equals("")){
+                        tags="[]";
+                    }
+                    return service.editFieldOfExpert(id,nameField,tags, idParentField);
                 }else {
                     return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
                 }
