@@ -14,7 +14,11 @@ public class ForumQuestionHandler extends BaseApiHandler {
         String type = request.getFormAttribute("t");
         if(type!=null){
             if(type.equals("ad")){
-                return null;
+                String phone = request.getFormAttribute("ph");
+                String image = request.getFormAttribute("image");
+                String content = request.getFormAttribute("content");
+                String idField = request.getFormAttribute("field");
+                return addQuestionHandle(phone,image,idField,content,service);
             }else if(type.equals("edit")){
                 String id = request.getFormAttribute("id");
                 String phone = request.getFormAttribute("ph");
@@ -35,14 +39,43 @@ public class ForumQuestionHandler extends BaseApiHandler {
                 String strpage = request.getParam("page");
                 String phone = request.getParam("ph");
                 return getQuestionByFieldHandle(id,phone,strofset,strpage,service);
-            } else if(type.equals("getbyid")){
+            }else if(type.equals("getbyid")){
                 String id = request.getFormAttribute("id");
                 String phone = request.getParam("ph");
                 return getQuestionByIDHandle(id,phone,service);
-            }  else{
+            }else if(type.equals("getexpertbyidquestion")){
+                String id = request.getFormAttribute("idquestion");
+                String strNumExpert = request.getFormAttribute("numexpert");
+                return getExpertByIDQuestionHandle(id,strNumExpert,service);
+            }else{
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
             }
         }else {
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
+        }
+    }
+
+    private BaseResponse getExpertByIDQuestionHandle(String id,String strNumExpert, ForumQuestionService service) throws Exception {
+        if(id!=null){
+            if(strNumExpert==null){
+                strNumExpert = "5";
+            }
+            try {
+                int numExpert = Integer.parseInt(strNumExpert);
+                return service.getExpertByIDQuestion(id,numExpert);
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+                return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");
+            }
+        }else {
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
+        }
+    }
+
+    private BaseResponse addQuestionHandle(String phone, String image,String idField, String content, ForumQuestionService service) throws Exception {
+        if(phone!=null && content!=null && idField!=null){
+            return service.addQuestion(phone,image,idField,content);
+        }else{
             return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }
     }

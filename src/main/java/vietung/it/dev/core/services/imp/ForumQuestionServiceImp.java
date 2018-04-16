@@ -10,11 +10,13 @@ import org.jongo.MongoCursor;
 import vietung.it.dev.apis.response.ForumQuestionResponse;
 import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.consts.ErrorCode;
-import vietung.it.dev.core.models.ForumQuestion;
-import vietung.it.dev.core.models.Users;
+import vietung.it.dev.core.models.*;
 import vietung.it.dev.core.services.ForumQuestionService;
+import vietung.it.dev.core.services.UploadService;
 import vietung.it.dev.core.utils.Utils;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class ForumQuestionServiceImp implements ForumQuestionService {
@@ -208,6 +210,92 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
             response.setMsg("Id không tồn tại.");
         }
 
+        return response;
+    }
+
+    @Override
+    public ForumQuestionResponse addQuestion(String phone, String image,String idField, String content) throws Exception {
+
+        ForumQuestionResponse response = new ForumQuestionResponse();
+        UploadService service = new UploadServiceImp();
+        if (!ObjectId.isValid(idField)) {
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("Id không đúng.");
+            return response;
+        }
+        Users users = Utils.getUserByPhone(phone);
+        ForumQuestion forumQuestion = new ForumQuestion();
+        ObjectId objectId = new ObjectId();
+        String id = objectId.toHexString();
+        forumQuestion.set_id(id);
+        forumQuestion.setIdField(idField);
+        forumQuestion.setPhone(phone);
+        forumQuestion.setContent(content);
+        if(image!=null){
+            try {
+                String urlImage = service.uploadImage(image);
+                forumQuestion.setImage(urlImage);
+            }catch (Exception e){
+                response.setError(ErrorCode.UPLOAD_IMAGE_ERROR);
+                response.setMsg("Có lỗi trong quá trình upload ảnh.");
+                return response;
+            }
+        }
+        forumQuestion.setTimeCreate(Calendar.getInstance().getTimeInMillis());
+        forumQuestion.setNumLike(0);
+        forumQuestion.setNumComment(0);
+
+        //save data to db
+        MongoPool.log(ForumQuestion.class.getSimpleName(),forumQuestion.toDocument());
+        //return response to client
+        response.setData(forumQuestion.toJson());
+
+        //send content question to sv2 and get tags and field from sv2------------
+
+        //Search Expert
+        List<Expert> lstExpert = new ArrayList<>();
+
+        //save data get from sv2 to db
+        List<String> lstTag = new ArrayList<>();
+        List<String> lstField = new ArrayList<>();
+        ExpertRorumQuestion expertRorumQuestion = new ExpertRorumQuestion();
+        expertRorumQuestion.setIdForumQuestion(id);
+        expertRorumQuestion.setExperts(lstExpert);
+        expertRorumQuestion.setIdField(lstField);
+        expertRorumQuestion.setTags(lstTag);
+        MongoPool.log(ExpertRorumQuestion.class.getSimpleName(),expertRorumQuestion.toDocument());
+        return response;
+    }
+
+    @Override
+    public ForumQuestionResponse getExpertByIDQuestion(String id, int numExpert) throws Exception {
+        ForumQuestionResponse response = new ForumQuestionResponse();
+        if (!ObjectId.isValid(id)) {
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("Id không đúng.");
+            return response;
+        }
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        StringBuilder builder = new StringBuilder();
+        MongoCursor<ExpertRorumQuestion> cursor = null;
+        MongoCollection collection = jongo.getCollection(ExpertRorumQuestion.class.getSimpleName());
+        builder.append("{$and: [{idForumQuestion: #}]}");
+        cursor = collection.find(builder.toString(),id).limit(1).as(ExpertRorumQuestion.class);
+        if(cursor.hasNext()){
+            ExpertRorumQuestion expertRorumQuestion = cursor.next();
+            List<Expert> lstExpert = expertRorumQuestion.getExperts();
+            List<Expert> lstTemp = new ArrayList<>();
+            for (int i=0;i<lstExpert.size();i++){
+                if(i==numExpert) break;
+                lstTemp.add(lstExpert.get(i));
+            }
+            expertRorumQuestion.setExperts(lstTemp);
+            response.setData(expertRorumQuestion.toJsonExpert());
+        }else{
+            response.setError(ErrorCode.ID_NOT_EXIST);
+            response.setMsg("Id không tồn tại.");
+        }
         return response;
     }
 }
