@@ -75,7 +75,7 @@ public class FieldOfExpertServiceImp implements FieldOfExpertService {
     public FieldOfExpertResponse addFieldOfExpert(String nameField, String tags, String idParentField) throws Exception{
         FieldOfExpertResponse response = new FieldOfExpertResponse();
         FieldOfExpert fieldOfExpert = new FieldOfExpert();
-        if (!ObjectId.isValid(idParentField)) {
+        if (!ObjectId.isValid(idParentField) && !idParentField.equals("")) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
             response.setMsg("idParentField không đúng.");
             return response;
