@@ -13,20 +13,20 @@ public class ForumQuestionHandler extends BaseApiHandler {
     @Override
     public BaseResponse handle(HttpServerRequest request) throws Exception {
         ForumQuestionService service = new ForumQuestionServiceImp();
-        String type = request.getParam("t");
+        String type = request.getFormAttribute("t");
         if(type!=null){
             if(type.equals("add")){
-                String idUser =  request.getParam("idUser");
-                String phone = request.getParam("ph");
-                String idField = request.getParam("idField");
-                String numExperts =  request.getParam("numExperts");
-                String content = request.getParam("content");
-                String images = request.getParam("images");
+                String idUser =  request.getFormAttribute("idUser");
+                String phone = request.getFormAttribute("ph");
+                String idField = request.getFormAttribute("idField");
+                String numExperts =  request.getFormAttribute("numExperts");
+                String content = request.getFormAttribute("content");
+                String images = request.getFormAttribute("images");
                 return addQuestionHandle(idUser,phone,idField,numExperts,content,images,service);
             }else if(type.equals("getall")){
-                String strofset = request.getParam("ofset");
-                String strpage = request.getParam("page");
-                String phone = request.getParam("ph");
+                String strofset = request.getFormAttribute("ofset");
+                String strpage = request.getFormAttribute("page");
+                String phone = request.getFormAttribute("ph");
                 return getQuestionAllHandle(phone,strofset,strpage,service);
             } else if(type.equals("edit")){
                 String id = request.getFormAttribute("id");
