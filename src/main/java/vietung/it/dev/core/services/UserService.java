@@ -13,4 +13,6 @@ public interface UserService {
     public UserResponse changeAddress(String phone, String address);
     public UserResponse changeRole(String phone, int role);
     public UserResponse getUserInfor(String phone);
+    public UserResponse getUserInforbyid(String id);
+
 }

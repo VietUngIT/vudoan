@@ -219,7 +219,7 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
 
         ForumQuestionResponse response = new ForumQuestionResponse();
         UploadService service = new UploadServiceImp();
-        if (!ObjectId.isValid(idField)) {
+        if (!ObjectId.isValid(idField) && !idField.equals("")) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
             response.setMsg("Id không đúng.");
             return response;
@@ -234,7 +234,7 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         forumQuestion.setPhone(phone);
         forumQuestion.setContent(content);
         forumQuestion.setStatus(ForumQuestion.ACTICE);
-        if(image!=null){
+        if(image!=null && !image.equals("")){
             try {
                 String urlImage = service.uploadImage(image);
                 forumQuestion.setImage(urlImage);
