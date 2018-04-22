@@ -58,6 +58,16 @@ public class RoomServiceImp implements RoomService {
                 MongoCursor<Room> cursorRoomUser = collectionRoom.find("{user:{$all:#}}",lstUser).as(Room.class);
                 if (cursorRoomUser.hasNext()) {
                     Room room = cursorRoomUser.next();
+                    List<String> listuser = room.getUser();
+                    JsonArray users = new JsonArray();
+                    for(int i =0 ; i < listuser.size() ; i ++){
+                        MongoCollection collectionIdUser = jongo.getCollection(Users.class.getSimpleName());
+                        MongoCursor<Users> cursorUsers = collectionIdUser.find("{_id:#}", listuser.get(i)).as(Users.class);
+                        while (cursorUsers.hasNext()) {
+                            users.add( cursorUsers.next().toJson());
+                        }
+                    }
+                    room.setUsers(users);
                     response.setData(room.toJson());
                     response.setError(ErrorCode.ROOM_EXIST);
                     response.setMsg("Room đã tôn tại.");
@@ -74,6 +84,15 @@ public class RoomServiceImp implements RoomService {
             room.setCreate_at(Calendar.getInstance().getTimeInMillis());
             room.setUpdate_at(Calendar.getInstance().getTimeInMillis());
             MongoPool.log(Room.class.getSimpleName(), room.toDocument());
+            List<String> listuser = room.getUser();
+            JsonArray users = new JsonArray();
+            for(int i =0 ; i < listuser.size() ; i ++){
+                MongoCollection collectionIdUser = jongo.getCollection(Users.class.getSimpleName());
+                MongoCursor<Users> cursorUsers = collectionIdUser.find("{_id:#}", listuser.get(i)).as(Users.class);
+                while (cursorUsers.hasNext()) {
+                    users.add( cursorUsers.next().toJson());
+                }
+            }
             response.setData(room.toJson());
             Chat.addNamespace(room);
         } catch (Exception e) {
