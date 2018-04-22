@@ -252,7 +252,6 @@ public class NewsServiceImp implements NewsService {
             if(image!=null){
                 urlImage = service.uploadImage(image);
             }
-            System.out.println("tags: "+tags);
             JsonArray array = Utils.toJsonArray(tags);
             List<String> lstTag = new ArrayList<>();
             for (int i=0;i<array.size();i++){

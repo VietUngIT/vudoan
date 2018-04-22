@@ -38,25 +38,58 @@ public class ExpertInfoHandler extends BaseApiHandler {
                 String strLat = request.getParam("lat");
                 String strLon = request.getParam("long");
                 String strNumExpert = request.getParam("nexpert");
-                String fieldExpert = request.getParam("field");
-                if(strLat!=null && strLon!=null && strNumExpert!=null && fieldExpert!=null){
+                String idparentfieldExpert = request.getParam("idparentfield");
+                if(strLat!=null && strLon!=null && strNumExpert!=null && idparentfieldExpert!=null){
                     try{
                         Double lat = Double.parseDouble(strLat);
                         Double lon = Double.parseDouble(strLon);
                         int numExpert = Integer.parseInt(strNumExpert);
-                        return service.getListExpertNearest(lat,lon,numExpert,fieldExpert);
+                        return service.getListExpertNearest(lat,lon,numExpert,idparentfieldExpert);
                     }catch (Exception e){
                         return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu."+e.getMessage());
                     }
                 }else{
                     return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
                 }
-            } else {
+            } else if(type.equals("edittags")){
+                String phone = request.getParam("phone");
+                String tags = request.getParam("tags");
+                return editTagsExpertHandle(phone,tags,service);
+            }else if(type.equals("rate")){
+                String phone = request.getParam("phone");
+                String strrate = request.getParam("rate");
+                return rateExpertHandle(phone,strrate,service);
+            }else {
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
             }
         }else {
             return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }
 
+    }
+
+    private BaseResponse rateExpertHandle(String phone, String strrate, ExpertService service) throws Exception {
+        if(phone!=null && strrate!=null){
+            try{
+                int rate = Integer.parseInt(strrate);
+                return service.rateExpert(phone,rate);
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+                return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");
+            }
+        }else {
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
+        }
+    }
+
+    private BaseResponse editTagsExpertHandle(String phone, String tags, ExpertService service) throws Exception {
+        if(phone!=null){
+            if(tags==null){
+                tags="[]";
+            }
+            return service.editTagsExpert(phone,tags);
+        }else{
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
+        }
     }
 }

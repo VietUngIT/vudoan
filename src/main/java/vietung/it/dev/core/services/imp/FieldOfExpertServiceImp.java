@@ -54,11 +54,35 @@ public class FieldOfExpertServiceImp implements FieldOfExpertService {
     }
 
     @Override
-    public FieldOfExpertResponse addFieldOfExpert(String nameField, String tags) throws Exception{
+    public FieldOfExpertResponse getByIdParentField(String id) throws Exception {
+        FieldOfExpertResponse response = new FieldOfExpertResponse();
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(FieldOfExpert.class.getSimpleName());
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("{idParentField: #}");
+        MongoCursor<FieldOfExpert> cursor = collection.find(stringBuilder.toString(),id).as(FieldOfExpert.class);
+        JsonArray jsonArray = new JsonArray();
+        while (cursor.hasNext()){
+            FieldOfExpert fieldOfExpert = cursor.next();
+            jsonArray.add(fieldOfExpert.toJson());
+        }
+        response.setArray(jsonArray);
+        return response;
+    }
+
+    @Override
+    public FieldOfExpertResponse addFieldOfExpert(String nameField, String tags, String idParentField) throws Exception{
         FieldOfExpertResponse response = new FieldOfExpertResponse();
         FieldOfExpert fieldOfExpert = new FieldOfExpert();
+        if (!ObjectId.isValid(idParentField) && !idParentField.equals("")) {
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("idParentField không đúng.");
+            return response;
+        }
         ObjectId objectId = new ObjectId();
         fieldOfExpert.set_id(objectId.toHexString());
+        fieldOfExpert.setIdParentField(idParentField);
         fieldOfExpert.setNameField(nameField);
         JsonArray arrayTags = Utils.toJsonArray(tags);
         List<String> lsttags = new ArrayList<>();
@@ -72,11 +96,16 @@ public class FieldOfExpertServiceImp implements FieldOfExpertService {
     }
 
     @Override
-    public FieldOfExpertResponse editFieldOfExpert(String id, String nameField,String tags) throws Exception {
+    public FieldOfExpertResponse editFieldOfExpert(String id, String nameField,String tags, String idParentField) throws Exception {
         FieldOfExpertResponse response = new FieldOfExpertResponse();
         if (!ObjectId.isValid(id)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
             response.setMsg("Id không đúng.");
+            return response;
+        }
+        if (!ObjectId.isValid(idParentField)) {
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("idParentField không đúng.");
             return response;
         }
         DB db = MongoPool.getDBJongo();
@@ -92,7 +121,8 @@ public class FieldOfExpertServiceImp implements FieldOfExpertService {
             for (int i=0;i<arrayTags.size();i++){
                 lsttags.add(arrayTags.get(i).getAsString().toLowerCase());
             }
-            collection.update("{_id: #}",new ObjectId(id)).with("{$set: {nameField: #,tags: #}}",nameField,lsttags);
+            collection.update("{_id: #}",new ObjectId(id)).with("{$set: {idParentField: #,nameField: #,tags: #}}",idParentField,nameField,lsttags);
+            fieldOfExpert.setIdParentField(idParentField);
             fieldOfExpert.setNameField(nameField);
             fieldOfExpert.setTags(lsttags);
             response.setData(fieldOfExpert.toJson());

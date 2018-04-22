@@ -32,6 +32,12 @@ public class ManagerUserHandler extends BaseApiHandler {
         }else if(type.equals("get")){
             String phone = request.getParam("ph");
             return getUserInfoHandler(phone,userService);
+        }else if(type.equals("getbyphone")){
+            String phone = request.getParam("ph2");
+            return getUserInfoHandler(phone,userService);
+        }else if(type.equals("getbyid")){
+            String id = request.getParam("id");
+            return getUserInfobyidHandler(id,userService);
         }else{
             SimpleResponse response = new SimpleResponse();
             response.setError(ErrorCode.INVALID_PARAMS);
@@ -65,6 +71,17 @@ public class ManagerUserHandler extends BaseApiHandler {
     private BaseResponse getUserInfoHandler(String phone, UserService userService) {
         if(phone!=null){
             return userService.getUserInfor(phone);
+        }else {
+            SimpleResponse response = new SimpleResponse();
+            response.setError(ErrorCode.INVALID_PARAMS);
+            response.setMsg("Invalid params.");
+            return response;
+        }
+    }
+
+    private BaseResponse getUserInfobyidHandler(String id, UserService userService) {
+        if(id!=null){
+            return userService.getUserInforbyid(id);
         }else {
             SimpleResponse response = new SimpleResponse();
             response.setError(ErrorCode.INVALID_PARAMS);

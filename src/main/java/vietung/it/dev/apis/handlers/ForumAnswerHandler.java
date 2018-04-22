@@ -28,15 +28,15 @@ public class ForumAnswerHandler extends BaseApiHandler {
                 String id = request.getFormAttribute("id");
                 return delAnswerHandle(phone,id,service);
             }else if(type.equals("like")){
-                String phone = request.getParam("ph");
-                String like = request.getParam("like");
-                String id = request.getParam("id");
+                String phone = request.getFormAttribute("ph");
+                String like = request.getFormAttribute("like");
+                String id = request.getFormAttribute("id");
                 return likeAnswerHandler(like,id,phone,service);
             }else if(type.equals("getbyquestion")){
                 String id = request.getFormAttribute("idquestion");
-                String strofset = request.getParam("ofset");
-                String strpage = request.getParam("page");
-                String phone = request.getParam("ph");
+                String strofset = request.getFormAttribute("ofset");
+                String strpage = request.getFormAttribute("page");
+                String phone = request.getFormAttribute("ph");
                 return getAnswerByQuestionHandle(id,phone,strofset,strpage,service);
             }  else{
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
