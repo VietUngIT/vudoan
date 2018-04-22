@@ -57,7 +57,9 @@ public class RoomServiceImp implements RoomService {
                 MongoCollection collectionRoom = jongo.getCollection(Room.class.getSimpleName());
                 MongoCursor<Room> cursorRoomUser = collectionRoom.find("{user:{$all:#}}",lstUser).as(Room.class);
                 if (cursorRoomUser.hasNext()) {
-                    response.setError(ErrorCode.INVALID_PARAMS);
+                    Room room = cursorRoomUser.next();
+                    response.setData(room.toJson());
+                    response.setError(ErrorCode.ROOM_EXIST);
                     response.setMsg("Room đã tôn tại.");
                     return response;
                 }
