@@ -121,6 +121,7 @@ public class MarketPriceServiceImp implements MarketPriceService {
         stringBuilder.append("{$and: [{idCate: #}]}");
         MongoCursor<MarketPrice> cursor = collection.find(stringBuilder.toString(),idCate).sort("{timeCreate:-1}").skip(page*ofset).limit(ofset).as(MarketPrice.class);
         JsonArray array = new JsonArray();
+        response.setTotal(cursor.count());
         while (cursor.hasNext()){
             array.add(cursor.next().toJson());
         }

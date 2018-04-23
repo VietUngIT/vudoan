@@ -18,6 +18,7 @@ public class Expert extends MongoLog {
     private String desc;
     private String email;
     private String address;
+    private String workPlace;
     private Double lat;
     private Double lon;
     private int numRate;
@@ -40,6 +41,7 @@ public class Expert extends MongoLog {
         document.append("desc",desc);
         document.append("email",email);
         document.append("address",address);
+        document.append("workPlace",workPlace);
         document.append("idParentField",idParentField);
         document.append("tags", tags);
         document.append("lat",lat);
@@ -61,6 +63,7 @@ public class Expert extends MongoLog {
         object.addProperty("desc",desc);
         object.addProperty("email",email);
         object.addProperty("address",address);
+        object.addProperty("workPlace",workPlace);
         object.addProperty("idParentField",idParentField);
         object.addProperty("nameParentField",nameParentField);
         List<String> rTags = new ArrayList<>();

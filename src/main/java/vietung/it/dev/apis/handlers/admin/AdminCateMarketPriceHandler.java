@@ -12,31 +12,31 @@ public class AdminCateMarketPriceHandler extends BaseApiHandler {
     @Override
     public BaseResponse handle(HttpServerRequest request) throws Exception {
         CategoryMarketPriceService service = new CategoryMarketPriceServiceImp();
-        String type = request.getParam("t");
+        String type = request.getFormAttribute("t");
         if(type!=null){
             if(type.equals("add")){
-                String strName = request.getParam("name");
-                String strImage = request.getParam("image");
+                String strName = request.getFormAttribute("name");
+                String strImage = request.getFormAttribute("image");
                 if(strName!=null){
                     return service.addCategoryMarketPrice(strName,strImage);
                 }
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
             }else if(type.equals("editname")){
-                String id = request.getParam("id");
-                String strNewName = request.getParam("name");
+                String id = request.getFormAttribute("id");
+                String strNewName = request.getFormAttribute("name");
                 if(id!=null && strNewName!=null){
                     return service.editNameCategoryMarketPrice(id,strNewName);
                 }
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
             }else if(type.equals("editimage")){
-                String id = request.getParam("id");
-                String strNewImage = request.getParam("image");
+                String id = request.getFormAttribute("id");
+                String strNewImage = request.getFormAttribute("image");
                 if(id!=null && strNewImage!=null){
                     return service.editImageCategoryMarketPrice(id,strNewImage);
                 }
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
             }else if(type.equals("del")){
-                String id = request.getParam("id");
+                String id = request.getFormAttribute("id");
                 if(id!=null){
                     return service.deleteCategoryMarketPrice(id);
                 }

@@ -2,16 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="12037996-b4d5-4029-9050-171439b73915" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/config/resource/cloudinary.properties" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/UploadHandler.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/config/CloudinaryConfig.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/UploadService.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/UploadServiceImp.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/test/java/UplaodTesst.java" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/config/apis/apis.json" afterPath="$PROJECT_DIR$/config/apis/apis.json" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/launcher/APILauncher.java" afterPath="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/launcher/APILauncher.java" />
+      <change beforePath="$PROJECT_DIR$/logs/vietungit/doan.log" afterPath="$PROJECT_DIR$/logs/vietungit/doan.log" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/ExpertInfoHandler.java" afterPath="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/ExpertInfoHandler.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminCateMarketPriceHandler.java" afterPath="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminCateMarketPriceHandler.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminExpertHandler.java" afterPath="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminExpertHandler.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/ExpertResponse.java" afterPath="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/ExpertResponse.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/MarketPriceResponse.java" afterPath="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/MarketPriceResponse.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/Expert.java" afterPath="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/Expert.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/ExpertService.java" afterPath="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/ExpertService.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/ExpertServiceImp.java" afterPath="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/ExpertServiceImp.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/MarketPriceServiceImp.java" afterPath="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/MarketPriceServiceImp.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,95 +25,118 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="UploadServiceImp.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/UploadServiceImp.java">
+      <file leaf-file-name="ExpertInfoHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/ExpertInfoHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="107" lean-forward="false" selection-start-line="14" selection-start-column="107" selection-end-line="14" selection-end-column="107" />
+            <state relative-caret-position="578">
+              <caret line="39" column="47" lean-forward="false" selection-start-line="39" selection-start-column="47" selection-end-line="39" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExpertServiceImp.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/ExpertServiceImp.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1615">
+              <caret line="131" column="16" lean-forward="false" selection-start-line="131" selection-start-column="16" selection-end-line="131" selection-end-column="16" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="method#deleteExpert#0;class#ExpertServiceImp#0" expanded="false" />
+                <element signature="method#updateStatusOnlineExpert#0;class#ExpertServiceImp#0" expanded="false" />
+                <element signature="method#editTagsExpert#0;class#ExpertServiceImp#0" expanded="false" />
+                <element signature="method#editDegreeExpert#0;class#ExpertServiceImp#0" expanded="false" />
+                <element signature="method#editFieldExpert#0;class#ExpertServiceImp#0" expanded="false" />
+                <element signature="method#rateExpert#0;class#ExpertServiceImp#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ManagerUserHandler.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/ManagerUserHandler.java">
+      <file leaf-file-name="ForumQuestionServiceImp.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/ForumQuestionServiceImp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="19" column="9" lean-forward="false" selection-start-line="19" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
+            <state relative-caret-position="1819">
+              <caret line="122" column="31" lean-forward="false" selection-start-line="122" selection-start-column="24" selection-end-line="122" selection-end-column="31" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserHandler.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/UserHandler.java">
+      <file leaf-file-name="NewsHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/NewsHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="652">
-              <caret line="46" column="56" lean-forward="false" selection-start-line="46" selection-start-column="56" selection-end-line="46" selection-end-column="56" />
+            <state relative-caret-position="357">
+              <caret line="27" column="92" lean-forward="false" selection-start-line="27" selection-start-column="92" selection-end-line="27" selection-end-column="92" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="APILauncher.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/launcher/APILauncher.java">
+      <file leaf-file-name="Expert.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/Expert.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="37" column="29" lean-forward="true" selection-start-line="37" selection-start-column="29" selection-end-line="37" selection-end-column="29" />
+            <state relative-caret-position="255">
+              <caret line="23" column="24" lean-forward="false" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Utils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/utils/Utils.java">
+      <file leaf-file-name="AdminExpertHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminExpertHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="28" column="35" lean-forward="true" selection-start-line="28" selection-start-column="35" selection-end-line="28" selection-end-column="35" />
+            <state relative-caret-position="1343">
+              <caret line="85" column="35" lean-forward="false" selection-start-line="85" selection-start-column="35" selection-end-line="85" selection-end-column="35" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CloudinaryConfig.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/config/CloudinaryConfig.java">
+      <file leaf-file-name="ExpertService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/ExpertService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="26" column="154" lean-forward="false" selection-start-line="26" selection-start-column="154" selection-end-line="26" selection-end-column="154" />
+            <state relative-caret-position="153">
+              <caret line="10" column="132" lean-forward="false" selection-start-line="10" selection-start-column="132" selection-end-line="10" selection-end-column="132" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExpertResponse.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/ExpertResponse.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="17" column="48" lean-forward="false" selection-start-line="17" selection-start-column="48" selection-end-line="17" selection-end-column="48" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NewsServiceImp.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/NewsServiceImp.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1088">
+              <caret line="226" column="8" lean-forward="false" selection-start-line="226" selection-start-column="8" selection-end-line="227" selection-end-column="42" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="method#likeNews#0;class#NewsServiceImp#0" expanded="false" />
+                <element signature="method#viewNews#0;class#NewsServiceImp#0" expanded="false" />
+                <element signature="method#commentNews#0;class#NewsServiceImp#0" expanded="false" />
+                <element signature="method#deleteNews#0;class#NewsServiceImp#0" expanded="false" />
+                <element signature="method#getNewsById#0;class#NewsServiceImp#0" expanded="false" />
+                <element signature="method#getAllNewsByCateWithFavorite#0;class#NewsServiceImp#0" expanded="false" />
+                <element signature="method#editNews#0;class#NewsServiceImp#0" expanded="false" />
+                <element signature="method#editImageNews#0;class#NewsServiceImp#0" expanded="false" />
+                <element signature="method#editTagsNews#0;class#NewsServiceImp#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MongoPool.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/config/MongoPool.java">
+      <file leaf-file-name="AdminForumQuestionHandler.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminForumQuestionHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="28" column="41" lean-forward="true" selection-start-line="28" selection-start-column="41" selection-end-line="28" selection-end-column="41" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="APIConfig.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/config/APIConfig.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="32" column="20" lean-forward="true" selection-start-line="32" selection-start-column="20" selection-end-line="32" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="mongodb.properties" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/resource/mongodb.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="4" selection-end-column="19" />
+            <state relative-caret-position="170">
+              <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -127,6 +152,28 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>AdminNewsHandler</find>
+      <find>AdminCateMarketInfoHandler</find>
+      <find>AdminMarketInfoHandler</find>
+      <find>AdminCateAgriTechHandler</find>
+      <find>CategorySubAgriTechHandler</find>
+      <find>AdminCateSubAgriTechHandler</find>
+      <find>AdminAgriTechHandler</find>
+      <find>CategoryAgriTechHandler</find>
+      <find>AgriTechHandler</find>
+      <find>CategoryNewsHandler</find>
+      <find>NewsHandler</find>
+      <find>CategoryMarketInfoHandler</find>
+      <find>MarketInfoHandler</find>
+      <find>CategoryMarketPriceHandler</find>
+      <find>CommentHandler</find>
+      <find>MarketPriceHandler</find>
+      <find>AdminMarketPriceHandler</find>
+      <find>AdminCateMarketPriceHandler</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -138,51 +185,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/config/resource/mongodb.properties" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/HandBook.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/CommentsNews.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/TypePriceMarket.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/PriceMarket.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/UserService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/UserServiceImp.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/config/APIConfig.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/config/VertxHttpConfigServer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/UserHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/NewsHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/News.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/utils/Utils.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/TypeNewsResponse.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/TypeNewsHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/TypeNews.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/TypeNewsService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/CreateTypeNewsHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/TypeNewsServiceImp.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/consts/ErrorCode.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/NewsService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/CreateNewsHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/MarketPriceHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/MarketPriceService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/AgriTechService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/CommentServiceImp.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/CommentHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/AgriTechServiceImp.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/MarketInfoServiceImp.java" />
         <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/NewsServiceImp.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/CommentNewsNewsHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/CommentNewsService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/CommentNewsServiceImp.java" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminUserHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/BaseApiHandler.java" />
+        <option value="$PROJECT_DIR$/src/test/java/MongoTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/FieldOfExpertResponse.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/FieldOfExpertService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/consts/Variable.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/ParentFieldExpertResponse.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/ParentFieldExpertHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminParentFieldExpertHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/ParentFieldExpertService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/ParentFieldExpert.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/ParentFieldExpertServiceImp.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/FieldOfExpert.java" />
         <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/FieldOfExpertHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminFieldOfExpertHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/FieldOfExpertService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/FieldOfExpert.java" />
         <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/FieldOfExpertServiceImp.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/UserServiceImp.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/ExpertHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/ForumQuestionService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/ForumQuestionServiceImp.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/ForumQuestionHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/ForumAnswerServiceImp.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/QAQuestion.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/QAQuestionResponse.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminQAQuestionHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/QAQuestionHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/QAQuestionService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/QAQuestionResponse.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/QAQuestionServiceImp.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/QAAnswer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/QAAnswerResponse.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminQAAnswerHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/QAAnswerHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/QAAnswerService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/QAAnswerServiceImp.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/MarketPriceResponse.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/MarketPriceServiceImp.java" />
         <option value="$PROJECT_DIR$/config/apis/apis.json" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/UploadHandler.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/config/resource/cloudinary.properties" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/config/CloudinaryConfig.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/UploadService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/UploadServiceImp.java" />
-        <option value="$PROJECT_DIR$/src/test/java/UplaodTesst.java" />
-        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/launcher/APILauncher.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminCateMarketPriceHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/ExpertInfoHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/ExpertResponse.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/Expert.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminExpertHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/ExpertService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/ExpertServiceImp.java" />
       </list>
     </option>
   </component>
@@ -407,23 +460,12 @@
               <item name="core" type="462c0819:PsiDirectoryNode" />
               <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="vu-doan" type="b2602c69:ProjectViewProjectNode" />
-              <item name="vudoan" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="vu-doan" type="b2602c69:ProjectViewProjectNode" />
-              <item name="vudoan" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
+      <pane id="Scratches" />
       <pane id="PackagesPane">
         <subPane>
           <expand>
@@ -440,8 +482,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="AndroidView" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -449,7 +489,8 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="E:/ms-server/core/pom.xml" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/pom.xml" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -463,7 +504,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.UplaodTesst">
+  <component name="RunManager" selected="Application.APILauncher">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
@@ -479,6 +520,34 @@
         </pattern>
       </extension>
       <option name="MAIN_CLASS_NAME" value="vietung.it.dev.apis.launcher.APILauncher" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="vu-doan" />
+      <envs />
+    </configuration>
+    <configuration name="JavaTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="JavaTest" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="vu-doan" />
+      <envs />
+    </configuration>
+    <configuration name="MongoTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="MongoTest" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -578,14 +647,18 @@
       <option name="PROGRAM_PARAMETERS" />
       <predefined_log_file id="idea.log" enabled="true" />
     </configuration>
-    <list size="2">
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Application.APILauncher" />
       <item index="1" class="java.lang.String" itemvalue="Application.UplaodTesst" />
+      <item index="2" class="java.lang.String" itemvalue="Application.MongoTest" />
+      <item index="3" class="java.lang.String" itemvalue="Application.JavaTest" />
     </list>
     <recent_temporary>
-      <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Application.UplaodTesst" />
-        <item index="1" class="java.lang.String" itemvalue="Application.APILauncher" />
+      <list size="4">
+        <item index="0" class="java.lang.String" itemvalue="Application.APILauncher" />
+        <item index="1" class="java.lang.String" itemvalue="Application.MongoTest" />
+        <item index="2" class="java.lang.String" itemvalue="Application.JavaTest" />
+        <item index="3" class="java.lang.String" itemvalue="Application.UplaodTesst" />
       </list>
     </recent_temporary>
   </component>
@@ -618,11 +691,41 @@
       <workItem from="1521029559128" duration="6609000" />
       <workItem from="1521079582783" duration="1048000" />
       <workItem from="1521208425337" duration="6537000" />
+      <workItem from="1521878758658" duration="1267000" />
+      <workItem from="1521901821221" duration="13057000" />
+      <workItem from="1522032705696" duration="16251000" />
+      <workItem from="1522159267403" duration="7281000" />
+      <workItem from="1522205021901" duration="11803000" />
+      <workItem from="1522296672512" duration="6769000" />
+      <workItem from="1522333311901" duration="8592000" />
+      <workItem from="1522381319663" duration="21803000" />
+      <workItem from="1522478389001" duration="1173000" />
+      <workItem from="1522503353735" duration="6464000" />
+      <workItem from="1522574770878" duration="375000" />
+      <workItem from="1522594598639" duration="3385000" />
+      <workItem from="1522682200505" duration="3021000" />
+      <workItem from="1522859254767" duration="600000" />
+      <workItem from="1523085147861" duration="2053000" />
+      <workItem from="1523279162436" duration="4901000" />
+      <workItem from="1523288775734" duration="2998000" />
+      <workItem from="1523367899778" duration="8438000" />
+      <workItem from="1523431459547" duration="11539000" />
+      <workItem from="1523455842619" duration="1421000" />
+      <workItem from="1523500527996" duration="173000" />
+      <workItem from="1523545565713" duration="1069000" />
+      <workItem from="1523692441202" duration="6930000" />
+      <workItem from="1524062612521" duration="7724000" />
+      <workItem from="1524234079171" duration="5925000" />
+      <workItem from="1524391455456" duration="89000" />
+      <workItem from="1524411930895" duration="2379000" />
+      <workItem from="1524448991807" duration="2464000" />
+      <workItem from="1524491085560" duration="228000" />
+      <workItem from="1524491506788" duration="603000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57266000" />
+    <option name="totallyTimeSpent" value="224172000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -635,27 +738,27 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3267974" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14872068" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32189542" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36677632" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28971255" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31467474" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4555921" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -663,10 +766,11 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3256579" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -684,412 +788,423 @@
           <properties />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/config/VertxHttpConfigServer.java</url>
-          <line>103</line>
+          <url>file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminNewsHandler.java</url>
+          <line>40</line>
           <properties />
-          <option name="timeStamp" value="1" />
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/NewsHandler.java</url>
+          <line>34</line>
+          <properties />
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/NewsServiceImp.java</url>
+          <line>130</line>
+          <properties />
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/CategoryMarketInfoHandler.java</url>
+          <line>16</line>
+          <properties />
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminFieldOfExpertHandler.java</url>
+          <line>13</line>
+          <properties />
+          <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="2" />
+      <option name="time" value="15" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/consts/Roles.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/ForumQuestionHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="38" lean-forward="false" selection-start-line="6" selection-start-column="38" selection-end-line="6" selection-end-column="38" />
+        <state relative-caret-position="254">
+          <caret line="80" column="38" lean-forward="false" selection-start-line="80" selection-start-column="38" selection-end-line="80" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/UserResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/TypeNewsResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="44" lean-forward="false" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/NewsResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/consts/ErrorCode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="47" lean-forward="false" selection-start-line="15" selection-start-column="47" selection-end-line="15" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/TypeNewsService.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/ForumQuestionService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
-          <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+          <caret line="12" column="48" lean-forward="false" selection-start-line="12" selection-start-column="43" selection-end-line="12" selection-end-column="48" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/TypeNewsHandler.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/ForumAnswerResponse.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="39" lean-forward="true" selection-start-line="13" selection-start-column="39" selection-end-line="13" selection-end-column="39" />
+        <state relative-caret-position="85">
+          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/NewsHandler.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/ForumAnswerHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="861">
-          <caret line="57" column="63" lean-forward="true" selection-start-line="57" selection-start-column="63" selection-end-line="57" selection-end-column="63" />
+        <state relative-caret-position="220">
+          <caret line="64" column="44" lean-forward="false" selection-start-line="64" selection-start-column="44" selection-end-line="64" selection-end-column="44" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/NewsService.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/ForumAnswerService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/CreateNewsHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="70" column="0" lean-forward="false" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/CommentNewsService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="54" lean-forward="false" selection-start-line="7" selection-start-column="54" selection-end-line="7" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/CommentNewsNewsHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="714">
-          <caret line="42" column="54" lean-forward="false" selection-start-line="42" selection-start-column="54" selection-end-line="42" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/CreateTypeNewsHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="759">
-          <caret line="49" column="5" lean-forward="true" selection-start-line="44" selection-start-column="4" selection-end-line="49" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/NewsServiceImp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="127" column="9" lean-forward="false" selection-start-line="127" selection-start-column="9" selection-end-line="127" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/UserService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="11" column="24" lean-forward="false" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/resource/log4j.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-714">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminUserHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="79" lean-forward="false" selection-start-line="25" selection-start-column="79" selection-end-line="25" selection-end-column="79" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/BaseApiHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="74">
-          <caret line="22" column="46" lean-forward="false" selection-start-line="22" selection-start-column="46" selection-end-line="22" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/config/VertxHttpConfigServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="86" column="5" lean-forward="false" selection-start-line="86" selection-start-column="5" selection-end-line="86" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/FieldOfExpertResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="48" lean-forward="false" selection-start-line="20" selection-start-column="48" selection-end-line="20" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/FieldOfExpertHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="24" column="90" lean-forward="false" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="90" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/FieldOfExpertService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="53" lean-forward="false" selection-start-line="9" selection-start-column="53" selection-end-line="9" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminFieldOfExpertHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="41" column="58" lean-forward="false" selection-start-line="41" selection-start-column="39" selection-end-line="41" selection-end-column="58" />
+        <state relative-caret-position="85">
+          <caret line="6" column="24" lean-forward="false" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/FieldOfExpert.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="15" column="34" lean-forward="false" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+        <state relative-caret-position="238">
+          <caret line="20" column="38" lean-forward="false" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/UserServiceImp.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/ParentFieldExpertResponse.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="88" column="106" lean-forward="false" selection-start-line="88" selection-start-column="16" selection-end-line="88" selection-end-column="106" />
+        <state relative-caret-position="102">
+          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="18" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/TypeNewsServiceImp.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminNewsHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-193">
-          <caret line="84" column="120" lean-forward="true" selection-start-line="79" selection-start-column="8" selection-end-line="84" selection-end-column="120" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/CommentNewsServiceImp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="867">
-          <caret line="66" column="55" lean-forward="false" selection-start-line="66" selection-start-column="16" selection-end-line="66" selection-end-column="55" />
+        <state relative-caret-position="-391">
+          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/FieldOfExpertServiceImp.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/QAQuestionService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1581">
-          <caret line="104" column="68" lean-forward="false" selection-start-line="104" selection-start-column="68" selection-end-line="104" selection-end-column="68" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+        <state relative-caret-position="34">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/TypeNews.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/ForumAnswerServiceImp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="27" column="26" lean-forward="false" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
-          <folding />
+        <state relative-caret-position="170">
+          <caret line="125" column="24" lean-forward="true" selection-start-line="99" selection-start-column="8" selection-end-line="125" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/News.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/QAQuestion.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="35" column="33" lean-forward="false" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="33" />
-          <folding />
+        <state relative-caret-position="272">
+          <caret line="16" column="27" lean-forward="false" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/HandBook.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/QAQuestionResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="23" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/QAAnswerResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="5" lean-forward="false" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminQAQuestionHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="393">
+          <caret line="57" column="9" lean-forward="true" selection-start-line="53" selection-start-column="7" selection-end-line="57" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminQAAnswerHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="33" column="9" lean-forward="true" selection-start-line="13" selection-start-column="8" selection-end-line="33" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/QAQuestionHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="42" column="90" lean-forward="true" selection-start-line="42" selection-start-column="16" selection-end-line="42" selection-end-column="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/QAAnswerService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/QAQuestionServiceImp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="104" column="24" lean-forward="true" selection-start-line="84" selection-start-column="8" selection-end-line="104" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/QAAnswerHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="444">
+          <caret line="36" column="47" lean-forward="true" selection-start-line="36" selection-start-column="47" selection-end-line="36" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/QAAnswerServiceImp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1717">
+          <caret line="101" column="34" lean-forward="false" selection-start-line="101" selection-start-column="34" selection-end-line="101" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/QAAnswer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="30" lean-forward="false" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/ParentFieldExpertHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/ParentFieldExpert.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
-          <caret line="25" column="24" lean-forward="false" selection-start-line="17" selection-start-column="8" selection-end-line="25" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/PriceMarket.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="18" column="47" lean-forward="false" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/CommentsNews.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="8" column="25" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/Users.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/apis/apis.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="401">
-          <caret line="97" column="59" lean-forward="false" selection-start-line="97" selection-start-column="46" selection-end-line="97" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/UploadHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="974">
-          <caret line="74" column="23" lean-forward="false" selection-start-line="74" selection-start-column="23" selection-end-line="74" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/resource/mongodb.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="4" selection-end-column="19" />
-          <folding />
+          <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/config/APIConfig.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
-          <caret line="32" column="20" lean-forward="true" selection-start-line="32" selection-start-column="20" selection-end-line="32" selection-end-column="20" />
-          <folding />
+          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/resource/cloudinary.properties">
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/CategoryNewsHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="10" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="10" />
-          <folding />
+        <state relative-caret-position="68">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/config/MongoConfig.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/News.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="33" column="5" lean-forward="true" selection-start-line="24" selection-start-column="4" selection-end-line="33" selection-end-column="5" />
-          <folding />
+        <state relative-caret-position="1054">
+          <caret line="70" column="42" lean-forward="false" selection-start-line="70" selection-start-column="32" selection-end-line="70" selection-end-column="42" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/config/MongoPool.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="28" column="41" lean-forward="true" selection-start-line="28" selection-start-column="41" selection-end-line="28" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/UploadService.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/Category.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
-          <caret line="5" column="61" lean-forward="false" selection-start-line="5" selection-start-column="61" selection-end-line="5" selection-end-column="61" />
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminParentFieldExpertHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="12" column="42" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/CategoryMarketPrice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/CategoryMarketPriceServiceImp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="58" column="39" lean-forward="false" selection-start-line="58" selection-start-column="39" selection-end-line="58" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/MarketPriceService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="24" lean-forward="false" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/MarketPriceResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/NewsService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="12" column="17" lean-forward="false" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/MarketPriceServiceImp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="123" column="42" lean-forward="false" selection-start-line="123" selection-start-column="42" selection-end-line="123" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/MarketPriceHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="45" column="25" lean-forward="false" selection-start-line="45" selection-start-column="25" selection-end-line="45" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/MarketPrice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="42" column="42" lean-forward="false" selection-start-line="42" selection-start-column="32" selection-end-line="42" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/apis/apis.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1513">
+          <caret line="89" column="20" lean-forward="false" selection-start-line="89" selection-start-column="20" selection-end-line="89" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/utils/Utils.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminCateMarketPriceHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="38" column="52" lean-forward="false" selection-start-line="38" selection-start-column="52" selection-end-line="38" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminMarketPriceHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="22" column="60" lean-forward="false" selection-start-line="22" selection-start-column="56" selection-end-line="22" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/ExpertHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="48" column="20" lean-forward="false" selection-start-line="48" selection-start-column="20" selection-end-line="48" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/NewsResponse.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
-          <caret line="28" column="35" lean-forward="true" selection-start-line="28" selection-start-column="35" selection-end-line="28" selection-end-column="35" />
+          <caret line="19" column="8" lean-forward="true" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/response/ExpertResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="48" lean-forward="false" selection-start-line="17" selection-start-column="48" selection-end-line="17" selection-end-column="48" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/UplaodTesst.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminExpertHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        <state relative-caret-position="1343">
+          <caret line="85" column="35" lean-forward="false" selection-start-line="85" selection-start-column="35" selection-end-line="85" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/ExpertService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="10" column="132" lean-forward="false" selection-start-line="10" selection-start-column="132" selection-end-line="10" selection-end-column="132" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/NewsHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="27" column="92" lean-forward="false" selection-start-line="27" selection-start-column="92" selection-end-line="27" selection-end-column="92" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/models/Expert.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="23" column="24" lean-forward="false" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/ExpertInfoHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="39" column="47" lean-forward="false" selection-start-line="39" selection-start-column="47" selection-end-line="39" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/ExpertServiceImp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1615">
+          <caret line="131" column="16" lean-forward="false" selection-start-line="131" selection-start-column="16" selection-end-line="131" selection-end-column="16" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#deleteExpert#0;class#ExpertServiceImp#0" expanded="false" />
+            <element signature="method#updateStatusOnlineExpert#0;class#ExpertServiceImp#0" expanded="false" />
+            <element signature="method#editTagsExpert#0;class#ExpertServiceImp#0" expanded="false" />
+            <element signature="method#editDegreeExpert#0;class#ExpertServiceImp#0" expanded="false" />
+            <element signature="method#editFieldExpert#0;class#ExpertServiceImp#0" expanded="false" />
+            <element signature="method#rateExpert#0;class#ExpertServiceImp#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/UserHandler.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/ForumQuestionServiceImp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="652">
-          <caret line="46" column="56" lean-forward="false" selection-start-line="46" selection-start-column="56" selection-end-line="46" selection-end-column="56" />
+        <state relative-caret-position="1819">
+          <caret line="122" column="31" lean-forward="false" selection-start-line="122" selection-start-column="24" selection-end-line="122" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/config/CloudinaryConfig.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/NewsServiceImp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="26" column="154" lean-forward="false" selection-start-line="26" selection-start-column="154" selection-end-line="26" selection-end-column="154" />
+        <state relative-caret-position="1088">
+          <caret line="226" column="8" lean-forward="false" selection-start-line="226" selection-start-column="8" selection-end-line="227" selection-end-column="42" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#likeNews#0;class#NewsServiceImp#0" expanded="false" />
+            <element signature="method#viewNews#0;class#NewsServiceImp#0" expanded="false" />
+            <element signature="method#commentNews#0;class#NewsServiceImp#0" expanded="false" />
+            <element signature="method#deleteNews#0;class#NewsServiceImp#0" expanded="false" />
+            <element signature="method#getNewsById#0;class#NewsServiceImp#0" expanded="false" />
+            <element signature="method#getAllNewsByCateWithFavorite#0;class#NewsServiceImp#0" expanded="false" />
+            <element signature="method#editNews#0;class#NewsServiceImp#0" expanded="false" />
+            <element signature="method#editImageNews#0;class#NewsServiceImp#0" expanded="false" />
+            <element signature="method#editTagsNews#0;class#NewsServiceImp#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/launcher/APILauncher.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/admin/AdminForumQuestionHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="37" column="29" lean-forward="true" selection-start-line="37" selection-start-column="29" selection-end-line="37" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/core/services/imp/UploadServiceImp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="107" lean-forward="false" selection-start-line="14" selection-start-column="107" selection-end-line="14" selection-end-column="107" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/vietung/it/dev/apis/handlers/ManagerUserHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="19" column="9" lean-forward="false" selection-start-line="19" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
+        <state relative-caret-position="170">
+          <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding />
         </state>
       </provider>
