@@ -214,4 +214,23 @@ public class UserServiceImp implements UserService {
         }
         return response;
     }
+
+    @Override
+    public UserResponse getUserInforbyid(String id) {
+        UserResponse response = new UserResponse();
+        DB db =  MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(Users.class.getSimpleName());
+        StringBuilder sb = new StringBuilder();
+        sb.append("{$and: [{_id: #}]}");
+        MongoCursor<Users> cursor = collection.find(sb.toString(), id).limit(1).as(Users.class);
+        if (cursor.hasNext()){
+            Users users = cursor.next();
+            response.setUsers(users);
+        } else {
+            response.setError(ErrorCode.USER_NOT_EXIST);
+            response.setMsg("Id khong ton tai");
+        }
+        return response;
+    }
 }
