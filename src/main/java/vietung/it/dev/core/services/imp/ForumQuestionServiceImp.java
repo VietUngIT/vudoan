@@ -255,22 +255,21 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         response.setData(forumQuestion.toJson());
 
         //send content question to sv2 and get tags and field from sv2------------
-
+        //Kafka.send(forumQuestion.get_id(),forumQuestion.getIdField(),forumQuestion.getContent());
+//        Kafka.out(forumQuestion.get_id(),forumQuestion.getContent());
         //Search Expert
-        List<Expert> lstExpert = new ArrayList<>();
 
-        //save data get from sv2 to db
+        //save data to db
         List<String> lstTag = new ArrayList<>();
         List<String> lstField = new ArrayList<>();
         ExpertRorumQuestion expertRorumQuestion = new ExpertRorumQuestion();
         expertRorumQuestion.set_id(objectId.toHexString());
         expertRorumQuestion.setIdForumQuestion(id);
-        expertRorumQuestion.setExperts(lstExpert);
         expertRorumQuestion.setIdField(lstField);
+        expertRorumQuestion.setIdParentField(idField);
         expertRorumQuestion.setTags(lstTag);
         MongoPool.log(ExpertRorumQuestion.class.getSimpleName(),expertRorumQuestion.toDocument());
-//        Kafka.send(forumQuestion.get_id(),forumQuestion.getIdField(),forumQuestion.getContent());
-        Kafka.out(forumQuestion.get_id(),forumQuestion.getIdField(),forumQuestion.getContent());
+
         return response;
     }
 
@@ -291,13 +290,16 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         cursor = collection.find(builder.toString(),id).limit(1).as(ExpertRorumQuestion.class);
         if(cursor.hasNext()){
             ExpertRorumQuestion expertRorumQuestion = cursor.next();
-            List<Expert> lstExpert = expertRorumQuestion.getExperts();
-            List<Expert> lstTemp = new ArrayList<>();
-            for (int i=0;i<lstExpert.size();i++){
-                if(i==numExpert) break;
-                lstTemp.add(lstExpert.get(i));
-            }
-            expertRorumQuestion.setExperts(lstTemp);
+
+
+//            List<Expert> lstExpert = expertRorumQuestion.getExperts();
+//            List<Expert> lstTemp = new ArrayList<>();
+//            for (int i=0;i<lstExpert.size();i++){
+//                if(i==numExpert) break;
+//                lstTemp.add(lstExpert.get(i));
+//            }
+//            expertRorumQuestion.setExperts(lstTemp);
+
             response.setData(expertRorumQuestion.toJsonExpert());
         }else{
             response.setError(ErrorCode.ID_NOT_EXIST);
