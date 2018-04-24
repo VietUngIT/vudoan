@@ -270,7 +270,7 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         expertRorumQuestion.setTags(lstTag);
         MongoPool.log(ExpertRorumQuestion.class.getSimpleName(),expertRorumQuestion.toDocument());
 //        Kafka.send(forumQuestion.get_id(),forumQuestion.getIdField(),forumQuestion.getContent());
-        Kafka.out(forumQuestion.get_id(),forumQuestion.getIdField(),forumQuestion.getContent());
+//        Kafka.out(forumQuestion.get_id(),forumQuestion.getIdField(),forumQuestion.getContent());
         return response;
     }
 
