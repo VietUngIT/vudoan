@@ -8,6 +8,7 @@ import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
 import vietung.it.dev.apis.response.ForumQuestionResponse;
+import vietung.it.dev.core.config.Kafka;
 import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.models.*;
@@ -36,7 +37,8 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         if(cursor.hasNext()){
             ForumQuestion forumQuestion = cursor.next();
             if(phone.trim().equals(forumQuestion.getPhone())){
-                collection.remove(new ObjectId(id));
+                collection.update("{_id:#}", new ObjectId(id)).with("{$set:{status:#}}",ForumQuestion.INACTIVE);
+                response.setData(forumQuestion.toJson());
             }else {
                 response.setError(ErrorCode.LESS_ROLE);
                 response.setMsg("Không có quyền xóa.");
@@ -152,8 +154,8 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         StringBuilder builder = new StringBuilder();
         MongoCursor<ForumQuestion> cursor = null;
         MongoCollection collection = jongo.getCollection(ForumQuestion.class.getSimpleName());
-        builder.append("{$and: [{idField: #}]}");
-        cursor = collection.find(builder.toString(),id).sort("{timeCreate:-1}").skip(page*ofset).limit(ofset).as(ForumQuestion.class);
+        builder.append("{$and: [{idField: #},{status: #}]}");
+        cursor = collection.find(builder.toString(),id,ForumQuestion.ACTICE).sort("{timeCreate:-1}").skip(page*ofset).limit(ofset).as(ForumQuestion.class);
         JsonArray jsonArray = new JsonArray();
         response.setTotal(cursor.count());
         while(cursor.hasNext()){
@@ -218,7 +220,7 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
 
         ForumQuestionResponse response = new ForumQuestionResponse();
         UploadService service = new UploadServiceImp();
-        if (!ObjectId.isValid(idField)) {
+        if (!ObjectId.isValid(idField) && !idField.equals("")) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
             response.setMsg("Id không đúng.");
             return response;
@@ -229,9 +231,11 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         String id = objectId.toHexString();
         forumQuestion.set_id(id);
         forumQuestion.setIdField(idField);
+        forumQuestion.setIdUser(users.get_id());
         forumQuestion.setPhone(phone);
         forumQuestion.setContent(content);
-        if(image!=null){
+        forumQuestion.setStatus(ForumQuestion.ACTICE);
+        if(image!=null && !image.equals("")){
             try {
                 String urlImage = service.uploadImage(image);
                 forumQuestion.setImage(urlImage);
@@ -259,11 +263,14 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         List<String> lstTag = new ArrayList<>();
         List<String> lstField = new ArrayList<>();
         ExpertRorumQuestion expertRorumQuestion = new ExpertRorumQuestion();
+        expertRorumQuestion.set_id(objectId.toHexString());
         expertRorumQuestion.setIdForumQuestion(id);
         expertRorumQuestion.setExperts(lstExpert);
         expertRorumQuestion.setIdField(lstField);
         expertRorumQuestion.setTags(lstTag);
         MongoPool.log(ExpertRorumQuestion.class.getSimpleName(),expertRorumQuestion.toDocument());
+//        Kafka.send(forumQuestion.get_id(),forumQuestion.getIdField(),forumQuestion.getContent());
+        Kafka.out(forumQuestion.get_id(),forumQuestion.getIdField(),forumQuestion.getContent());
         return response;
     }
 
@@ -296,6 +303,38 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
             response.setError(ErrorCode.ID_NOT_EXIST);
             response.setMsg("Id không tồn tại.");
         }
+        return response;
+    }
+
+    @Override
+    public ForumQuestionResponse getQuestionAll(int page, int ofset, String phone) throws Exception {
+        ForumQuestionResponse response = new ForumQuestionResponse();
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        StringBuilder builder = new StringBuilder();
+        MongoCursor<ForumQuestion> cursor = null;
+        MongoCollection collection = jongo.getCollection(ForumQuestion.class.getSimpleName());
+        builder.append("{$and: [{status: #}]}");
+        cursor = collection.find(builder.toString(),ForumQuestion.ACTICE).sort("{timeCreate:-1}").skip(page*ofset).limit(ofset).as(ForumQuestion.class);
+        JsonArray jsonArray = new JsonArray();
+        response.setTotal(cursor.count());
+        while(cursor.hasNext()){
+            ForumQuestion forumQuestion = cursor.next();
+            Users users = Utils.getUserByPhone(forumQuestion.getPhone());
+            if(users!=null){
+                forumQuestion.setAvatar(users.getAvatar());
+                forumQuestion.setNameUser(users.getName());
+            }
+            List<String> userLike = forumQuestion.getUserLike();
+            if(userLike!=null && userLike.contains(phone)){
+                forumQuestion.setIsLiked(true);
+            }else{
+                forumQuestion.setIsLiked(false);
+            }
+            jsonArray.add(forumQuestion.toJson());
+        }
+        response.setArray(jsonArray);
+
         return response;
     }
 }

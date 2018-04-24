@@ -24,7 +24,7 @@ import java.util.List;
 
 public class ExpertServiceImp implements ExpertService {
     @Override
-    public ExpertResponse addExpert(String name, String phone, String desc, String email, String address,String idParentField, Double lat,Double lon, String field, String tags, String degree) throws Exception {
+    public ExpertResponse addExpert(String name, String phone, String desc, String email, String address,String idParentField, Double lat,Double lon, String field, String tags, String degree, String workplace) throws Exception {
         ExpertResponse response = new ExpertResponse();
         UserResponse userResponse = new UserResponse();
         UserService service = new UserServiceImp();
@@ -33,7 +33,7 @@ public class ExpertServiceImp implements ExpertService {
         JsonArray arrayDegree = Utils.toJsonArray(degree);
         if(arrayField.size()<=0){
             response.setError(ErrorCode.INVALID_PARAMS);
-            response.setMsg("Phải thêm lĩnh vực làm iệc cho chuyên gia");
+            response.setMsg("Phải thêm lĩnh vực làm việc cho chuyên gia");
             return response;
         }
         if (!ObjectId.isValid(idParentField)) {
@@ -67,6 +67,7 @@ public class ExpertServiceImp implements ExpertService {
             expert.setDesc(desc);
             expert.setEmail(email);
             expert.setAddress(address);
+            expert.setWorkPlace(workplace);
             expert.setIdParentField(idParentField);
             expert.setLat(lat);
             expert.setLon(lon);
@@ -107,7 +108,7 @@ public class ExpertServiceImp implements ExpertService {
     }
 
     @Override
-    public ExpertResponse editExpert(String phone, String desc, Double lat,Double lon, String email, String idParentField) throws Exception {
+    public ExpertResponse editExpert(String phone, String desc, Double lat,Double lon, String email, String idParentField, String workplace) throws Exception {
         ExpertResponse response = new ExpertResponse();
         if (!ObjectId.isValid(idParentField)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
@@ -135,6 +136,9 @@ public class ExpertServiceImp implements ExpertService {
                     collection.update("{phone:#}",phone).with("{$set:{email:#}}",email);
                     expert.setLat(lat);
                     expert.setLon(lon);
+                }
+                if(workplace!=null){
+                    collection.update("{phone:#}",phone).with("{$set:{workPlace:#}}",workplace);
                 }
                 collection.update("{phone:#}",phone).with("{$set:{idParentField:#}}",idParentField);
                 expert.setIdParentField(idParentField);
@@ -324,6 +328,24 @@ public class ExpertServiceImp implements ExpertService {
             response.setError(ErrorCode.USER_NOT_EXIST);
             response.setMsg("Chuyên gia này không tồn tại.");
         }
+        return response;
+    }
+
+    @Override
+    public ExpertResponse getAllExpert(int ofs, int page) throws Exception {
+        ExpertResponse response = new ExpertResponse();
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(Expert.class.getSimpleName());
+        MongoCursor<Expert> cursor = collection.find().skip(page*ofs).limit(ofs).as(Expert.class);
+        JsonArray jsonArray = new JsonArray();
+        response.setTotal(cursor.count());
+        while(cursor.hasNext()){
+            Expert expert = cursor.next();
+            expert.setNameFields(getListNameFieldOfExpert(expert.getIdFields()));
+            jsonArray.add(expert.toJson());
+        }
+        response.setArray(jsonArray);
         return response;
     }
 

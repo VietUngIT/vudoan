@@ -8,6 +8,14 @@
     <artifactId>vu-doan</artifactId>
     <version>1.0-SNAPSHOT</version>
     <dependencies>
+
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>0.10.1.1</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>

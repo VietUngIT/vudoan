@@ -87,7 +87,7 @@
       "handler":"vietung.it.dev.apis.handlers.admin.AdminCateMarketPriceHandler",
       "isPublic":false,
       "roles":[2,3],
-      "method":"GET"
+      "method":"POST"
     },{
       "path":"/news",
       "handler":"vietung.it.dev.apis.handlers.NewsHandler",
@@ -183,13 +183,13 @@
       "handler":"vietung.it.dev.apis.handlers.ForumQuestionHandler",
       "isPublic":false,
       "roles":[],
-      "method":"GET"
+      "method":"POST"
     },{
       "path":"/forumanswer",
       "handler":"vietung.it.dev.apis.handlers.ForumAnswerHandler",
       "isPublic":false,
       "roles":[],
-      "method":"GET"
+      "method":"POST"
     },{
       "path":"/parentfiledexpert",
       "handler":"vietung.it.dev.apis.handlers.ParentFieldExpertHandler",

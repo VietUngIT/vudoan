@@ -10,6 +10,8 @@ import java.util.List;
 
 @Data
 public class ForumQuestion extends  MongoLog {
+    public static final int ACTICE = 0;
+    public static final int INACTIVE = 1;
     private String _id;
     private String idField;
     private String phone;
@@ -23,7 +25,7 @@ public class ForumQuestion extends  MongoLog {
     private List<String> userLike = new ArrayList<>();
     private int numComment;
     private Boolean isLiked;
-
+    private int status;
     @Override
     public Document toDocument() {
         Document document = new Document();
@@ -37,6 +39,7 @@ public class ForumQuestion extends  MongoLog {
         document.append("numLike",numLike);
         document.append("userLike",userLike);
         document.append("timeCreate",timeCreate);
+        document.append("status",status);
         return document;
     }
     public JsonObject toJson(){

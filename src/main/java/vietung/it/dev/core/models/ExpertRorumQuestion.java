@@ -25,6 +25,7 @@ public class ExpertRorumQuestion extends MongoLog{
         doc.append("tags",tags);
         doc.append("idField",idField);
         doc.append("idExpert",idExpert);
+        doc.append("experts",experts);
         return doc;
     }
 
