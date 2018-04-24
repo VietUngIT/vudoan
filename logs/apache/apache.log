@@ -1,0 +1,2 @@
+17 thg 4 2018, 15:45:22,931 I/O exception (java.net.SocketException) caught when processing request to {s}->https://api.cloudinary.com:443: Connection reset by peer: socket write error
+17 thg 4 2018, 15:45:22,936 Retrying request to {s}->https://api.cloudinary.com:443

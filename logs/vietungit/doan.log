@@ -1,21 +1,13 @@
-23 Apr 2018, 10:13:25,584 Logger is initialed
-23 Apr 2018, 10:13:26,213 APIConfig is initialed
-23 Apr 2018, 10:13:27,484 MongoPool is initialed
-23 Apr 2018, 10:13:27,495 Cloudinary is initialed
-23 Apr 2018, 10:13:28,240 start on port 8083
-23 Apr 2018, 10:13:28,240 start on port 8083
-23 Apr 2018, 10:13:28,240 start on port 8083
-23 Apr 2018, 10:13:28,240 start on port 8083
-23 Apr 2018, 10:13:28,240 start on port 8083
-23 Apr 2018, 10:13:28,240 start on port 8083
-23 Apr 2018, 10:13:28,240 start on port 8083
-23 Apr 2018, 10:13:28,240 start on port 8083
-23 Apr 2018, 10:13:28,240 start on port 8083
-23 Apr 2018, 10:13:28,240 start on port 8083
-23 Apr 2018, 10:13:28,240 start on port 8083
-23 Apr 2018, 10:13:28,240 start on port 8083
-23 Apr 2018, 10:13:28,240 start on port 8083
-23 Apr 2018, 10:13:28,240 start on port 8083
-23 Apr 2018, 10:13:28,240 start on port 8083
-23 Apr 2018, 10:13:28,240 start on port 8083
-23 Apr 2018, 10:13:28,244 Vert.x application is started!
+19 thg 4 2018, 13:45:32,051 Logger is initialed
+19 thg 4 2018, 13:45:32,533 APIConfig is initialed
+19 thg 4 2018, 13:45:33,439 MongoPool is initialed
+19 thg 4 2018, 13:45:33,447 Cloudinary is initialed
+19 thg 4 2018, 13:45:33,975 start on port 8083
+19 thg 4 2018, 13:45:33,975 start on port 8083
+19 thg 4 2018, 13:45:33,975 start on port 8083
+19 thg 4 2018, 13:45:33,975 start on port 8083
+19 thg 4 2018, 13:45:33,975 start on port 8083
+19 thg 4 2018, 13:45:33,975 start on port 8083
+19 thg 4 2018, 13:45:33,975 start on port 8083
+19 thg 4 2018, 13:45:33,975 start on port 8083
+19 thg 4 2018, 13:45:33,979 Vert.x application is started!
