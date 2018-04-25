@@ -3,6 +3,7 @@ package vietung.it.dev.core.services.imp;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mongodb.DB;
+import org.apache.commons.collections4.CollectionUtils;
 import org.bson.types.ObjectId;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
@@ -12,12 +13,15 @@ import vietung.it.dev.core.config.Kafka;
 import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.models.*;
+import vietung.it.dev.core.services.ExpertService;
+import vietung.it.dev.core.services.FieldOfExpertService;
 import vietung.it.dev.core.services.ForumQuestionService;
 import vietung.it.dev.core.services.UploadService;
 import vietung.it.dev.core.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 public class ForumQuestionServiceImp implements ForumQuestionService {
@@ -255,22 +259,23 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         response.setData(forumQuestion.toJson());
 
         //send content question to sv2 and get tags and field from sv2------------
+//        Kafka.send(forumQuestion.get_id(),forumQuestion.getIdField(),forumQuestion.getContent());
+        Kafka.out(forumQuestion.get_id(),"",forumQuestion.getContent());
 
-        //Search Expert
-        List<Expert> lstExpert = new ArrayList<>();
-
-        //save data get from sv2 to db
-        List<String> lstTag = new ArrayList<>();
+        //save data to db tablde temp
         List<String> lstField = new ArrayList<>();
+        List<Expert> lstExpert = new ArrayList<>();
+        List<String> lstTag = new ArrayList<>();
         ExpertRorumQuestion expertRorumQuestion = new ExpertRorumQuestion();
         expertRorumQuestion.set_id(objectId.toHexString());
         expertRorumQuestion.setIdForumQuestion(id);
         expertRorumQuestion.setExperts(lstExpert);
+        expertRorumQuestion.setIdParentField(idField);
         expertRorumQuestion.setIdField(lstField);
         expertRorumQuestion.setTags(lstTag);
+        expertRorumQuestion.setTimeCreate(Calendar.getInstance().getTimeInMillis());
         MongoPool.log(ExpertRorumQuestion.class.getSimpleName(),expertRorumQuestion.toDocument());
-//        Kafka.send(forumQuestion.get_id(),forumQuestion.getIdField(),forumQuestion.getContent());
-//        Kafka.out(forumQuestion.get_id(),forumQuestion.getIdField(),forumQuestion.getContent());
+
         return response;
     }
 
@@ -335,6 +340,109 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         }
         response.setArray(jsonArray);
 
+        return response;
+    }
+
+    @Override
+    public ForumQuestionResponse getTagsForumQuestion(String idQuestion, String strTags) throws Exception {
+
+        ForumQuestionResponse response = new ForumQuestionResponse();
+        FieldOfExpertService fieldOfExpertService = new FieldOfExpertServiceImp();
+        ExpertService expertService = new ExpertServiceImp();
+        if (!ObjectId.isValid(idQuestion) && !idQuestion.equals("")) {
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("Id không đúng.");
+            return response;
+        }
+        JsonArray array = Utils.toJsonArray(strTags);
+        List<String> lstTag = new ArrayList<>();
+        for (int i=0;i<array.size();i++){
+            JsonObject object = new JsonObject();
+            lstTag.add(object.get("label").getAsString());
+        }
+        //get by idquestion in table expertRorumQuestion
+
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        StringBuilder builder = new StringBuilder();
+        MongoCursor<ExpertRorumQuestion> cursor = null;
+        MongoCollection collection = jongo.getCollection(ExpertRorumQuestion.class.getSimpleName());
+        builder.append("{$and: [{idForumQuestion: #}]}");
+        cursor = collection.find(builder.toString(),idQuestion).limit(1).as(ExpertRorumQuestion.class);
+        if(cursor.hasNext()){
+            ExpertRorumQuestion expertRorumQuestion = cursor.next();
+            //get 5 field
+            List<String> lstIdField = fieldOfExpertService.getListFieldMatchTags(lstTag);
+            //query expert
+            List<Expert> lstExpert = expertService.getListExpertByParentField(expertRorumQuestion.getIdParentField());
+            int nExpert = lstExpert.size();
+            //-----------------------------
+            // + sort expert by match tags and update weigth match
+            for (Expert expert: lstExpert ){
+                expert.setNumMatchTags(CollectionUtils.intersection(expert.getTags(),lstTag).size());
+            }
+            Collections.sort(lstExpert,Expert.NUM_MATCH_TAGS_DESC);
+            for (int i=0;i<lstExpert.size();i++){
+                if(i==0){
+                    lstExpert.get(i).setWeigthMatch(nExpert*50);
+                } else {
+                    if(lstExpert.get(i).getNumMatchTags()==lstExpert.get(i-1).getNumMatchTags()){
+                        lstExpert.get(i).setWeigthMatch(lstExpert.get(i-1).getWeigthMatch());
+                    }else{
+                        lstExpert.get(i).setWeigthMatch((nExpert-i)*50);
+                    }
+                }
+
+            }
+            // + sort expert by match idField and update weigth match
+            for (Expert expert: lstExpert ){
+                expert.setNumMatchField(CollectionUtils.intersection(expert.getIdFields(),lstIdField).size());
+            }
+            Collections.sort(lstExpert,Expert.NUM_MATCH_FIELD_DESC);
+            int tempField = 0;
+            for (int i=0;i<lstExpert.size();i++){
+                int oldWeigth = lstExpert.get(i).getWeigthMatch();
+                if(i==0){
+                    lstExpert.get(i).setWeigthMatch(oldWeigth+ nExpert*35);
+                } else {
+                    if(lstExpert.get(i).getNumMatchField()==lstExpert.get(i-1).getNumMatchField()){
+                        lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-tempField)*35);
+                    }else{
+                        lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-i)*35);
+                        tempField = i;
+                    }
+                }
+
+            }
+            // + sort expert by rate and update weigth match
+            Collections.sort(lstExpert,Expert.NUM_RATE_DESC);
+            int tempRate = 0;
+            for (int i=0;i<lstExpert.size();i++){
+                int oldWeigth = lstExpert.get(i).getWeigthMatch();
+                if(i==0){
+                    lstExpert.get(i).setWeigthMatch(oldWeigth+ nExpert*25);
+                } else {
+                    if(lstExpert.get(i).getRate()==lstExpert.get(i-1).getRate()){
+                        lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-tempRate)*25);
+                    }else{
+                        lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-i)*35);
+                        tempRate = i;
+                    }
+                }
+
+            }
+            //sort expert by weight macth
+            Collections.sort(lstExpert,Expert.WEIGHT_MATCH_DESC);
+            List<String> lstIdExpert = new ArrayList<>();
+            for (Expert expert: lstExpert){
+                lstIdExpert.add(expert.get_id());
+            }
+            //update to tb temp
+            collection.update("{idForumQuestion:#}",idQuestion).with("{$set:{tags:#,idField: #,idExpert: #}}",lstTag,lstIdField,lstIdExpert);
+        }else {
+            response.setError(ErrorCode.ID_NOT_EXIST);
+            response.setMsg("id không tồn tại");
+        }
         return response;
     }
 }

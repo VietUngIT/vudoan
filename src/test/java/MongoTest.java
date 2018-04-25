@@ -26,13 +26,14 @@ public class MongoTest {
             MongoPool.init();
             System.out.println("start");
             FieldOfExpert fieldOfExpert = new FieldOfExpert();
-            ObjectId objectId = new ObjectId();
-            fieldOfExpert.set_id(objectId.toHexString());
-            fieldOfExpert.setNameField("ABC");
-            List<String> abc = new ArrayList<>();
-            abc.add("aaa");
-            fieldOfExpert.setTags(abc);
-            MongoPool.log(FieldOfExpert.class.getSimpleName(),fieldOfExpert.toDocument());
+
+//            ObjectId objectId = new ObjectId();
+//            fieldOfExpert.set_id(objectId.toHexString());
+//            fieldOfExpert.setNameField("ABC");
+//            List<String> abc = new ArrayList<>();
+//            abc.add("aaa");
+//            fieldOfExpert.setTags(abc);
+//            MongoPool.log(FieldOfExpert.class.getSimpleName(),fieldOfExpert.toDocument());
 
 //            DB db = MongoPool.getDBJongo();
 //            Jongo jongo = new Jongo(db);
@@ -40,12 +41,28 @@ public class MongoTest {
 //            StringBuilder stringBuilder = new StringBuilder();
 //            stringBuilder.append("{ tags: { $elemMatch: { $eq:# } } }");
 //            MongoCursor<News> cursor = collection.find(stringBuilder.toString(),"111").as(News.class);
+            List<String> list = new ArrayList<>();
+            list.add("blue");
+            list.add("red");
+            list.add("green");
+            list.add("pink");
+            list.add("black");
+//            DB db = MongoPool.getDBJongo();
+//            Jongo jongo = new Jongo(db);
+//            MongoCollection collection = jongo.getCollection(FieldOfExpert.class.getSimpleName());
+//            StringBuilder stringBuilder = new StringBuilder();
+//            stringBuilder.append("{ idParentField: {$in:# } }");
+//            MongoCursor<FieldOfExpert> cursor = collection.find(stringBuilder.toString(),list).as(FieldOfExpert.class);
 //            while(cursor.hasNext()){
-//                News news = cursor.next();
-//                System.out.println(news.getTitle());
+//                FieldOfExpert news = cursor.next();
+//                System.out.println(news.get_id()+" - "+news.getIdParentField()+" - "+news.getNameField());
 //            }
+            FieldOfExpertService service = new FieldOfExpertServiceImp();
+            service.getListFieldMatchTags(list);
             System.out.println("finnish!!!");
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

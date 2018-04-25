@@ -349,6 +349,26 @@ public class ExpertServiceImp implements ExpertService {
         return response;
     }
 
+    @Override
+    public List<Expert> getListExpertByParentField(String idParentField) throws Exception {
+        if (!ObjectId.isValid(idParentField) && !idParentField.equals("")) {
+            return null;
+        }
+        List<Expert> lstExpert = new ArrayList<>();
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        StringBuilder builder = new StringBuilder();
+        MongoCursor<Expert> cursor = null;
+        MongoCollection collection = jongo.getCollection(Expert.class.getSimpleName());
+        builder.append("{$and: [{idParentField: #}]}");
+        cursor = collection.find(builder.toString(),idParentField).as(Expert.class);
+        while(cursor.hasNext()){
+            Expert expert = cursor.next();
+            lstExpert.add(expert);
+        }
+        return lstExpert;
+    }
+
     private JsonArray getListNameFieldOfExpert(List<String> idField){
         DB db = MongoPool.getDBJongo();
         Jongo jongo = new Jongo(db);

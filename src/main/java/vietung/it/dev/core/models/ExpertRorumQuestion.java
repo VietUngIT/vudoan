@@ -17,6 +17,7 @@ public class ExpertRorumQuestion extends MongoLog{
     private List<String> idField;
     private List<String> idExpert;
     private List<Expert> experts;
+    private long timeCreate;
 
     @Override
     public Document toDocument() {
@@ -25,7 +26,9 @@ public class ExpertRorumQuestion extends MongoLog{
         doc.append("idForumQuestion",idForumQuestion);
         doc.append("tags",tags);
         doc.append("idField",idField);
+        doc.append("idExpert",idExpert);
         doc.append("idParentField",idParentField);
+        doc.append("timeCreate",timeCreate);
         return doc;
     }
 

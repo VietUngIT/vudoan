@@ -227,6 +227,13 @@
       "roles":[],
       "method":"GET"
     }
+  ,{
+      "path":"/gettagssv2",
+      "handler":"vietung.it.dev.apis.handlers.GetTagsSv2Handler",
+      "isPublic":true,
+      "roles":[],
+      "method":"POST"
+    }
 
   ]
 }

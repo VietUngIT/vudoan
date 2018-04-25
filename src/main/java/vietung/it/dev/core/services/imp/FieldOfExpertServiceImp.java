@@ -3,6 +3,7 @@ package vietung.it.dev.core.services.imp;
 import com.google.gson.JsonArray;
 import com.mongodb.DB;
 import org.bson.types.ObjectId;
+import org.jongo.Aggregate;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
@@ -157,6 +158,26 @@ public class FieldOfExpertServiceImp implements FieldOfExpertService {
             response.setMsg("ID không tồn tại.");
         }
         return response;
+    }
+
+    @Override
+    public List<String> getListFieldMatchTags(List<String> tags) throws Exception {
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(FieldOfExpert.class.getSimpleName());
+        Aggregate.ResultsIterator<FieldOfExpert> cursorTop = collection.aggregate("{\"$match\": { \"tags\": { \"$in\": # } } }", tags)
+                .and("{$project:{_id:1,idParentField:1,nameField: 1,tags: 1,num_match_tags:{$size:{$setIntersection:[#,\"$tags\"]}}}}",tags)
+                .and("{$sort:{num_match_tags:-1}}")
+                .as(FieldOfExpert.class);
+        List<String> idFileds = new ArrayList<>();
+        int i = 0;
+        while (cursorTop.hasNext()) {
+            if(i>=5) break;
+            FieldOfExpert fieldOfExpert = cursorTop.next();
+            idFileds.add(fieldOfExpert.get_id());
+            i++;
+        }
+        return idFileds;
     }
 
 }

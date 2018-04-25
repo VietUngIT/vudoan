@@ -21,4 +21,6 @@ public interface ForumQuestionService {
     ForumQuestionResponse getExpertByIDQuestion(String id, int numExpert) throws Exception;
 
     ForumQuestionResponse getQuestionAll(int page,int ofset,String phone)throws Exception;
+
+    ForumQuestionResponse getTagsForumQuestion(String idQuestion, String strTags) throws Exception;
 }

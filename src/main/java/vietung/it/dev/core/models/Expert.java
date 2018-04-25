@@ -32,6 +32,10 @@ public class Expert extends MongoLog {
     private Boolean isOnline = false;
     private Double distance = 0D;
     private JsonArray nameFields;
+    private int numMatchTags = 0;
+    private int numMatchField = 0;
+    private int weigthMatch = 0;
+
     @Override
     public Document toDocument() {
         Document document = new Document();
@@ -96,6 +100,65 @@ public class Expert extends MongoLog {
                 return -1;
             } else {
                 if (e1.distance == e2.distance) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+        }
+    };
+
+    public static Comparator<Expert> NUM_MATCH_TAGS_DESC = new Comparator<Expert>() {
+        @Override
+        public int compare(Expert e1, Expert e2) {
+            if (e2.numMatchTags < e1.numMatchTags) {
+                return -1;
+            } else {
+                if (e1.numMatchTags == e2.numMatchTags) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+        }
+    };
+
+    public static Comparator<Expert> NUM_MATCH_FIELD_DESC = new Comparator<Expert>() {
+        @Override
+        public int compare(Expert e1, Expert e2) {
+            if (e2.numMatchField < e1.numMatchField) {
+                return -1;
+            } else {
+                if (e1.numMatchField == e2.numMatchField) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+        }
+    };
+    public static Comparator<Expert> NUM_RATE_DESC = new Comparator<Expert>() {
+        @Override
+        public int compare(Expert e1, Expert e2) {
+            if (e2.rate < e1.rate) {
+                return -1;
+            } else {
+                if (e1.rate == e2.rate) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+        }
+    };
+
+    public static Comparator<Expert> WEIGHT_MATCH_DESC = new Comparator<Expert>() {
+        @Override
+        public int compare(Expert e1, Expert e2) {
+            if (e2.weigthMatch < e1.weigthMatch) {
+                return -1;
+            } else {
+                if (e1.weigthMatch == e2.weigthMatch) {
                     return 0;
                 } else {
                     return 1;
