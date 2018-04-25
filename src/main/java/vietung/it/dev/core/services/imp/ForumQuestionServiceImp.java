@@ -8,7 +8,7 @@ import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
 import vietung.it.dev.apis.response.ForumQuestionResponse;
-import vietung.it.dev.core.config.Kafka;
+import vietung.it.dev.core.config.KafkaProduce;
 import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.models.*;
@@ -269,8 +269,7 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         expertRorumQuestion.setIdField(lstField);
         expertRorumQuestion.setTags(lstTag);
         MongoPool.log(ExpertRorumQuestion.class.getSimpleName(),expertRorumQuestion.toDocument());
-//        Kafka.send(forumQuestion.get_id(),forumQuestion.getIdField(),forumQuestion.getContent());
-        Kafka.out(forumQuestion.get_id(),forumQuestion.getIdField(),forumQuestion.getContent());
+        KafkaProduce.runProducer(forumQuestion.get_id(),forumQuestion.getContent());
         return response;
     }
 
