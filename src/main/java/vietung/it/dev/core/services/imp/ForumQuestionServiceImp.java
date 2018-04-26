@@ -280,7 +280,7 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
     }
 
     @Override
-    public ForumQuestionResponse getExpertByIDQuestion(String id, int numExpert) throws Exception {
+    public ForumQuestionResponse getExpertByIDQuestion(String id, int numExpert,double lat,double lon,int status) throws Exception {
         ForumQuestionResponse response = new ForumQuestionResponse();
         if (!ObjectId.isValid(id)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
@@ -296,14 +296,20 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         cursor = collection.find(builder.toString(),id).limit(1).as(ExpertRorumQuestion.class);
         if(cursor.hasNext()){
             ExpertRorumQuestion expertRorumQuestion = cursor.next();
-            List<Expert> lstExpert = expertRorumQuestion.getExperts();
-            List<Expert> lstTemp = new ArrayList<>();
-            for (int i=0;i<lstExpert.size();i++){
-                if(i==numExpert) break;
-                lstTemp.add(lstExpert.get(i));
+            List<String> lstId = expertRorumQuestion.getIdField();
+            if(lstId.size()>0){
+
+            }else{
+
             }
-            expertRorumQuestion.setExperts(lstTemp);
-            response.setData(expertRorumQuestion.toJsonExpert());
+//            List<Expert> lstExpert = expertRorumQuestion.getExperts();
+//            List<Expert> lstTemp = new ArrayList<>();
+//            for (int i=0;i<lstExpert.size();i++){
+//                if(i==numExpert) break;
+//                lstTemp.add(lstExpert.get(i));
+//            }
+//            expertRorumQuestion.setExperts(lstTemp);
+//            response.setData(expertRorumQuestion.toJsonExpert());
         }else{
             response.setError(ErrorCode.ID_NOT_EXIST);
             response.setMsg("Id không tồn tại.");
@@ -444,5 +450,14 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
             response.setMsg("id không tồn tại");
         }
         return response;
+    }
+
+    private boolean checkConditionHourEnough24(long time1, long time2){
+        long sub = time1 - time2;
+        int timeMunite = (int)(sub/60000);
+        if(timeMunite>=1440){
+            return false;
+        }
+        return true;
     }
 }

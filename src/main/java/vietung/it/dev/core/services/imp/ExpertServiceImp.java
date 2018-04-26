@@ -369,6 +369,24 @@ public class ExpertServiceImp implements ExpertService {
         return lstExpert;
     }
 
+    @Override
+    public List<Expert> getExpertByIds(List<String> ids) throws Exception {
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(Expert.class.getSimpleName());
+
+        List<ObjectId> lstid = new ArrayList<ObjectId>();
+        for (int i=0;i<ids.size();i++){
+            lstid.add(new ObjectId(ids.get(i)));
+        }
+        MongoCursor<Expert> cursor = collection.find("{_id:{$in:#}}", ids).as(Expert.class);
+        List<Expert> listExpert = new ArrayList<>();
+        while (cursor.hasNext()){
+            listExpert.add(cursor.next());
+        }
+        return listExpert;
+    }
+
     private JsonArray getListNameFieldOfExpert(List<String> idField){
         DB db = MongoPool.getDBJongo();
         Jongo jongo = new Jongo(db);

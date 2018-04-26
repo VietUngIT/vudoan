@@ -28,5 +28,8 @@ public interface ExpertService {
     ExpertResponse rateExpert(String phone,int rate) throws Exception;
 
     ExpertResponse getAllExpert(int ofs, int page) throws Exception;
+
     List<Expert> getListExpertByParentField(String idParentField) throws Exception;
+
+    List<Expert> getExpertByIds(List<String> ids) throws Exception;
 }
