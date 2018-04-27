@@ -2,6 +2,7 @@ package vietung.it.dev.core.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import io.vertx.core.http.GoAway;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -12,6 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import vietung.it.dev.core.models.kafka.SendQuestion;
 import vietung.it.dev.core.models.kafka.SeparatedFrom;
+import vietung.it.dev.core.services.ForumQuestionService;
+import vietung.it.dev.core.services.imp.ForumQuestionServiceImp;
+import vietung.it.dev.core.utils.Utils;
 
 import java.util.Collections;
 
@@ -53,6 +57,9 @@ public class KafkaConsume {
             consumerRecords.forEach(record -> {
                 try {
                     SeparatedFrom separatedFrom = gson.fromJson(record.value(),SeparatedFrom.class);
+                    ForumQuestionService service = new ForumQuestionServiceImp();
+                    String strTags = Utils.toJsonStringGson(separatedFrom.getCountFroms());
+                    service.getTagsForumQuestion(separatedFrom.getId(),strTags);
                     logger.info(String.format("Consumer Record:(%d, %s, %d, %d)\n", record.key(), record.value(), record.partition(), record.offset()));
                 }catch (Exception e){
                     logger.error(String.format("Error(%s)\n",e.getMessage()));

@@ -9,7 +9,7 @@ import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
 import vietung.it.dev.apis.response.ForumQuestionResponse;
-import vietung.it.dev.core.config.Kafka;
+import vietung.it.dev.core.config.KafkaProduce;
 import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.models.*;
@@ -259,8 +259,7 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         response.setData(forumQuestion.toJson());
 
         //send content question to sv2 and get tags and field from sv2------------
-//        Kafka.send(forumQuestion.get_id(),forumQuestion.getIdField(),forumQuestion.getContent());
-        Kafka.out(forumQuestion.get_id(),"",forumQuestion.getContent());
+        KafkaProduce.runProducer(forumQuestion.get_id(),forumQuestion.getContent());
 
         //save data to db tablde temp
         List<String> lstField = new ArrayList<>();
@@ -363,8 +362,8 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         JsonArray array = Utils.toJsonArray(strTags);
         List<String> lstTag = new ArrayList<>();
         for (int i=0;i<array.size();i++){
-            JsonObject object = new JsonObject();
-            lstTag.add(object.get("label").getAsString());
+            JsonObject object = array.get(i).getAsJsonObject();
+            lstTag.add(object.get("name").getAsString());
         }
         //get by idquestion in table expertRorumQuestion
 

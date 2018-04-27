@@ -23,6 +23,15 @@ public class SeparatedFrom {
         return countFroms;
     }
 
+    public String toString (){
+//        StringBuilder stringBuilder = new StringBuilder("[");
+//        for(int i=0;i<this.getCountFroms().size();i++){
+//            if()
+//            stringBuilder.append("{ \"name \":").append(this.countFroms.get(i).getName()).append("},");
+//        }
+        return "";
+    }
+
     public void setCountFroms(List<CountFrom> countFroms) {
         this.countFroms = countFroms;
     }
