@@ -259,7 +259,7 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         response.setData(forumQuestion.toJson());
 
         //send content question to sv2 and get tags and field from sv2------------
-        KafkaProduce.runProducer(forumQuestion.get_id(),forumQuestion.getContent());
+        KafkaProduce.runProducer(forumQuestion.get_id(),forumQuestion.getContent().toLowerCase());
 
         //save data to db tablde temp
         List<String> lstField = new ArrayList<>();
