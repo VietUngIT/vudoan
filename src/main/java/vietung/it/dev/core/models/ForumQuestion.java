@@ -1,11 +1,19 @@
 package vietung.it.dev.core.models;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import lombok.Data;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.cloudinary.json.JSONArray;
+import org.jongo.MongoCollection;
+import org.jongo.MongoCursor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Data

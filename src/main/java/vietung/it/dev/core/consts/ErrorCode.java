@@ -15,5 +15,9 @@ public class ErrorCode {
     public static final int NOT_AUTHORISED = 11;
     public static final int NO_ROLE_DELETE = 12;
     public static final int UPLOAD_IMAGE_ERROR = 13;
-    public static final int SEARCHING_EXPERT = 14;
+    public static final int ROOM_EXIST = 14;
+    public static final int SEARCHING_EXPERT = 15;
+
+
+
 }

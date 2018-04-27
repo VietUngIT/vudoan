@@ -1,5 +1,6 @@
 package vietung.it.dev.core.services;
 
+import com.google.gson.JsonArray;
 import vietung.it.dev.apis.response.BaseResponse;
 import vietung.it.dev.apis.response.ForumQuestionResponse;
 

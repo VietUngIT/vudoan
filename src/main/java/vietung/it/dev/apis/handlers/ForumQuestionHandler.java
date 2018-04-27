@@ -1,7 +1,9 @@
 package vietung.it.dev.apis.handlers;
 
+import com.google.gson.JsonArray;
 import io.vertx.core.http.HttpServerRequest;
 import vietung.it.dev.apis.response.BaseResponse;
+import vietung.it.dev.apis.response.ForumQuestionResponse;
 import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.services.ForumQuestionService;
 import vietung.it.dev.core.services.imp.ForumQuestionServiceImp;

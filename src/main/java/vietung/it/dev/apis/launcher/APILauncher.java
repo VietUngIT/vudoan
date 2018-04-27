@@ -59,6 +59,8 @@ public class APILauncher {
                 }
             });
 
+            Chat.init();
+
         }catch (Exception e){
             e.printStackTrace();
         }

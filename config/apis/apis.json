@@ -226,6 +226,19 @@
       "isPublic":false,
       "roles":[],
       "method":"GET"
+    },    {
+      "path":"/messages",
+      "handler":"vietung.it.dev.apis.handlers.MessagesHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
+    },
+    {
+      "path":"/room",
+      "handler":"vietung.it.dev.apis.handlers.RoomHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
     }
   ,{
       "path":"/gettagssv2",
@@ -234,6 +247,7 @@
       "roles":[],
       "method":"POST"
     }
+
 
   ]
 }
