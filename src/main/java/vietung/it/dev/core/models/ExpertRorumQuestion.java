@@ -12,10 +12,12 @@ import java.util.List;
 public class ExpertRorumQuestion extends MongoLog{
     private String _id;
     private String idForumQuestion;
+    private String idParentField;
     private List<String> tags;
     private List<String> idField;
     private List<String> idExpert;
     private List<Expert> experts;
+    private long timeCreate;
 
     @Override
     public Document toDocument() {
@@ -25,7 +27,8 @@ public class ExpertRorumQuestion extends MongoLog{
         doc.append("tags",tags);
         doc.append("idField",idField);
         doc.append("idExpert",idExpert);
-        doc.append("experts",experts);
+        doc.append("idParentField",idParentField);
+        doc.append("timeCreate",timeCreate);
         return doc;
     }
 

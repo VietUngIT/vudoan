@@ -14,6 +14,7 @@ public class FieldOfExpert extends MongoLog {
     private String idParentField;
     private String nameField;
     private List<String> tags = new ArrayList<>();
+    private int num_match_tags = 0;
     @Override
     public Document toDocument() {
         Document document = new Document();

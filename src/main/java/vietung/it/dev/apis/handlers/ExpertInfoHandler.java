@@ -27,6 +27,24 @@ public class ExpertInfoHandler extends BaseApiHandler {
                     return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
                 }
 
+            }else if(type.equals("getall")){
+                String ofset = request.getParam("ofset");
+                String strpage = request.getParam("page");
+                if(ofset!=null){
+                    if(strpage==null || strpage==""){
+                        strpage="0";
+                    }
+                    try{
+                        int ofs = Integer.parseInt(ofset);
+                        int page = Integer.parseInt(strpage);
+                        return service.getAllExpert(ofs,page);
+                    }catch (NumberFormatException e){
+                        e.printStackTrace();
+                        return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu."+e.getMessage());
+                    }
+                }else{
+                    return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
+                }
             }else if(type.equals("get")){
                 String id = request.getParam("idexpert");
                 if(id!=null){

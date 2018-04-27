@@ -87,7 +87,7 @@
       "handler":"vietung.it.dev.apis.handlers.admin.AdminCateMarketPriceHandler",
       "isPublic":false,
       "roles":[2,3],
-      "method":"GET"
+      "method":"POST"
     },{
       "path":"/news",
       "handler":"vietung.it.dev.apis.handlers.NewsHandler",
@@ -226,6 +226,13 @@
       "isPublic":false,
       "roles":[],
       "method":"GET"
+    }
+  ,{
+      "path":"/gettagssv2",
+      "handler":"vietung.it.dev.apis.handlers.GetTagsSv2Handler",
+      "isPublic":true,
+      "roles":[],
+      "method":"POST"
     }
 
   ]

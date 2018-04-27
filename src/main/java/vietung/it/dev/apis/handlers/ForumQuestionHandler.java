@@ -45,8 +45,11 @@ public class ForumQuestionHandler extends BaseApiHandler {
                 return getQuestionByIDHandle(id,phone,service);
             }else if(type.equals("getexpertbyidquestion")){
                 String id = request.getFormAttribute("idquestion");
+                String strLat = request.getFormAttribute("lat");
+                String strLon = request.getFormAttribute("long");
+                String strstatus = request.getFormAttribute("status");
                 String strNumExpert = request.getFormAttribute("numexpert");
-                return getExpertByIDQuestionHandle(id,strNumExpert,service);
+                return getExpertByIDQuestionHandle(id,strNumExpert,strLat,strLon,strstatus,service);
             }else if(type.equals("getall")){
                 String strofset = request.getFormAttribute("ofset");
                 String strpage = request.getFormAttribute("page");
@@ -60,14 +63,20 @@ public class ForumQuestionHandler extends BaseApiHandler {
         }
     }
 
-    private BaseResponse getExpertByIDQuestionHandle(String id,String strNumExpert, ForumQuestionService service) throws Exception {
+    private BaseResponse getExpertByIDQuestionHandle(String id,String strNumExpert,String strLat,String strLon,String strstatus,ForumQuestionService service) throws Exception {
         if(id!=null){
             if(strNumExpert==null){
                 strNumExpert = "5";
             }
+            if(strstatus==null || strstatus.equals("")){
+                strstatus = "-1";
+            }
             try {
                 int numExpert = Integer.parseInt(strNumExpert);
-                return service.getExpertByIDQuestion(id,numExpert);
+                Double lat = Double.parseDouble(strLat);
+                Double lon = Double.parseDouble(strLon);
+                int status = Integer.parseInt(strstatus);
+                return service.getExpertByIDQuestion(id,numExpert,lat,lon,status);
             }catch (NumberFormatException e){
                 e.printStackTrace();
                 return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");
