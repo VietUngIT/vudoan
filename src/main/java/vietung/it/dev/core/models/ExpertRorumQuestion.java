@@ -13,6 +13,7 @@ public class ExpertRorumQuestion extends MongoLog{
     private String _id;
     private String idForumQuestion;
     private String idParentField;
+    private int nExpert;
     private List<String> tags;
     private List<String> idField;
     private List<String> idExpert;
@@ -29,6 +30,7 @@ public class ExpertRorumQuestion extends MongoLog{
         doc.append("idExpert",idExpert);
         doc.append("idParentField",idParentField);
         doc.append("timeCreate",timeCreate);
+        doc.append("nExpert",nExpert);
         return doc;
     }
 

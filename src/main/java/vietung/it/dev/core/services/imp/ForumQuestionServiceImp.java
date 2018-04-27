@@ -220,7 +220,7 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
     }
 
     @Override
-    public ForumQuestionResponse addQuestion(String phone, String image,String idField, String content) throws Exception {
+    public ForumQuestionResponse addQuestion(String phone, String image,String idField, String content, int nExpert) throws Exception {
 
         ForumQuestionResponse response = new ForumQuestionResponse();
         UploadService service = new UploadServiceImp();
@@ -273,6 +273,7 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         expertRorumQuestion.setIdParentField(idField);
         expertRorumQuestion.setIdField(lstField);
         expertRorumQuestion.setTags(lstTag);
+        expertRorumQuestion.setNExpert(nExpert);
         expertRorumQuestion.setTimeCreate(Calendar.getInstance().getTimeInMillis());
         MongoPool.log(ExpertRorumQuestion.class.getSimpleName(),expertRorumQuestion.toDocument());
 
@@ -280,8 +281,9 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
     }
 
     @Override
-    public ForumQuestionResponse getExpertByIDQuestion(String id, int numExpert,double lat,double lon,int status) throws Exception {
+    public ForumQuestionResponse getExpertByIDQuestion(String id,double lat,double lon,int status) throws Exception {
         ForumQuestionResponse response = new ForumQuestionResponse();
+        ExpertService expertService = new ExpertServiceImp();
         if (!ObjectId.isValid(id)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
             response.setMsg("Id không đúng.");
@@ -296,20 +298,52 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         cursor = collection.find(builder.toString(),id).limit(1).as(ExpertRorumQuestion.class);
         if(cursor.hasNext()){
             ExpertRorumQuestion expertRorumQuestion = cursor.next();
-            List<String> lstId = expertRorumQuestion.getIdField();
-            if(lstId.size()>0){
-
+            List<String> lstTags = expertRorumQuestion.getTags();
+            if(lstTags.size()>0){
+                List<Expert> lstExpert = null;
+                if (checkConditionHourEnough24(Calendar.getInstance().getTimeInMillis(),expertRorumQuestion.getTimeCreate())){
+                    lstExpert = expertService.getExpertByIds(expertRorumQuestion.getIdExpert());
+                }else{
+                    // re-search expert
+                    lstExpert = ReSearchExpert(expertRorumQuestion.get_id(),expertRorumQuestion.getTags());
+                }
+                if(lstExpert!=null){
+                    List<Expert> lstTemp = new ArrayList<>();
+                    for (Expert e : lstExpert){
+                        if (status==1){
+                            if(e.getIsOnline()){
+                                double dist = Utils.distance(lat,lon,e.getLat(),e.getLon(),"K");
+                                e.setDistance(dist);
+                                lstTemp.add(e);
+                            }
+                        } else if(status==0){
+                            if (!e.getIsOnline()){
+                                double dist = Utils.distance(lat,lon,e.getLat(),e.getLon(),"K");
+                                e.setDistance(dist);
+                                lstTemp.add(e);
+                            }
+                        }else if (status==-1){
+                            double dist = Utils.distance(lat,lon,e.getLat(),e.getLon(),"K");
+                            e.setDistance(dist);
+                            lstTemp.add(e);
+                        }
+                    }
+                    List<Expert> expertList = new ArrayList<>();
+                    for (int i=0;i<lstTemp.size();i++){
+                        if(i==expertRorumQuestion.getNExpert()) break;
+                        expertList.add(lstTemp.get(i));
+                    }
+                    expertRorumQuestion.setExperts(expertList);
+                    response.setData(expertRorumQuestion.toJsonExpert());
+                    return response;
+                }else{
+                    response.setError(ErrorCode.SYSTEM_ERROR);
+                    response.setMsg("Có lỗi xảy ra trong quá trình xử lý.");
+                }
             }else{
-
+                response.setError(ErrorCode.SEARCHING_EXPERT);
+                response.setMsg("Đang tìm kiếm chuyến gia. Uqay lại sau.");
             }
-//            List<Expert> lstExpert = expertRorumQuestion.getExperts();
-//            List<Expert> lstTemp = new ArrayList<>();
-//            for (int i=0;i<lstExpert.size();i++){
-//                if(i==numExpert) break;
-//                lstTemp.add(lstExpert.get(i));
-//            }
-//            expertRorumQuestion.setExperts(lstTemp);
-//            response.setData(expertRorumQuestion.toJsonExpert());
         }else{
             response.setError(ErrorCode.ID_NOT_EXIST);
             response.setMsg("Id không tồn tại.");
@@ -450,6 +484,99 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
             response.setMsg("id không tồn tại");
         }
         return response;
+    }
+
+    private List<Expert> ReSearchExpert(String id, List<String> lstTags){
+        List<Expert> lstExpert = new ArrayList<>();
+        FieldOfExpertService fieldOfExpertService = new FieldOfExpertServiceImp();
+        ExpertService expertService = new ExpertServiceImp();
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        StringBuilder builder = new StringBuilder();
+        MongoCursor<ExpertRorumQuestion> cursor = null;
+        MongoCollection collection = jongo.getCollection(ExpertRorumQuestion.class.getSimpleName());
+        builder.append("{$and: [{_id: #}]}");
+        cursor = collection.find(builder.toString(),new ObjectId(id)).limit(1).as(ExpertRorumQuestion.class);
+        try {
+            if(cursor.hasNext()){
+                ExpertRorumQuestion expertRorumQuestion = cursor.next();
+                //get 5 field
+                List<String> lstIdField = fieldOfExpertService.getListFieldMatchTags(lstTags);
+                //query expert
+                lstExpert = expertService.getListExpertByParentField(expertRorumQuestion.getIdParentField());
+                int nExpert = lstExpert.size();
+                //-----------------------------
+                // + sort expert by match tags and update weigth match
+                for (Expert expert: lstExpert ){
+                    expert.setNumMatchTags(CollectionUtils.intersection(expert.getTags(),lstTags).size());
+                }
+                Collections.sort(lstExpert,Expert.NUM_MATCH_TAGS_DESC);
+                for (int i=0;i<lstExpert.size();i++){
+                    if(i==0){
+                        lstExpert.get(i).setWeigthMatch(nExpert*50);
+                    } else {
+                        if(lstExpert.get(i).getNumMatchTags()==lstExpert.get(i-1).getNumMatchTags()){
+                            lstExpert.get(i).setWeigthMatch(lstExpert.get(i-1).getWeigthMatch());
+                        }else{
+                            lstExpert.get(i).setWeigthMatch((nExpert-i)*50);
+                        }
+                    }
+
+                }
+                // + sort expert by match idField and update weigth match
+                for (Expert expert: lstExpert ){
+                    expert.setNumMatchField(CollectionUtils.intersection(expert.getIdFields(),lstIdField).size());
+                }
+                Collections.sort(lstExpert,Expert.NUM_MATCH_FIELD_DESC);
+                int tempField = 0;
+                for (int i=0;i<lstExpert.size();i++){
+                    int oldWeigth = lstExpert.get(i).getWeigthMatch();
+                    if(i==0){
+                        lstExpert.get(i).setWeigthMatch(oldWeigth+ nExpert*35);
+                    } else {
+                        if(lstExpert.get(i).getNumMatchField()==lstExpert.get(i-1).getNumMatchField()){
+                            lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-tempField)*35);
+                        }else{
+                            lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-i)*35);
+                            tempField = i;
+                        }
+                    }
+
+                }
+                // + sort expert by rate and update weigth match
+                Collections.sort(lstExpert,Expert.NUM_RATE_DESC);
+                int tempRate = 0;
+                for (int i=0;i<lstExpert.size();i++){
+                    int oldWeigth = lstExpert.get(i).getWeigthMatch();
+                    if(i==0){
+                        lstExpert.get(i).setWeigthMatch(oldWeigth+ nExpert*25);
+                    } else {
+                        if(lstExpert.get(i).getRate()==lstExpert.get(i-1).getRate()){
+                            lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-tempRate)*25);
+                        }else{
+                            lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-i)*35);
+                            tempRate = i;
+                        }
+                    }
+
+                }
+                //sort expert by weight macth
+                Collections.sort(lstExpert,Expert.WEIGHT_MATCH_DESC);
+                List<String> lstIdExpert = new ArrayList<>();
+                for (Expert expert: lstExpert){
+                    lstIdExpert.add(expert.get_id());
+                }
+                //update to tb temp
+                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{idField: #,idExpert: #}}",lstIdField,lstIdExpert);
+            }else {
+                return null;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+        return lstExpert;
     }
 
     private boolean checkConditionHourEnough24(long time1, long time2){

@@ -16,9 +16,9 @@ public interface ForumQuestionService {
 
     ForumQuestionResponse getQuestionByID(String id, String phone) throws Exception;
 
-    ForumQuestionResponse addQuestion(String phone, String image, String idField, String content) throws Exception;
+    ForumQuestionResponse addQuestion(String phone, String image, String idField, String content, int nExpert) throws Exception;
 
-    ForumQuestionResponse getExpertByIDQuestion(String id, int numExpert,double lat,double lon,int status) throws Exception;
+    ForumQuestionResponse getExpertByIDQuestion(String id,double lat,double lon,int status) throws Exception;
 
     ForumQuestionResponse getQuestionAll(int page,int ofset,String phone)throws Exception;
 
