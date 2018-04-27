@@ -18,7 +18,8 @@ public class ForumQuestionHandler extends BaseApiHandler {
                 String image = request.getFormAttribute("image");
                 String content = request.getFormAttribute("content");
                 String idField = request.getFormAttribute("field");
-                return addQuestionHandle(phone,image,idField,content,service);
+                String strNumExpert = request.getFormAttribute("nexpert");
+                return addQuestionHandle(phone,image,idField,content,strNumExpert,service);
             }else if(type.equals("edit")){
                 String id = request.getFormAttribute("id");
                 String phone = request.getFormAttribute("ph");
@@ -48,8 +49,7 @@ public class ForumQuestionHandler extends BaseApiHandler {
                 String strLat = request.getFormAttribute("lat");
                 String strLon = request.getFormAttribute("long");
                 String strstatus = request.getFormAttribute("status");
-                String strNumExpert = request.getFormAttribute("numexpert");
-                return getExpertByIDQuestionHandle(id,strNumExpert,strLat,strLon,strstatus,service);
+                return getExpertByIDQuestionHandle(id,strLat,strLon,strstatus,service);
             }else if(type.equals("getall")){
                 String strofset = request.getFormAttribute("ofset");
                 String strpage = request.getFormAttribute("page");
@@ -63,20 +63,16 @@ public class ForumQuestionHandler extends BaseApiHandler {
         }
     }
 
-    private BaseResponse getExpertByIDQuestionHandle(String id,String strNumExpert,String strLat,String strLon,String strstatus,ForumQuestionService service) throws Exception {
+    private BaseResponse getExpertByIDQuestionHandle(String id,String strLat,String strLon,String strstatus,ForumQuestionService service) throws Exception {
         if(id!=null){
-            if(strNumExpert==null){
-                strNumExpert = "5";
-            }
             if(strstatus==null || strstatus.equals("")){
                 strstatus = "-1";
             }
             try {
-                int numExpert = Integer.parseInt(strNumExpert);
                 Double lat = Double.parseDouble(strLat);
                 Double lon = Double.parseDouble(strLon);
                 int status = Integer.parseInt(strstatus);
-                return service.getExpertByIDQuestion(id,numExpert,lat,lon,status);
+                return service.getExpertByIDQuestion(id,lat,lon,status);
             }catch (NumberFormatException e){
                 e.printStackTrace();
                 return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");
@@ -86,9 +82,19 @@ public class ForumQuestionHandler extends BaseApiHandler {
         }
     }
 
-    private BaseResponse addQuestionHandle(String phone, String image,String idField, String content, ForumQuestionService service) throws Exception {
+    private BaseResponse addQuestionHandle(String phone, String image,String idField, String content, String strNExpert, ForumQuestionService service) throws Exception {
+
         if(phone!=null && content!=null && idField!=null){
-            return service.addQuestion(phone,image,idField,content);
+            if(strNExpert==null){
+                strNExpert = "5";
+            }
+            try {
+                int nExpert = Integer.parseInt(strNExpert);
+                return service.addQuestion(phone,image,idField,content,nExpert);
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+                return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");
+            }
         }else{
             return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }
