@@ -567,7 +567,7 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
                     lstIdExpert.add(expert.get_id());
                 }
                 //update to tb temp
-                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{idField: #,idExpert: #}}",lstIdField,lstIdExpert);
+                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{idField: #,idExpert: #, timeCreate: #}}",lstIdField,lstIdExpert,Calendar.getInstance().getTimeInMillis());
             }else {
                 return null;
             }
