@@ -74,9 +74,9 @@ public class ExpertInfoHandler extends BaseApiHandler {
                 String tags = request.getParam("tags");
                 return editTagsExpertHandle(phone,tags,service);
             }else if(type.equals("rate")){
-                String phone = request.getParam("phone");
+                String id = request.getParam("idexpert");
                 String strrate = request.getParam("rate");
-                return rateExpertHandle(phone,strrate,service);
+                return rateExpertHandle(id,strrate,service);
             }else {
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
             }
@@ -86,11 +86,11 @@ public class ExpertInfoHandler extends BaseApiHandler {
 
     }
 
-    private BaseResponse rateExpertHandle(String phone, String strrate, ExpertService service) throws Exception {
-        if(phone!=null && strrate!=null){
+    private BaseResponse rateExpertHandle(String id, String strrate, ExpertService service) throws Exception {
+        if(id!=null && strrate!=null){
             try{
                 int rate = Integer.parseInt(strrate);
-                return service.rateExpert(phone,rate);
+                return service.rateExpert(id,rate);
             }catch (NumberFormatException e){
                 e.printStackTrace();
                 return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");

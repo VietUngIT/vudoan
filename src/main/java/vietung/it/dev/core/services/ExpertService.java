@@ -25,7 +25,7 @@ public interface ExpertService {
 
     ExpertResponse editFieldExpert(String phone, String idfield) throws Exception;
 
-    ExpertResponse rateExpert(String phone,int rate) throws Exception;
+    ExpertResponse rateExpert(String id,int rate) throws Exception;
 
     ExpertResponse getAllExpert(int ofs, int page) throws Exception;
 

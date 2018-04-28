@@ -309,18 +309,22 @@ public class ExpertServiceImp implements ExpertService {
     }
 
     @Override
-    public ExpertResponse rateExpert(String phone, int rate) throws Exception {
+    public ExpertResponse rateExpert(String id, int rate) throws Exception {
         ExpertResponse response = new ExpertResponse();
+        if (!ObjectId.isValid(id)) {
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("Id không đúng.");
+        }
         DB db = MongoPool.getDBJongo();
         Jongo jongo = new Jongo(db);
         MongoCollection collection = jongo.getCollection(Expert.class.getSimpleName());
-        MongoCursor<Expert> cursor = collection.find("{phone:#}",phone).limit(1).as(Expert.class);
+        MongoCursor<Expert> cursor = collection.find("{_id:#}",new ObjectId(id)).limit(1).as(Expert.class);
         if(cursor.hasNext()){
             Expert expert = cursor.next();
             int numRate = expert.getNumRate();
             float rateOld = expert.getRate();
             float newRate = (rateOld*numRate+rate)/(numRate+1);
-            collection.update("{phone:#}",phone).with("{$set:{numRate:#,rate:#}}",(++numRate),newRate);
+            collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#}}",(++numRate),newRate);
             expert.setNumRate(numRate);
             expert.setRate(rate);
             response.setData(expert.toJson());
