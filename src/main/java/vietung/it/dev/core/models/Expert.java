@@ -91,6 +91,8 @@ public class Expert extends MongoLog {
         object.addProperty("degree",rDegree.toString());
         object.addProperty("avatar",avatar);
         object.addProperty("isOnline",isOnline);
+        object.addProperty("lat",lat);
+        object.addProperty("long",lon);
         return object;
     }
     public static Comparator<Expert> DISTANCE_ASC = new Comparator<Expert>() {
