@@ -93,6 +93,7 @@ public class RoomServiceImp implements RoomService {
                     users.add( cursorUsers.next().toJson());
                 }
             }
+            room.setUsers(users);
             response.setData(room.toJson());
             Chat.addNamespace(room);
         } catch (Exception e) {

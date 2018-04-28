@@ -10,6 +10,7 @@ import vietung.it.dev.core.config.*;
 import vietung.it.dev.core.services.UserService;
 import vietung.it.dev.core.services.imp.UserServiceImp;
 
+import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -52,15 +53,25 @@ public class APILauncher {
                 }
             });
             ExecutorService service2 = Executors.newFixedThreadPool(1);
-            service.execute(new Runnable() {
+            service2.execute(new Runnable() {
                 @Override
                 public void run() {
                     KafkaConsume.init();
                 }
             });
-
-            Chat.init();
-
+            ExecutorService service3 = Executors.newFixedThreadPool(1);
+            service3.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Chat.init();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         }catch (Exception e){
             e.printStackTrace();
         }
