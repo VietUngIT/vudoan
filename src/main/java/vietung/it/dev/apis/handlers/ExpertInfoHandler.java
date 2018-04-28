@@ -74,9 +74,9 @@ public class ExpertInfoHandler extends BaseApiHandler {
                 String tags = request.getParam("tags");
                 return editTagsExpertHandle(phone,tags,service);
             }else if(type.equals("rate")){
-                String id = request.getParam("idexpert");
+                String phone = request.getParam("phone");
                 String strrate = request.getParam("rate");
-                return rateExpertHandle(id,strrate,service);
+                return rateExpertHandle(phone,strrate,service);
             }else {
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
             }
