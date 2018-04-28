@@ -302,6 +302,10 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
                 List<Expert> lstExpert = null;
                 if (checkConditionHourEnough24(Calendar.getInstance().getTimeInMillis(),expertRorumQuestion.getTimeCreate())){
                     lstExpert = expertService.getExpertByIds(expertRorumQuestion.getIdExpert());
+                    if(lstExpert.size()<=0){
+                        // re-search expert
+                        lstExpert = ReSearchExpert(expertRorumQuestion.get_id(),expertRorumQuestion.getTags());
+                    }
                 }else{
                     // re-search expert
                     lstExpert = ReSearchExpert(expertRorumQuestion.get_id(),expertRorumQuestion.getTags());
