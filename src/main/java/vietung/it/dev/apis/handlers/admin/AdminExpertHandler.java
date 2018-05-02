@@ -102,7 +102,7 @@ public class AdminExpertHandler extends BaseApiHandler{
 
 
     private BaseResponse addExpertHandle(String name, String phone, String desc, String email, String address,String idParentField, String strLat, String strLon, String field, String tags, String degree,String workplace, ExpertService service) throws Exception {
-        if(name!=null && phone!=null && desc!=null && email!=null && address!=null && strLat!=null && strLon!=null && idParentField!=null && workplace!=null){
+        if(name!=null && phone!=null && email!=null && address!=null && strLat!=null && strLon!=null && idParentField!=null && workplace!=null){
             if(field==null){
                 field="[]";
             }

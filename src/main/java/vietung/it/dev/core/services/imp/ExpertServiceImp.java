@@ -11,9 +11,7 @@ import vietung.it.dev.apis.response.UserResponse;
 import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.consts.Variable;
-import vietung.it.dev.core.models.Category;
-import vietung.it.dev.core.models.Expert;
-import vietung.it.dev.core.models.Users;
+import vietung.it.dev.core.models.*;
 import vietung.it.dev.core.services.ExpertService;
 import vietung.it.dev.core.services.UserService;
 import vietung.it.dev.core.utils.Utils;
@@ -31,11 +29,6 @@ public class ExpertServiceImp implements ExpertService {
         JsonArray arrayField = Utils.toJsonArray(field);
         JsonArray arrayTags = Utils.toJsonArray(tags);
         JsonArray arrayDegree = Utils.toJsonArray(degree);
-        if(arrayField.size()<=0){
-            response.setError(ErrorCode.INVALID_PARAMS);
-            response.setMsg("Phải thêm lĩnh vực làm việc cho chuyên gia");
-            return response;
-        }
         if (!ObjectId.isValid(idParentField)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
             response.setMsg("Id field không đúng.");
@@ -269,6 +262,7 @@ public class ExpertServiceImp implements ExpertService {
         MongoCursor<Expert> cursor = collection.find("{phone:#}",phone).limit(1).as(Expert.class);
         if(cursor.hasNext()){
             Expert expert = cursor.next();
+            expert.setNameFields(getListNameFieldOfExpert(expert.getIdFields()));
             JsonArray arrayTags = Utils.toJsonArray(degree);
             List<String> lstdegree = new ArrayList<>();
             for (int i=0;i<arrayTags.size();i++){
@@ -391,19 +385,44 @@ public class ExpertServiceImp implements ExpertService {
         return listExpert;
     }
 
+    @Override
+    public ExpertResponse getListExpertByIdField(String idparentfieldExpert,int ofs, int page) throws Exception {
+        ExpertResponse response = new ExpertResponse();
+        if (!ObjectId.isValid(idparentfieldExpert)) {
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("Id không đúng.");
+            return response;
+        }
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(Expert.class.getSimpleName());
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("{ idParentField: # }");
+        MongoCursor<Expert> cursor = collection.find(stringBuilder.toString(),idparentfieldExpert).skip(page*ofs).limit(ofs).as(Expert.class);
+        JsonArray jsonArray = new JsonArray();
+        response.setTotal(cursor.count());
+        while(cursor.hasNext()){
+            Expert expert = cursor.next();
+//            expert.setNameFields(getListNameFieldOfExpert(expert.getIdFields()));
+            jsonArray.add(expert.toJson());
+        }
+        response.setArray(jsonArray);
+        return response;
+    }
+
     private JsonArray getListNameFieldOfExpert(List<String> idField){
         DB db = MongoPool.getDBJongo();
         Jongo jongo = new Jongo(db);
-        MongoCollection collection = jongo.getCollection(Variable.MG_CATEGORY_FIELD_EXPERT);
+        MongoCollection collection = jongo.getCollection(FieldOfExpert.class.getSimpleName());
 
         List<ObjectId> ids = new ArrayList<ObjectId>();
         for (int i=0;i<idField.size();i++){
             ids.add(new ObjectId(idField.get(i)));
         }
-        MongoCursor<Category> cursor = collection.find("{_id:{$in:#}}", ids).as(Category.class);
+        MongoCursor<FieldOfExpert> cursor = collection.find("{_id:{$in:#}}", ids).as(FieldOfExpert.class);
         JsonArray array = new JsonArray();
         while (cursor.hasNext()){
-            array.add(cursor.next().toJson());
+            array.add(cursor.next().toJsonForExpert());
         }
         return array;
     }

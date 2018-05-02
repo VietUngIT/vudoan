@@ -32,4 +32,6 @@ public interface ExpertService {
     List<Expert> getListExpertByParentField(String idParentField) throws Exception;
 
     List<Expert> getExpertByIds(List<String> ids) throws Exception;
+
+    ExpertResponse getListExpertByIdField(String idparentfieldExpert,int ofs, int page) throws Exception;
 }

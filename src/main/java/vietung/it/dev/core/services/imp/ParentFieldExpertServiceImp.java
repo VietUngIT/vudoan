@@ -103,6 +103,7 @@ public class ParentFieldExpertServiceImp implements ParentFieldExpertService {
         MongoCursor<ParentFieldExpert> cursor = collection.find(stringBuilder.toString(),new ObjectId(id)).limit(1).as(ParentFieldExpert.class);
         if (cursor.hasNext()){
             ParentFieldExpert parentFieldExpert = cursor.next();
+            collection.remove(new ObjectId(id));
         }else {
             response.setError(ErrorCode.ID_NOT_EXIST);
             response.setMsg("ID không tồn tại.");
