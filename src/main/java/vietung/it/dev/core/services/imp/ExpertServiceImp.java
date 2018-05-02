@@ -288,12 +288,14 @@ public class ExpertServiceImp implements ExpertService {
         if(cursor.hasNext()){
             Expert expert = cursor.next();
             JsonArray arrayTags = Utils.toJsonArray(idfield);
+
             List<String> lstIdField = new ArrayList<>();
             for (int i=0;i<arrayTags.size();i++){
                 lstIdField.add(arrayTags.get(i).getAsString().toLowerCase());
             }
             collection.update("{phone:#}",phone).with("{$set:{idFields:#}}",lstIdField);
             expert.setIdFields(lstIdField);
+            expert.setNameFields(getListNameFieldOfExpert(expert.getIdFields()));
             response.setData(expert.toJson());
         }else{
             response.setError(ErrorCode.USER_NOT_EXIST);
