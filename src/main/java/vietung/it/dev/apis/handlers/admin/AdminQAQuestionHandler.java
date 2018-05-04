@@ -12,19 +12,22 @@ public class AdminQAQuestionHandler extends BaseApiHandler {
     @Override
     public BaseResponse handle(HttpServerRequest request) throws Exception {
         QAQuestionService service = new QAQuestionServiceImp();
-        String type = request.getParam("t");
+        String type = request.getFormAttribute("t");
         if(type!=null){
             if(type.equals("ad")){
-                String idfield = request.getParam("idfield");
-                String content = request.getParam("content");
-                return addQAQuestionHandle(idfield,content,service);
+                String idfield = request.getFormAttribute("idfield");
+                String content = request.getFormAttribute("content");
+                String title = request.getFormAttribute("title");
+                String answer = request.getFormAttribute("answer");
+                return addQAQuestionHandle(idfield,title,content,answer,service);
             }else if(type.equals("edit")){
-                String id = request.getParam("id");
-                String idfield = request.getParam("idfield");
-                String content = request.getParam("content");
-                return editQAQuestionHandle(id,idfield,content,service);
+                String id = request.getFormAttribute("id");
+                String content = request.getFormAttribute("content");
+                String title = request.getFormAttribute("title");
+                String answer = request.getFormAttribute("answer");
+                return editQAQuestionHandle(id,title,content,answer,service);
             }else if(type.equals("del")){
-                String id = request.getParam("id");
+                String id = request.getFormAttribute("id");
                 return delQAQuestionHandle(id,service);
             }else {
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
@@ -42,17 +45,17 @@ public class AdminQAQuestionHandler extends BaseApiHandler {
         }
     }
 
-    private BaseResponse editQAQuestionHandle(String id, String idfield, String content, QAQuestionService service) throws Exception {
-        if (id!=null && !id.trim().equals("") && idfield!=null && content!=null && !idfield.trim().equals("") && !content.trim().equals("")){
-            return service.editQAQuestion(id,idfield,content);
+    private BaseResponse editQAQuestionHandle(String id,String title, String content,String answer, QAQuestionService service) throws Exception {
+        if (id!=null && !id.trim().equals("") && content!=null && !content.trim().equals("")){
+            return service.editQAQuestion(id,title,content,answer);
         }else {
             return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }
     }
 
-    private BaseResponse addQAQuestionHandle(String idfield, String content, QAQuestionService service) throws Exception{
+    private BaseResponse addQAQuestionHandle(String idfield,String title, String content,String answer, QAQuestionService service) throws Exception{
         if (idfield!=null && content!=null && !idfield.trim().equals("") && !content.trim().equals("")){
-            return service.addQAQuestion(idfield,content);
+            return service.addQAQuestion(idfield,title,content,answer);
         }else {
             return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }

@@ -207,7 +207,7 @@
       "handler":"vietung.it.dev.apis.handlers.admin.AdminQAQuestionHandler",
       "isPublic":false,
       "roles":[2,3],
-      "method":"GET"
+      "method":"POST"
     },{
       "path":"/qaquestion",
       "handler":"vietung.it.dev.apis.handlers.QAQuestionHandler",
