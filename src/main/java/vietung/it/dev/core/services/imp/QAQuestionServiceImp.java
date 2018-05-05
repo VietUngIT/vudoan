@@ -35,16 +35,11 @@ public class QAQuestionServiceImp implements QAQuestionService {
     }
 
     @Override
-    public QAQuestionResponse editQAQuestion(String id, String idfield, String content) throws Exception {
+    public QAQuestionResponse editQAQuestion(String id,String title, String content,String answer) throws Exception {
         QAQuestionResponse response = new QAQuestionResponse();
         if (!ObjectId.isValid(id)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
             response.setMsg("Id không đúng.");
-            return response;
-        }
-        if (!ObjectId.isValid(idfield)) {
-            response.setError(ErrorCode.NOT_A_OBJECT_ID);
-            response.setMsg("Id field không đúng.");
             return response;
         }
 
@@ -54,7 +49,7 @@ public class QAQuestionServiceImp implements QAQuestionService {
         MongoCursor<QAQuestion> cursor = collection.find("{_id:#}", new ObjectId(id)).limit(1).as(QAQuestion.class);
         if(cursor.hasNext()){
             QAQuestion qaQuestion = cursor.next();
-            collection.update("{_id:#}", new ObjectId(id)).with("{$set:{idField:#,content:#}}",idfield,content);
+            collection.update("{_id:#}", new ObjectId(id)).with("{$set:{title:#,content:#,answer:#}}",title,content,answer);
             response.setData(qaQuestion.toJson());
         }else {
             response.setError(ErrorCode.ID_NOT_EXIST);
@@ -64,7 +59,7 @@ public class QAQuestionServiceImp implements QAQuestionService {
     }
 
     @Override
-    public QAQuestionResponse addQAQuestion(String idfield, String content) throws Exception {
+    public QAQuestionResponse addQAQuestion(String idfield,String title, String content,String answer) throws Exception {
         QAQuestionResponse response = new QAQuestionResponse();
         if (!ObjectId.isValid(idfield)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
@@ -76,6 +71,8 @@ public class QAQuestionServiceImp implements QAQuestionService {
         qaQuestion.set_id(_id.toHexString());
         qaQuestion.setIdField(idfield);
         qaQuestion.setContent(content);
+        qaQuestion.setTitle(title);
+        qaQuestion.setAnswer(answer);
         MongoPool.log(QAQuestion.class.getSimpleName(),qaQuestion.toDocument());
         return  response;
     }
