@@ -239,6 +239,7 @@ public class ExpertServiceImp implements ExpertService {
         if(cursor.hasNext()){
             Expert expert = cursor.next();
             JsonArray arrayTags = Utils.toJsonArray(tags);
+            expert.setNameFields(getListNameFieldOfExpert(expert.getIdFields()));
             List<String> lsttags = new ArrayList<>();
             for (int i=0;i<arrayTags.size();i++){
                 lsttags.add(arrayTags.get(i).getAsString().toLowerCase());
