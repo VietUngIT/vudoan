@@ -27,6 +27,7 @@ public class QAQuestion extends MongoLog {
         object.addProperty("id",_id);
         object.addProperty("idField",idField);
         object.addProperty("title",title);
+        object.addProperty("content",content);
         object.addProperty("answer",answer);
         return object;
     }

@@ -50,6 +50,9 @@ public class QAQuestionServiceImp implements QAQuestionService {
         if(cursor.hasNext()){
             QAQuestion qaQuestion = cursor.next();
             collection.update("{_id:#}", new ObjectId(id)).with("{$set:{title:#,content:#,answer:#}}",title,content,answer);
+            qaQuestion.setTitle(title);
+            qaQuestion.setContent(content);
+            qaQuestion.setAnswer(answer);
             response.setData(qaQuestion.toJson());
         }else {
             response.setError(ErrorCode.ID_NOT_EXIST);
@@ -73,6 +76,7 @@ public class QAQuestionServiceImp implements QAQuestionService {
         qaQuestion.setContent(content);
         qaQuestion.setTitle(title);
         qaQuestion.setAnswer(answer);
+        response.setData(qaQuestion.toJson());
         MongoPool.log(QAQuestion.class.getSimpleName(),qaQuestion.toDocument());
         return  response;
     }
