@@ -3,6 +3,7 @@ package vietung.it.dev.core.services.imp;
 import com.google.gson.JsonArray;
 import com.mongodb.DB;
 import org.bson.types.ObjectId;
+import org.jongo.Aggregate;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
@@ -11,6 +12,8 @@ import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.models.QAQuestion;
 import vietung.it.dev.core.services.QAQuestionService;
+
+import java.util.Calendar;
 
 public class QAQuestionServiceImp implements QAQuestionService {
     @Override
@@ -103,6 +106,37 @@ public class QAQuestionServiceImp implements QAQuestionService {
             jsonArray.add(qaQuestion.toJson());
         }
         response.setArray(jsonArray);
+        return response;
+    }
+
+    @Override
+    public QAQuestionResponse searchQA(String content, String id) throws Exception {
+        long st = Calendar.getInstance().getTimeInMillis();
+        QAQuestionResponse response = new QAQuestionResponse();
+        if (!ObjectId.isValid(id)) {
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("Id không đúng.");
+            return response;
+        }
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(QAQuestion.class.getSimpleName());
+        collection.ensureIndex("{ content: \"text\",title: \"text\",idField: \"text\"}");
+        Aggregate.ResultsIterator<QAQuestion> cursor = collection.aggregate("{\"$match\": { \"$text\":{\"$search\":#},idField: #}}",content,id)
+                .and("{$project:{_id:1,idField:1,title: 1,content: 1,answer:1,score: { $meta: \"textScore\" }}}")
+                .and("{$sort:{score: -1}}")
+                .as(QAQuestion.class);
+        JsonArray array = new JsonArray();
+        int i = 0;
+        while (cursor.hasNext()) {
+            if(i>=5) break;
+            QAQuestion qaQuestion = cursor.next();
+            array.add(qaQuestion.toJson());
+        }
+        collection.dropIndex("{ content: \"text\",title: \"text\",idField: \"text\"}");
+        response.setArray(array);
+        long ed = Calendar.getInstance().getTimeInMillis();
+        System.out.println(String.valueOf((ed-st)/1000));
         return response;
     }
 }

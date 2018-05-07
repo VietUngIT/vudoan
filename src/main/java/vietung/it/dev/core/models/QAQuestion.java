@@ -12,6 +12,7 @@ public class QAQuestion extends MongoLog {
     private String title;
     private String content;
     private String answer;
+    private String score;
     @Override
     public Document toDocument() {
         Document doc = new Document();
@@ -31,4 +32,6 @@ public class QAQuestion extends MongoLog {
         object.addProperty("answer",answer);
         return object;
     }
+
+
 }
