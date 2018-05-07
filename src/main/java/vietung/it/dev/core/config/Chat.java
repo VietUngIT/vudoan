@@ -11,12 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import vietung.it.dev.apis.launcher.APILauncher;
 import vietung.it.dev.apis.response.MessagesResponse;
+import vietung.it.dev.apis.response.NotificationResponse;
 import vietung.it.dev.apis.response.UserResponse;
 import vietung.it.dev.core.consts.ErrorCode;
-import vietung.it.dev.core.models.Expert;
-import vietung.it.dev.core.models.Messages;
-import vietung.it.dev.core.models.Room;
-import vietung.it.dev.core.models.Users;
+import vietung.it.dev.core.models.*;
 import vietung.it.dev.core.services.UploadService;
 import vietung.it.dev.core.services.imp.UploadServiceImp;
 
@@ -147,5 +145,9 @@ public class Chat {
                 socketIONamespace.getBroadcastOperations().sendEvent("chatevent", response);
             }
         });
+    }
+
+    public static void sendNotification(NotificationResponse response){
+        server.getBroadcastOperations().sendEvent("notification", response);
     }
 }
