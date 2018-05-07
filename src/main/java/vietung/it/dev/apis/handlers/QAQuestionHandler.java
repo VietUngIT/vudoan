@@ -7,6 +7,8 @@ import vietung.it.dev.core.services.QAQuestionService;
 import vietung.it.dev.core.services.imp.QAQuestionServiceImp;
 import vietung.it.dev.core.utils.Utils;
 
+import java.util.Calendar;
+
 public class QAQuestionHandler extends BaseApiHandler {
     @Override
     public BaseResponse handle(HttpServerRequest request) throws Exception {
@@ -18,9 +20,6 @@ public class QAQuestionHandler extends BaseApiHandler {
                 String strpage = request.getParam("page");
                 String idfield = request.getParam("idfield");
                 return getQAQuestionByIdFieldHandle(idfield,strofset,strpage,service);
-            }else if(type.equals("searchqa")){
-                String content = request.getParam("content");
-                return null;
             }else {
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
             }
@@ -28,6 +27,8 @@ public class QAQuestionHandler extends BaseApiHandler {
             return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }
     }
+
+
 
     private BaseResponse getQAQuestionByIdFieldHandle(String idfield, String strofset, String strpage, QAQuestionService service) throws Exception {
         if(idfield!=null && strofset!=null && !idfield.trim().equals("") && !strofset.trim().equals("")){

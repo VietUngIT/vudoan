@@ -39,4 +39,12 @@ public class FieldOfExpert extends MongoLog {
         object.addProperty("tags",rTags.toString());
         return object;
     }
+
+    public JsonObject toJsonForExpert(){
+        JsonObject object = new JsonObject();
+        object.addProperty("id",_id);
+        object.addProperty("idParentField",idParentField);
+        object.addProperty("nameField",nameField);
+        return object;
+    }
 }
