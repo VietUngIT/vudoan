@@ -200,8 +200,8 @@ public class AgriTechServiceImp implements AgriTechService {
             String urlImage = null;
             DB db = MongoPool.getDBJongo();
             Jongo jongo = new Jongo(db);
-
-            if(image!=null){
+            System.out.println("image: "+image);
+            if(!(image.equals("null") || image==null)){
                 urlImage = service.uploadImage(image);
             }
             JsonArray array = Utils.toJsonArray(tags);
@@ -231,6 +231,8 @@ public class AgriTechServiceImp implements AgriTechService {
 
         }catch (Exception e){
             e.printStackTrace();
+            response.setError(ErrorCode.UPLOAD_IMAGE_ERROR);
+            response.setMsg("Lỗi cập nhật ảnh.");
         }
         return response;
     }
