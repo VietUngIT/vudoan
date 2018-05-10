@@ -35,6 +35,11 @@ public class Expert extends MongoLog {
     private int numMatchTags = 0;
     private int numMatchField = 0;
     private int weigthMatch = 0;
+    private int numRate1 = 0;
+    private int numRate2 = 0;
+    private int numRate3 = 0;
+    private int numRate4 = 0;
+    private int numRate5 = 0;
 
     @Override
     public Document toDocument() {
@@ -56,6 +61,11 @@ public class Expert extends MongoLog {
         document.append("degree",degree);
         document.append("avatar",avatar);
         document.append("isOnline",isOnline);
+        document.append("numRate1",numRate1);
+        document.append("numRate2",numRate2);
+        document.append("numRate3",numRate3);
+        document.append("numRate4",numRate4);
+        document.append("numRate5",numRate5);
         return document;
     }
 
@@ -93,6 +103,11 @@ public class Expert extends MongoLog {
         object.addProperty("isOnline",isOnline);
         object.addProperty("lat",lat);
         object.addProperty("long",lon);
+        object.addProperty("numRate1",numRate1);
+        object.addProperty("numRate2",numRate2);
+        object.addProperty("numRate3",numRate3);
+        object.addProperty("numRate4",numRate4);
+        object.addProperty("numRate5",numRate5);
         return object;
     }
     public static Comparator<Expert> DISTANCE_ASC = new Comparator<Expert>() {

@@ -5,6 +5,8 @@ import lombok.Data;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.util.Calendar;
+
 @Data
 public class NumCommentExpert extends MongoLog {
     private String _id;
@@ -27,6 +29,14 @@ public class NumCommentExpert extends MongoLog {
         JsonObject object = new JsonObject();
         object.addProperty("id",_id);
         object.addProperty("idExpert",idExpert);
+        if(startTime>0){
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(startTime);
+            String date = String.valueOf(calendar.get(Calendar.DATE))+"/"+String.valueOf(calendar.get(Calendar.MONTH)+1);
+            String fullDate = String.valueOf(calendar.get(Calendar.DATE))+"/"+String.valueOf(calendar.get(Calendar.MONTH)+1)+"/"+String.valueOf(calendar.get(Calendar.YEAR));
+            object.addProperty("date",date);
+            object.addProperty("fullDate",fullDate);
+        }
         object.addProperty("startTime",startTime);
         object.addProperty("endTime",endTime);
         object.addProperty("countComment",countComment);

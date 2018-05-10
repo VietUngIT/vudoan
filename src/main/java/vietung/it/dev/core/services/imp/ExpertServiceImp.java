@@ -324,7 +324,27 @@ public class ExpertServiceImp implements ExpertService {
             int numRate = expert.getNumRate();
             float rateOld = expert.getRate();
             float newRate = (rateOld*numRate+rate)/(numRate+1);
-            collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#}}",(++numRate),newRate);
+            if(rate==1){
+                int r1 = expert.getNumRate1();
+                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate1: #}}",(++numRate),newRate,++r1);
+                expert.setNumRate1(r1);
+            }else if(rate==2){
+                int r2 = expert.getNumRate2();
+                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate2: #}}",(++numRate),newRate,++r2);
+                expert.setNumRate2(r2);
+            }else if(rate==3){
+                int r3 = expert.getNumRate3();
+                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate3: #}}",(++numRate),newRate,++r3);
+                expert.setNumRate3(r3);
+            }else if(rate==4){
+                int r4 = expert.getNumRate4();
+                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate4: #}}",(++numRate),newRate,++r4);
+                expert.setNumRate4(r4);
+            }else if(rate==5){
+                int r5 = expert.getNumRate4();
+                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate5: #}}",(++numRate),newRate,++r5);
+                expert.setNumRate5(r5);
+            }
             expert.setNumRate(numRate);
             expert.setRate(rate);
             response.setData(expert.toJson());
@@ -441,6 +461,7 @@ public class ExpertServiceImp implements ExpertService {
         JsonObject object = new JsonObject();
         JsonArray jsonArray = new JsonArray();
         List<NumCommentExpert> lstStatitic = initListStatitic(id,startTime,endTime);
+        object.addProperty("totalActice",cursor.count());
         while(cursor.hasNext()){
             ForumAnswer forumAnswer = cursor.next();
             for (NumCommentExpert numCommentExpert: lstStatitic){
