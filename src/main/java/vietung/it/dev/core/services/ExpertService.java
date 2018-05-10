@@ -34,4 +34,6 @@ public interface ExpertService {
     List<Expert> getExpertByIds(List<String> ids) throws Exception;
 
     ExpertResponse getListExpertByIdField(String idparentfieldExpert,int ofs, int page) throws Exception;
+
+    ExpertResponse statiticCommentByExpert(String id) throws Exception;
 }

@@ -1,6 +1,7 @@
 package vietung.it.dev.core.services.imp;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.mongodb.DB;
 import org.bson.types.ObjectId;
 import org.jongo.Jongo;
@@ -17,10 +18,12 @@ import vietung.it.dev.core.services.UserService;
 import vietung.it.dev.core.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
 public class ExpertServiceImp implements ExpertService {
+    private final static long BLOCK_DATE = 86400000;
     @Override
     public ExpertResponse addExpert(String name, String phone, String desc, String email, String address,String idParentField, Double lat,Double lon, String field, String tags, String degree, String workplace) throws Exception {
         ExpertResponse response = new ExpertResponse();
@@ -411,6 +414,83 @@ public class ExpertServiceImp implements ExpertService {
         }
         response.setArray(jsonArray);
         return response;
+    }
+
+    @Override
+    public ExpertResponse statiticCommentByExpert(String id) throws Exception {
+        ExpertResponse response = new ExpertResponse();
+        if (!ObjectId.isValid(id)) {
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("Id không đúng.");
+            return response;
+        }
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+
+        MongoCollection collectionCommentFR = jongo.getCollection(ForumAnswer.class.getSimpleName());
+
+        Calendar calendarST = Calendar.getInstance();
+        calendarST.add(Calendar.DATE,-31);
+        Calendar calendarED = Calendar.getInstance();
+        calendarED.add(Calendar.DATE,-1);
+        long startTime = getStartDay(calendarST.getTimeInMillis());
+        long endTime = getEndDay(calendarED.getTimeInMillis());
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("{idUser:#,timeCreate:{$gte:#},timeCreate:{$lte:#}}");
+        MongoCursor<ForumAnswer> cursor = collectionCommentFR.find(stringBuilder.toString(),id,startTime,endTime).as(ForumAnswer.class);
+        JsonObject object = new JsonObject();
+        JsonArray jsonArray = new JsonArray();
+        List<NumCommentExpert> lstStatitic = initListStatitic(id,startTime,endTime);
+        while(cursor.hasNext()){
+            ForumAnswer forumAnswer = cursor.next();
+            for (NumCommentExpert numCommentExpert: lstStatitic){
+                if(forumAnswer.getTimeCreate()>=numCommentExpert.getStartTime() && forumAnswer.getTimeCreate()<=numCommentExpert.getEndTime()){
+                    int count = numCommentExpert.getCountComment();
+                    numCommentExpert.setCountComment(count+1);
+                    break;
+                }
+            }
+        }
+        for (NumCommentExpert numCommentExpert: lstStatitic){
+            jsonArray.add(numCommentExpert.toJson());
+        }
+        object.add("statitic",jsonArray);
+        response.setData(object);
+        return response;
+    }
+
+
+    private long getStartDay(long time){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        calendar.set(Calendar.HOUR_OF_DAY,0);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.MILLISECOND,0);
+        return calendar.getTimeInMillis();
+    }
+    private long getEndDay(long time){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        calendar.set(Calendar.HOUR_OF_DAY,23);
+        calendar.set(Calendar.MINUTE,59);
+        calendar.set(Calendar.SECOND,59);
+        calendar.set(Calendar.MILLISECOND,990);
+        return calendar.getTimeInMillis();
+    }
+    private List<NumCommentExpert> initListStatitic(String id, long startTime, long endTime){
+        List<NumCommentExpert> lstNum = new ArrayList<>();
+        while (startTime<endTime){
+            long tempTime = startTime+BLOCK_DATE;
+            NumCommentExpert numCommentExpert = new NumCommentExpert();
+            numCommentExpert.setIdExpert(id);
+            numCommentExpert.setStartTime(startTime);
+            numCommentExpert.setEndTime(tempTime);
+            numCommentExpert.setCountComment(0);
+            lstNum.add(numCommentExpert);
+            startTime = tempTime;
+        }
+        return lstNum;
     }
 
     private JsonArray getListNameFieldOfExpert(List<String> idField){
