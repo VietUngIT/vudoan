@@ -322,8 +322,7 @@ public class ExpertServiceImp implements ExpertService {
         if(cursor.hasNext()){
             Expert expert = cursor.next();
             int numRate = expert.getNumRate();
-            float rateOld = expert.getRate();
-            float newRate = (rateOld*numRate+rate)/(numRate+1);
+            float newRate = caculatoRate(expert,rate);
             if(rate==1){
                 int r1 = expert.getNumRate1();
                 collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate1: #}}",(++numRate),newRate,++r1);
@@ -341,18 +340,48 @@ public class ExpertServiceImp implements ExpertService {
                 collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate4: #}}",(++numRate),newRate,++r4);
                 expert.setNumRate4(r4);
             }else if(rate==5){
-                int r5 = expert.getNumRate4();
+                int r5 = expert.getNumRate5();
                 collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate5: #}}",(++numRate),newRate,++r5);
                 expert.setNumRate5(r5);
             }
             expert.setNumRate(numRate);
-            expert.setRate(rate);
+            expert.setRate(newRate);
             response.setData(expert.toJson());
         }else{
             response.setError(ErrorCode.USER_NOT_EXIST);
             response.setMsg("Chuyên gia này không tồn tại.");
         }
         return response;
+    }
+
+    private float caculatoRate(Expert e, int rate){
+        float res = 0;
+        float ts = 0;
+        switch (rate){
+            case 1:
+                ts = ((e.getNumRate1()+1)+e.getNumRate2()*2+e.getNumRate3()*3+e.getNumRate4()*4+e.getNumRate5()*5);
+                res = ts/(float)(e.getNumRate()+1);
+                break;
+            case 2:
+                ts = (e.getNumRate1()+(e.getNumRate2()+1)*2+e.getNumRate3()*3+e.getNumRate4()*4+e.getNumRate5()*5);
+                res = ts/(float)(e.getNumRate()+1);
+                break;
+            case 3:
+                ts = (e.getNumRate1()+e.getNumRate2()*2+(e.getNumRate3()+1)*3+e.getNumRate4()*4+e.getNumRate5()*5);
+                res = ts/(float)(e.getNumRate()+1);
+                break;
+            case 4:
+                ts = (e.getNumRate1()+e.getNumRate2()*2+e.getNumRate3()*3+(e.getNumRate4()+1)*4+e.getNumRate5()*5);
+                res = ts/(float)(e.getNumRate()+1);
+                break;
+            case 5:
+                ts = (e.getNumRate1()+e.getNumRate2()*2+e.getNumRate3()*3+e.getNumRate4()*4+(e.getNumRate5()+1)*5);
+                res = ts/(float)(e.getNumRate()+1);
+                break;
+        }
+        float tempRes = res*10;
+        float kq = Math.round(tempRes);
+        return kq / 10;
     }
 
     @Override
