@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mongodb.DB;
 import org.bson.types.ObjectId;
+import org.jongo.Aggregate;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
@@ -17,10 +18,7 @@ import vietung.it.dev.core.services.ExpertService;
 import vietung.it.dev.core.services.UserService;
 import vietung.it.dev.core.utils.Utils;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class ExpertServiceImp implements ExpertService {
     private final static long BLOCK_DATE = 86400000;
@@ -482,8 +480,8 @@ public class ExpertServiceImp implements ExpertService {
         calendarST.add(Calendar.DATE,-31);
         Calendar calendarED = Calendar.getInstance();
         calendarED.add(Calendar.DATE,-1);
-        long startTime = getStartDay(calendarST.getTimeInMillis());
-        long endTime = getEndDay(calendarED.getTimeInMillis());
+        long startTime = Utils.getStartDay(calendarST.getTimeInMillis());
+        long endTime = Utils.getEndDay(calendarED.getTimeInMillis());
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("{idUser:#,timeCreate:{$gte:#},timeCreate:{$lte:#}}");
         MongoCursor<ForumAnswer> cursor = collectionCommentFR.find(stringBuilder.toString(),id,startTime,endTime).as(ForumAnswer.class);
@@ -509,25 +507,25 @@ public class ExpertServiceImp implements ExpertService {
         return response;
     }
 
+    @Override
+    public Report gtExpertForDashBoard(Jongo jongo) throws Exception {
+        MongoCollection collection = jongo.getCollection(Expert.class.getSimpleName());
+        Aggregate.ResultsIterator<ReportObject> cursor = collection.aggregate("{$group: {_id:\"$idParentField\",value:{$sum:1}}}")
+                .as(ReportObject.class);
+        HashMap<String,ReportObject> hashMap = new HashMap<>();
+        int count = 0;
+        while(cursor.hasNext()){
+            ReportObject reportObject = cursor.next();
+            count+=reportObject.getValue();
+            hashMap.put(reportObject.get_id(),reportObject);
+        }
+        Report report = new Report();
+        report.setCount(count);
+        report.setLst(hashMap);
+        return report;
+    }
 
-    private long getStartDay(long time){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(time);
-        calendar.set(Calendar.HOUR_OF_DAY,0);
-        calendar.set(Calendar.MINUTE,0);
-        calendar.set(Calendar.SECOND,0);
-        calendar.set(Calendar.MILLISECOND,0);
-        return calendar.getTimeInMillis();
-    }
-    private long getEndDay(long time){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(time);
-        calendar.set(Calendar.HOUR_OF_DAY,23);
-        calendar.set(Calendar.MINUTE,59);
-        calendar.set(Calendar.SECOND,59);
-        calendar.set(Calendar.MILLISECOND,990);
-        return calendar.getTimeInMillis();
-    }
+
     private List<NumCommentExpert> initListStatitic(String id, long startTime, long endTime){
         List<NumCommentExpert> lstNum = new ArrayList<>();
         while (startTime<endTime){

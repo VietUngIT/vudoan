@@ -1,17 +1,13 @@
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.mongodb.DB;
 import org.bson.types.ObjectId;
-import org.jongo.Aggregate;
-import org.jongo.Jongo;
-import org.jongo.MongoCollection;
-import org.jongo.MongoCursor;
+import org.jongo.*;
 import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.consts.Variable;
 import vietung.it.dev.core.models.*;
-import vietung.it.dev.core.services.ExpertService;
-import vietung.it.dev.core.services.FieldOfExpertService;
-import vietung.it.dev.core.services.imp.ExpertServiceImp;
-import vietung.it.dev.core.services.imp.FieldOfExpertServiceImp;
+import vietung.it.dev.core.services.*;
+import vietung.it.dev.core.services.imp.*;
 import vietung.it.dev.core.utils.Utils;
 
 import java.io.IOException;
@@ -23,7 +19,40 @@ public class MongoTest {
     public static void main(String[] args) {
         try {
             MongoPool.init();
+            DB db = MongoPool.getDBJongo();
+            Jongo jongo = new Jongo(db);
             System.out.println("start");
+            long st = Calendar.getInstance().getTimeInMillis();
+            getDistint();
+//            testREport();
+//            ExpertService service = new ExpertServiceImp();
+//            UserService userService = new UserServiceImp();
+//            QAQuestionService qaQuestionService = new QAQuestionServiceImp();
+//            ForumQuestionService forumQuestionService = new ForumQuestionServiceImp();
+//            JsonObject object = service.gtExpertForDashBoard(jongo);
+//            JsonObject qaObject = qaQuestionService.getQAForDashBoard(jongo);
+//            JsonObject frObject = forumQuestionService.getForumQuestionByDayForDashBoard(jongo);
+//
+//            System.out.println("result");
+//            System.out.println(object);
+//            System.out.println("numUser: "+userService.getCountUser(jongo));
+//            System.out.println("result");
+//            System.out.println(qaObject);
+//            System.out.println("result");
+//            System.out.println(frObject);
+//            List<JsonObject> array = new ArrayList<>();
+//            for (int i=0;i<3;i++){
+//                ReportObject reportObject = new ReportObject();
+//                reportObject.setName("name"+i);
+//                reportObject.setValue(i);
+//                array.add(reportObject.toJson());
+//            }
+//            DashBoardObject dashBoardObject = new DashBoardObject();
+//            ObjectId id = new ObjectId();
+//            dashBoardObject.set_id(id.toHexString());
+//            dashBoardObject.setNumExpert(3);
+//            dashBoardObject.setExpertByField(array.toString());
+//            MongoPool.log(DashBoardObject.class.getSimpleName(),dashBoardObject.toDocument());
 //            FieldOfExpert fieldOfExpert = new FieldOfExpert();
 
 //            ObjectId objectId = new ObjectId();
@@ -58,8 +87,8 @@ public class MongoTest {
 //            }
 //            FieldOfExpertService service = new FieldOfExpertServiceImp();
 //            service.getListFieldMatchTags(list);
-            long st = Calendar.getInstance().getTimeInMillis();
-            testSearch("nguyên nhân và cách khắc phục");
+
+//            testSearch("nguyên nhân và cách khắc phục");
             long ed = Calendar.getInstance().getTimeInMillis();
             System.out.println(String.valueOf((ed-st)/1000));
             System.out.println("finnish!!!");
@@ -70,6 +99,11 @@ public class MongoTest {
         }
 
 
+    }
+
+    private static void testREport() throws Exception{
+        DashBoardServiceImp service = new DashBoardServiceImp();
+//        service.getInfo();
     }
 
     private static void testSearch(String str){
@@ -109,5 +143,26 @@ public class MongoTest {
             array.add(cursor.next().toJson());
         }
         return array;
+    }
+
+    private static void getDistint(){
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(ForumAnswer.class.getSimpleName());
+        List<String> cursor1 = collection.distinct("idQuestion").query("{\"idUser\":\"5ac1bfeca0e74c0e6c34893c\"}").as(String.class);
+        List<ObjectId> lstOBid = new ArrayList<>();
+        for (String str: cursor1){
+            lstOBid.add(new ObjectId(str));
+        }
+        MongoCollection collectiontt = jongo.getCollection(ForumQuestion.class.getSimpleName());
+        StringBuilder builder = new StringBuilder();
+        builder.append("{_id:{$in: #}}");
+        MongoCursor<ForumQuestion> cursor = collectiontt.find(builder.toString(),lstOBid).as(ForumQuestion.class);
+        while(cursor.hasNext()){
+            ForumQuestion forumQuestion = cursor.next();
+            System.out.println(forumQuestion.get_id()+"-"+forumQuestion.getContent());
+        }
+//        System.out.println(cursor.get(0));
+//        System.out.println("");
     }
 }

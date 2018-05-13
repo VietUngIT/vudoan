@@ -40,6 +40,17 @@ public class ForumQuestionHandler extends BaseApiHandler {
                 String strpage = request.getFormAttribute("page");
                 String phone = request.getFormAttribute("ph");
                 return getQuestionByFieldHandle(id,phone,strofset,strpage,service);
+            }else if(type.equals("getbyiduser")){
+                String id = request.getFormAttribute("iduser");
+                String strofset = request.getFormAttribute("ofset");
+                String strpage = request.getFormAttribute("page");
+                String phone = request.getFormAttribute("phone");
+                return getQuestionByIDUserHandle(id,strofset,strpage,phone,service);
+            }else if(type.equals("getbyidexpert")){
+                String id = request.getFormAttribute("idexpert");
+                String strofset = request.getFormAttribute("ofset");
+                String strpage = request.getFormAttribute("page");
+                return getQuestionByIDExpertHandle(id,strofset,strpage,service);
             }else if(type.equals("getbyid")){
                 String id = request.getFormAttribute("id");
                 String phone = request.getFormAttribute("ph");
@@ -57,6 +68,36 @@ public class ForumQuestionHandler extends BaseApiHandler {
                 return getQuestionAllHandle(phone,strofset,strpage,service);
             }else{
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
+            }
+        }else {
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
+        }
+    }
+
+    private BaseResponse getQuestionByIDExpertHandle(String id, String strofset, String strpage, ForumQuestionService service) throws Exception {
+        if(id!=null && strofset!=null && strpage!=null){
+            try {
+                int ofs = Integer.parseInt(strofset);
+                int page = Integer.parseInt(strpage);
+                return service.getExpertByIDExpertQuestion(id,ofs,page);
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+                return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");
+            }
+        }else {
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
+        }
+    }
+
+    private BaseResponse getQuestionByIDUserHandle(String id, String strofset, String strpage,String phone, ForumQuestionService service) throws Exception {
+        if(id!=null && strofset!=null && strpage!=null && phone!=null){
+            try {
+                int ofs = Integer.parseInt(strofset);
+                int page = Integer.parseInt(strpage);
+                return service.getExpertByIDUserQuestion(id,ofs,page,phone);
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+                return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");
             }
         }else {
             return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
@@ -84,7 +125,7 @@ public class ForumQuestionHandler extends BaseApiHandler {
 
     private BaseResponse addQuestionHandle(String phone, String image,String idField, String content, String strNExpert, ForumQuestionService service) throws Exception {
 
-        if(phone!=null && content!=null && idField!=null){
+        if(phone!=null && content!=null && idField!=null ){
             if(strNExpert==null){
                 strNExpert = "5";
             }

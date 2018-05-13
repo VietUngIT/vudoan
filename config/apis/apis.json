@@ -238,6 +238,12 @@
       "isPublic":true,
       "roles":[],
       "method":"POST"
+    },{
+      "path":"/dashboard",
+      "handler":"vietung.it.dev.apis.handlers.admin.DashBoardHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
     }
 
   ]

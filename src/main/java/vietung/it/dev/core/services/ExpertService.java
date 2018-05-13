@@ -1,8 +1,11 @@
 package vietung.it.dev.core.services;
 
+import com.google.gson.JsonObject;
+import org.jongo.Jongo;
 import vietung.it.dev.apis.response.BaseResponse;
 import vietung.it.dev.apis.response.ExpertResponse;
 import vietung.it.dev.core.models.Expert;
+import vietung.it.dev.core.models.Report;
 
 import java.util.List;
 
@@ -36,4 +39,6 @@ public interface ExpertService {
     ExpertResponse getListExpertByIdField(String idparentfieldExpert,int ofs, int page) throws Exception;
 
     ExpertResponse statiticCommentByExpert(String id) throws Exception;
+
+    Report gtExpertForDashBoard(Jongo jongo) throws Exception;
 }

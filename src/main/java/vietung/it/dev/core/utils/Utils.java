@@ -14,6 +14,7 @@ import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.models.Users;
 
 import java.security.MessageDigest;
+import java.util.Calendar;
 import java.util.Random;
 
 public class Utils {
@@ -86,5 +87,23 @@ public class Utils {
         response.setError(errorCode);
         response.setMsg(msg);
         return response;
+    }
+    public static long getStartDay(long time){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        calendar.set(Calendar.HOUR_OF_DAY,0);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.MILLISECOND,0);
+        return calendar.getTimeInMillis();
+    }
+    public static long getEndDay(long time){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        calendar.set(Calendar.HOUR_OF_DAY,23);
+        calendar.set(Calendar.MINUTE,59);
+        calendar.set(Calendar.SECOND,59);
+        calendar.set(Calendar.MILLISECOND,990);
+        return calendar.getTimeInMillis();
     }
 }
