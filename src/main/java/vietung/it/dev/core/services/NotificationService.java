@@ -7,5 +7,7 @@ import vietung.it.dev.core.models.Notification;
 public interface NotificationService {
     public NotificationResponse getAllNotificationByIdReceiver(int page, int ofset, String idreceiver);
 
+    public NotificationResponse sendNoti(String idSend, String idreceiver,String message,String action,int type);
+
     public void sendNotification(String idSend, String idreceiver,String message,String action,int type);
 }

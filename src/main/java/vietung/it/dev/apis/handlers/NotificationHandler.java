@@ -18,7 +18,14 @@ public class NotificationHandler  extends BaseApiHandler {
                 String ofset = request.getParam("ofset");
                 String strpage = request.getParam("page");
                 return getAllNotificationByIdReceiverHandler(strpage,idreceiver,ofset,service);
-            }else {
+            }if(type.equals("sendNoti")){
+                String idSend = request.getParam("idSend");
+                String idreceiver = request.getParam("idreceiver");
+                String message = request.getParam("message");
+                String action = request.getParam("action");
+                String types = request.getParam("type");
+                return sendNoti(idSend,idreceiver,message,action,types,service);
+            } else {
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
             }
         }else {
@@ -35,6 +42,20 @@ public class NotificationHandler  extends BaseApiHandler {
                 int page = Integer.parseInt(strpage);
                 int of = Integer.parseInt(ofset);
                 return service.getAllNotificationByIdReceiver(page,of,idreceiver);
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+                return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");
+            }
+        }else {
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
+        }
+    }
+
+    private BaseResponse sendNoti(String idSend, String idreceiver,String message,String action,String types,NotificationService service){
+        if(idSend!=null && idreceiver!=null && message != null && types != null){
+            try {
+                int type = Integer.parseInt(types);
+                return service.sendNoti(idSend,idreceiver,message,action,type);
             }catch (NumberFormatException e){
                 e.printStackTrace();
                 return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");

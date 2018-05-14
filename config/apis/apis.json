@@ -257,6 +257,12 @@
       "isPublic":false,
       "roles":[],
       "method":"GET"
+    }, {
+      "path":"/notification",
+      "handler":"vietung.it.dev.apis.handlers.NotificationHandler",
+      "isPublic":false,
+      "roles":[],
+      "method":"GET"
     }
   ]
 }
