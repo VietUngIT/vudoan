@@ -40,6 +40,20 @@ public class NotificationServiceImp implements NotificationService {
         JsonArray jsonArray = new JsonArray();
         while(cursor.hasNext()){
             Notification notification = cursor.next();
+            MongoCollection collectionUser = jongo.getCollection(Users.class.getSimpleName());
+            StringBuilder sb = new StringBuilder();
+            sb.append("{$and: [{_id: #}]}");
+            MongoCursor<Users> cursorUser = collectionUser.find(sb.toString(), notification.getIdSend()).limit(1).as(Users.class);
+            if (cursorUser.hasNext()){
+                Users users = cursorUser.next();
+                notification.setNameSend(users.getName());
+                if(users.getAvatar() != null){
+                    notification.setAvataSend(users.getAvatar());
+                }else {
+                    notification.setAvataSend("");
+                }
+                response.setData(notification);
+            }
             jsonArray.add(notification.toJson());
         }
         response.setDatas(jsonArray);
