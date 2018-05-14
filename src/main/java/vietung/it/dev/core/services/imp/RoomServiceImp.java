@@ -165,4 +165,36 @@ public class RoomServiceImp implements RoomService {
 
         return response;
     }
+
+    @Override
+    public RoomsResponse getRoomById(String id) {
+        RoomsResponse response = new RoomsResponse();
+        if (!ObjectId.isValid(id)) {
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("Id User không đúng.");
+            return response;
+        }
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collectionRoom = jongo.getCollection(Room.class.getSimpleName());
+        MongoCursor<Room> cursorRoomUser = collectionRoom.find("{_id:#}",new ObjectId(id)).as(Room.class);
+        if (cursorRoomUser.hasNext()) {
+            Room room = cursorRoomUser.next();
+            List<String> listuser = room.getUser();
+            JsonArray users = new JsonArray();
+            for(int i =0 ; i < listuser.size() ; i ++){
+                MongoCollection collectionIdUser = jongo.getCollection(Users.class.getSimpleName());
+                MongoCursor<Users> cursorUsers = collectionIdUser.find("{_id:#}", listuser.get(i)).as(Users.class);
+                while (cursorUsers.hasNext()) {
+                    users.add( cursorUsers.next().toJson());
+                }
+            }
+            room.setUsers(users);
+            response.setData(room.toJson());
+            return response;
+        }
+        response.setError(ErrorCode.ROOM_EXIST);
+        response.setMsg("Room không tồn tại");
+        return response;
+    }
 }

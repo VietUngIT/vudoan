@@ -35,6 +35,9 @@ public class RoomHandler extends BaseApiHandler {
                 String ofset = request.getParam("ofset");
                 String strpage = request.getParam("page");
                 return getAllRoomByIdUserWithRoom(strpage,iduser,ofset,service);
+            }if(type.equals("room_getbyid")){
+                String id = request.getParam("id");
+                return getRoomById(id,service);
             }else {
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
             }
@@ -101,6 +104,14 @@ public class RoomHandler extends BaseApiHandler {
                 return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");
             }
 
+        }else {
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
+        }
+    }
+
+    private BaseResponse getRoomById(String id, RoomService service) {
+        if(id !=null){
+            return service.getRoomById(id);
         }else {
             return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }
