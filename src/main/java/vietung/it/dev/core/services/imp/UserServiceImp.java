@@ -233,4 +233,14 @@ public class UserServiceImp implements UserService {
         }
         return response;
     }
+
+    @Override
+    public int getCountUser(Jongo jongo) throws Exception {
+        MongoCollection collection = jongo.getCollection(Users.class.getSimpleName());
+        MongoCursor<Users> cursor = collection.find().as(Users.class);
+        if(cursor.hasNext()){
+            return cursor.count();
+        }
+        return 0;
+    }
 }

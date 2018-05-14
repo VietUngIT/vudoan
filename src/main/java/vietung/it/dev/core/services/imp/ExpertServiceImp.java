@@ -1,8 +1,10 @@
 package vietung.it.dev.core.services.imp;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.mongodb.DB;
 import org.bson.types.ObjectId;
+import org.jongo.Aggregate;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
@@ -16,11 +18,10 @@ import vietung.it.dev.core.services.ExpertService;
 import vietung.it.dev.core.services.UserService;
 import vietung.it.dev.core.utils.Utils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class ExpertServiceImp implements ExpertService {
+    private final static long BLOCK_DATE = 86400000;
     @Override
     public ExpertResponse addExpert(String name, String phone, String desc, String email, String address,String idParentField, Double lat,Double lon, String field, String tags, String degree, String workplace) throws Exception {
         ExpertResponse response = new ExpertResponse();
@@ -319,17 +320,66 @@ public class ExpertServiceImp implements ExpertService {
         if(cursor.hasNext()){
             Expert expert = cursor.next();
             int numRate = expert.getNumRate();
-            float rateOld = expert.getRate();
-            float newRate = (rateOld*numRate+rate)/(numRate+1);
-            collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#}}",(++numRate),newRate);
+            float newRate = caculatoRate(expert,rate);
+            if(rate==1){
+                int r1 = expert.getNumRate1();
+                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate1: #}}",(++numRate),newRate,++r1);
+                expert.setNumRate1(r1);
+            }else if(rate==2){
+                int r2 = expert.getNumRate2();
+                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate2: #}}",(++numRate),newRate,++r2);
+                expert.setNumRate2(r2);
+            }else if(rate==3){
+                int r3 = expert.getNumRate3();
+                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate3: #}}",(++numRate),newRate,++r3);
+                expert.setNumRate3(r3);
+            }else if(rate==4){
+                int r4 = expert.getNumRate4();
+                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate4: #}}",(++numRate),newRate,++r4);
+                expert.setNumRate4(r4);
+            }else if(rate==5){
+                int r5 = expert.getNumRate5();
+                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate5: #}}",(++numRate),newRate,++r5);
+                expert.setNumRate5(r5);
+            }
             expert.setNumRate(numRate);
-            expert.setRate(rate);
+            expert.setRate(newRate);
             response.setData(expert.toJson());
         }else{
             response.setError(ErrorCode.USER_NOT_EXIST);
             response.setMsg("Chuyên gia này không tồn tại.");
         }
         return response;
+    }
+
+    private float caculatoRate(Expert e, int rate){
+        float res = 0;
+        float ts = 0;
+        switch (rate){
+            case 1:
+                ts = ((e.getNumRate1()+1)+e.getNumRate2()*2+e.getNumRate3()*3+e.getNumRate4()*4+e.getNumRate5()*5);
+                res = ts/(float)(e.getNumRate()+1);
+                break;
+            case 2:
+                ts = (e.getNumRate1()+(e.getNumRate2()+1)*2+e.getNumRate3()*3+e.getNumRate4()*4+e.getNumRate5()*5);
+                res = ts/(float)(e.getNumRate()+1);
+                break;
+            case 3:
+                ts = (e.getNumRate1()+e.getNumRate2()*2+(e.getNumRate3()+1)*3+e.getNumRate4()*4+e.getNumRate5()*5);
+                res = ts/(float)(e.getNumRate()+1);
+                break;
+            case 4:
+                ts = (e.getNumRate1()+e.getNumRate2()*2+e.getNumRate3()*3+(e.getNumRate4()+1)*4+e.getNumRate5()*5);
+                res = ts/(float)(e.getNumRate()+1);
+                break;
+            case 5:
+                ts = (e.getNumRate1()+e.getNumRate2()*2+e.getNumRate3()*3+e.getNumRate4()*4+(e.getNumRate5()+1)*5);
+                res = ts/(float)(e.getNumRate()+1);
+                break;
+        }
+        float tempRes = res*10;
+        float kq = Math.round(tempRes);
+        return kq / 10;
     }
 
     @Override
@@ -411,6 +461,84 @@ public class ExpertServiceImp implements ExpertService {
         }
         response.setArray(jsonArray);
         return response;
+    }
+
+    @Override
+    public ExpertResponse statiticCommentByExpert(String id) throws Exception {
+        ExpertResponse response = new ExpertResponse();
+        if (!ObjectId.isValid(id)) {
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("Id không đúng.");
+            return response;
+        }
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+
+        MongoCollection collectionCommentFR = jongo.getCollection(ForumAnswer.class.getSimpleName());
+
+        Calendar calendarST = Calendar.getInstance();
+        calendarST.add(Calendar.DATE,-31);
+        Calendar calendarED = Calendar.getInstance();
+        calendarED.add(Calendar.DATE,-1);
+        long startTime = Utils.getStartDay(calendarST.getTimeInMillis());
+        long endTime = Utils.getEndDay(calendarED.getTimeInMillis());
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("{idUser:#,timeCreate:{$gte:#},timeCreate:{$lte:#}}");
+        MongoCursor<ForumAnswer> cursor = collectionCommentFR.find(stringBuilder.toString(),id,startTime,endTime).as(ForumAnswer.class);
+        JsonObject object = new JsonObject();
+        JsonArray jsonArray = new JsonArray();
+        List<NumCommentExpert> lstStatitic = initListStatitic(id,startTime,endTime);
+        object.addProperty("totalActice",cursor.count());
+        while(cursor.hasNext()){
+            ForumAnswer forumAnswer = cursor.next();
+            for (NumCommentExpert numCommentExpert: lstStatitic){
+                if(forumAnswer.getTimeCreate()>=numCommentExpert.getStartTime() && forumAnswer.getTimeCreate()<=numCommentExpert.getEndTime()){
+                    int count = numCommentExpert.getCountComment();
+                    numCommentExpert.setCountComment(count+1);
+                    break;
+                }
+            }
+        }
+        for (NumCommentExpert numCommentExpert: lstStatitic){
+            jsonArray.add(numCommentExpert.toJson());
+        }
+        object.add("statitic",jsonArray);
+        response.setData(object);
+        return response;
+    }
+
+    @Override
+    public Report gtExpertForDashBoard(Jongo jongo) throws Exception {
+        MongoCollection collection = jongo.getCollection(Expert.class.getSimpleName());
+        Aggregate.ResultsIterator<ReportObject> cursor = collection.aggregate("{$group: {_id:\"$idParentField\",value:{$sum:1}}}")
+                .as(ReportObject.class);
+        HashMap<String,ReportObject> hashMap = new HashMap<>();
+        int count = 0;
+        while(cursor.hasNext()){
+            ReportObject reportObject = cursor.next();
+            count+=reportObject.getValue();
+            hashMap.put(reportObject.get_id(),reportObject);
+        }
+        Report report = new Report();
+        report.setCount(count);
+        report.setLst(hashMap);
+        return report;
+    }
+
+
+    private List<NumCommentExpert> initListStatitic(String id, long startTime, long endTime){
+        List<NumCommentExpert> lstNum = new ArrayList<>();
+        while (startTime<endTime){
+            long tempTime = startTime+BLOCK_DATE;
+            NumCommentExpert numCommentExpert = new NumCommentExpert();
+            numCommentExpert.setIdExpert(id);
+            numCommentExpert.setStartTime(startTime);
+            numCommentExpert.setEndTime(tempTime);
+            numCommentExpert.setCountComment(0);
+            lstNum.add(numCommentExpert);
+            startTime = tempTime;
+        }
+        return lstNum;
     }
 
     private JsonArray getListNameFieldOfExpert(List<String> idField){

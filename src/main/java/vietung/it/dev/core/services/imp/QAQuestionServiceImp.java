@@ -1,6 +1,7 @@
 package vietung.it.dev.core.services.imp;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.mongodb.DB;
 import org.bson.types.ObjectId;
 import org.jongo.Aggregate;
@@ -11,9 +12,14 @@ import vietung.it.dev.apis.response.QAQuestionResponse;
 import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.models.QAQuestion;
+import vietung.it.dev.core.models.Report;
+import vietung.it.dev.core.models.ReportObject;
 import vietung.it.dev.core.services.QAQuestionService;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
 public class QAQuestionServiceImp implements QAQuestionService {
     @Override
@@ -138,5 +144,23 @@ public class QAQuestionServiceImp implements QAQuestionService {
         long ed = Calendar.getInstance().getTimeInMillis();
         System.out.println(String.valueOf((ed-st)/1000));
         return response;
+    }
+
+    @Override
+    public Report getQAForDashBoard(Jongo jongo) throws Exception {
+        MongoCollection collection = jongo.getCollection(QAQuestion.class.getSimpleName());
+        Aggregate.ResultsIterator<ReportObject> cursor = collection.aggregate("{$group: {_id:\"$idField\",value:{$sum:1}}}")
+                .as(ReportObject.class);
+        HashMap<String,ReportObject> hashMap = new HashMap<>();
+        int count = 0;
+        while(cursor.hasNext()){
+            ReportObject reportObject = cursor.next();
+            count+=reportObject.getValue();
+            hashMap.put(reportObject.get_id(),reportObject);
+        }
+        Report report = new Report();
+        report.setCount(count);
+        report.setLst(hashMap);
+        return report;
     }
 }

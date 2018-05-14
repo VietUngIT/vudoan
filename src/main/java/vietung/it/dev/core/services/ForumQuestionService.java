@@ -1,8 +1,14 @@
 package vietung.it.dev.core.services;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import io.vertx.core.json.Json;
+import org.jongo.Jongo;
 import vietung.it.dev.apis.response.BaseResponse;
 import vietung.it.dev.apis.response.ForumQuestionResponse;
+import vietung.it.dev.core.models.Report;
+
+import java.util.Calendar;
 
 public interface ForumQuestionService {
     ForumQuestionResponse delQuestion(String phone, String id) throws Exception;
@@ -24,4 +30,11 @@ public interface ForumQuestionService {
     ForumQuestionResponse getQuestionAll(int page,int ofset,String phone)throws Exception;
 
     ForumQuestionResponse getTagsForumQuestion(String idQuestion, String strTags) throws Exception;
+
+    String getForumQuestionByDayForDashBoard(Jongo jongo) throws Exception;
+    Report getReportQuestionByDayForDashBoard(Jongo jongo, Calendar calendarST, Calendar calendarED) throws Exception;
+
+    ForumQuestionResponse getExpertByIDUserQuestion(String id, int ofs, int page, String phone) throws Exception;
+
+    ForumQuestionResponse getExpertByIDExpertQuestion(String id, int ofs, int page) throws Exception;
 }

@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.mongodb.DB;
 import org.apache.commons.collections4.CollectionUtils;
 import org.bson.types.ObjectId;
+import org.jongo.Aggregate;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
@@ -19,12 +20,10 @@ import vietung.it.dev.core.services.ForumQuestionService;
 import vietung.it.dev.core.services.UploadService;
 import vietung.it.dev.core.utils.Utils;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class ForumQuestionServiceImp implements ForumQuestionService {
+    private final static long BLOCK_DATE = 86400000;
     @Override
     public ForumQuestionResponse delQuestion(String phone, String id) throws Exception {
         ForumQuestionResponse response = new ForumQuestionResponse();
@@ -489,6 +488,149 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         return response;
     }
 
+    @Override
+    public String getForumQuestionByDayForDashBoard(Jongo jongo) throws Exception {
+
+        MongoCollection collection = jongo.getCollection(ForumQuestion.class.getSimpleName());
+
+        Calendar calendarST = Calendar.getInstance();
+        calendarST.add(Calendar.DATE,-16);
+        Calendar calendarED = Calendar.getInstance();
+        calendarED.add(Calendar.DATE,-1);
+        long startTime = Utils.getStartDay(calendarST.getTimeInMillis());
+        long endTime = Utils.getEndDay(calendarED.getTimeInMillis());
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("{timeCreate:{$gte:#},timeCreate:{$lte:#}}");
+        MongoCursor<ForumQuestion> cursor = collection.find(stringBuilder.toString(),startTime,endTime).as(ForumQuestion.class);
+        JsonObject object = new JsonObject();
+        List<JsonObject> array = new ArrayList<>();
+        List<NumCommentExpert> lstStatitic = initListREportFR(startTime,endTime);
+        object.addProperty("total",cursor.count());
+        while(cursor.hasNext()){
+            ForumQuestion forumQuestion = cursor.next();
+            for (NumCommentExpert numCommentExpert: lstStatitic){
+                if(forumQuestion.getTimeCreate()>=numCommentExpert.getStartTime() && forumQuestion.getTimeCreate()<=numCommentExpert.getEndTime()){
+                    int count = numCommentExpert.getCountComment();
+                    numCommentExpert.setCountComment(count+1);
+                    break;
+                }
+            }
+        }
+        for (NumCommentExpert numCommentExpert: lstStatitic){
+            array.add(numCommentExpert.toJson());
+        }
+        object.addProperty("list",array.toString());
+        return array.toString();
+    }
+
+    @Override
+    public Report getReportQuestionByDayForDashBoard(Jongo jongo,Calendar calendarST, Calendar calendarED) throws Exception {
+        MongoCollection collection = jongo.getCollection(ForumQuestion.class.getSimpleName());
+        Aggregate.ResultsIterator<ReportObject> cursor = collection.aggregate("{$match: {$and:[{timeCreate : {$gte:#, $lte: #}}]}}",Utils.getStartDay(calendarST.getTimeInMillis()),Utils.getEndDay((calendarED.getTimeInMillis())))
+                .and("{$group: {_id:\"$idField\",value:{$sum:1}}}")
+                .as(ReportObject.class);
+        HashMap<String,ReportObject> hashMap = new HashMap<>();
+        int count = 0;
+        while(cursor.hasNext()){
+            ReportObject reportObject = cursor.next();
+            count+=reportObject.getValue();
+            hashMap.put(reportObject.get_id(),reportObject);
+        }
+        Report report = new Report();
+        report.setCount(count);
+        report.setLst(hashMap);
+        return report;
+    }
+
+    @Override
+    public ForumQuestionResponse getExpertByIDUserQuestion(String id, int ofs, int page, String phone) throws Exception {
+        ForumQuestionResponse response = new ForumQuestionResponse();
+        if (!ObjectId.isValid(id)) {
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("Id không đúng.");
+            return response;
+        }
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        StringBuilder builder = new StringBuilder();
+        MongoCursor<ForumQuestion> cursor = null;
+        MongoCollection collection = jongo.getCollection(ForumQuestion.class.getSimpleName());
+        builder.append("{$and: [{idUser: #}]}");
+        cursor = collection.find(builder.toString(),id).sort("{timeCreate:-1}").skip(page*ofs).limit(ofs).as(ForumQuestion.class);
+        JsonArray jsonArray = new JsonArray();
+        response.setTotal(cursor.count());
+        Users users = Utils.getUserByPhone(phone);
+        while(cursor.hasNext()){
+            ForumQuestion forumQuestion = cursor.next();
+
+            if(users!=null){
+                forumQuestion.setAvatar(users.getAvatar());
+                forumQuestion.setNameUser(users.getName());
+            }
+            List<String> userLike = forumQuestion.getUserLike();
+            if(userLike!=null && userLike.contains(phone)){
+                forumQuestion.setIsLiked(true);
+            }else{
+                forumQuestion.setIsLiked(false);
+            }
+            jsonArray.add(forumQuestion.toJson());
+        }
+        response.setArray(jsonArray);
+
+        return response;
+    }
+
+    @Override
+    public ForumQuestionResponse getExpertByIDExpertQuestion(String id, int ofs, int page) throws Exception {
+        ForumQuestionResponse response = new ForumQuestionResponse();
+        if (!ObjectId.isValid(id)) {
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("Id không đúng.");
+            return response;
+        }
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        List<String> lstIdQuestion = getListQuestionbyExpert(id,jongo);
+        List<ObjectId> lstOBid = new ArrayList<>();
+        for (String str: lstIdQuestion){
+            lstOBid.add(new ObjectId(str));
+        }
+        MongoCursor<ForumQuestion> cursor = null;
+        MongoCollection collection = jongo.getCollection(ForumQuestion.class.getSimpleName());
+        StringBuilder builder = new StringBuilder();
+        builder.append("{_id:{$in: #}}");
+        cursor = collection.find(builder.toString(),lstOBid).skip(page*ofs).limit(ofs).as(ForumQuestion.class);
+        JsonArray jsonArray = new JsonArray();
+        response.setTotal(cursor.count());
+//        Users users = Utils.getUserByPhone(phone);
+        while(cursor.hasNext()){
+            ForumQuestion forumQuestion = cursor.next();
+            jsonArray.add(forumQuestion.toJson());
+        }
+        response.setArray(jsonArray);
+
+        return response;
+    }
+
+    private List<String> getListQuestionbyExpert(String idExpert, Jongo jongo){
+        MongoCollection collection = jongo.getCollection(ForumAnswer.class.getSimpleName());
+        List<String> cursor = collection.distinct("idQuestion").query("{\"idUser\":#}",idExpert).as(String.class);
+        return cursor;
+    }
+
+    private List<NumCommentExpert> initListREportFR(long startTime, long endTime){
+        List<NumCommentExpert> lstNum = new ArrayList<>();
+        while (startTime<endTime){
+            long tempTime = startTime+BLOCK_DATE;
+            NumCommentExpert numCommentExpert = new NumCommentExpert();
+            numCommentExpert.setStartTime(startTime);
+            numCommentExpert.setEndTime(tempTime);
+            numCommentExpert.setCountComment(0);
+            lstNum.add(numCommentExpert);
+            startTime = tempTime;
+        }
+        return lstNum;
+    }
     private List<Expert> ReSearchExpert(String id, List<String> lstTags){
         List<Expert> lstExpert = new ArrayList<>();
         FieldOfExpertService fieldOfExpertService = new FieldOfExpertServiceImp();

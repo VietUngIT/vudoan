@@ -16,16 +16,17 @@ import vietung.it.dev.core.models.MarketPrice;
 import vietung.it.dev.core.utils.Utils;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 public class TestCommon {
     public static void main(String[] args) {
         try {
             MongoPool.init();
-            MongoDatabase database = MongoPool.getDB();
-            CreateCollectionOptions createCollectionOptions = new CreateCollectionOptions();
-            createCollectionOptions.capped(true);
-            createCollectionOptions.sizeInBytes(10000);
-            database.createCollection(Variable.MG_COMMENTS_NEWS,createCollectionOptions);
+//            MongoDatabase database = MongoPool.getDB();
+//            CreateCollectionOptions createCollectionOptions = new CreateCollectionOptions();
+//            createCollectionOptions.capped(true);
+//            createCollectionOptions.sizeInBytes(10000);
+//            database.createCollection(Variable.MG_COMMENTS_NEWS,createCollectionOptions);
 
             //Insert comment to mongo
 //            DB db = MongoPool.getDBJongo();
@@ -49,6 +50,10 @@ public class TestCommon {
 //                }
 //            };
 //            new Thread(task).start();
+            Calendar calendar = Calendar.getInstance();
+            System.out.println(calendar.get(Calendar.YEAR));
+            System.out.println(calendar.get(Calendar.MONTH));
+            System.out.println(calendar.get(Calendar.DATE));
         } catch (IOException e) {
             e.printStackTrace();
         }

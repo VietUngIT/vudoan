@@ -1,5 +1,6 @@
 package vietung.it.dev.core.services;
 
+import org.jongo.Jongo;
 import vietung.it.dev.apis.response.UserResponse;
 import vietung.it.dev.core.models.Users;
 
@@ -14,5 +15,5 @@ public interface UserService {
     public UserResponse changeRole(String phone, int role);
     public UserResponse getUserInfor(String phone);
     public UserResponse getUserInforbyid(String id);
-
+    int getCountUser(Jongo jongo) throws Exception;
 }

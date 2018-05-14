@@ -13,6 +13,9 @@ import vietung.it.dev.core.models.ParentFieldExpert;
 import vietung.it.dev.core.services.ParentFieldExpertService;
 import vietung.it.dev.core.utils.Utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ParentFieldExpertServiceImp implements ParentFieldExpertService {
     @Override
     public ParentFieldExpertResponse getAllParentField() throws Exception {
@@ -109,5 +112,17 @@ public class ParentFieldExpertServiceImp implements ParentFieldExpertService {
             response.setMsg("ID không tồn tại.");
         }
         return response;
+    }
+
+    @Override
+    public List<ParentFieldExpert> getListParentField(Jongo jongo) throws Exception {
+        MongoCollection collection = jongo.getCollection(ParentFieldExpert.class.getSimpleName());
+        MongoCursor<ParentFieldExpert> cursor = collection.find().as(ParentFieldExpert.class);
+        List<ParentFieldExpert> array = new ArrayList<>();
+        while (cursor.hasNext()){
+            ParentFieldExpert parentFieldExpert = cursor.next();
+            array.add(parentFieldExpert);
+        }
+        return array;
     }
 }
