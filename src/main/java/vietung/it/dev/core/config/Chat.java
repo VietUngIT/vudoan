@@ -148,6 +148,7 @@ public class Chat {
     }
 
     public static void sendNotification(NotificationResponse response){
-        server.getBroadcastOperations().sendEvent("notification", response);
+        final SocketIONamespace socketIONamespace = server.addNamespace("/" + response.getData().getIdReceiver());
+        socketIONamespace.getBroadcastOperations().sendEvent("notification", response);
     }
 }
