@@ -37,15 +37,16 @@ public class NewsServiceImp implements NewsService {
         MongoCursor<News> cursor = collection.find(builder.toString(), new ObjectId(idNews)).as(News.class);
         if(cursor.hasNext()){
             News news = cursor.next();
+            Users users = Utils.getUserByPhone(phone);
             int like = news.getNumLike()>=0?news.getNumLike():0;
             if(isLike){
                 news.setNumLike(like+1);
                 collection.update("{_id:#}", new ObjectId(idNews)).with("{$set:{numLike:#}}",news.getNumLike());
-                collection.update("{_id:#}", new ObjectId(idNews)).with("{ $push: {userLike:#}}",phone);
+                collection.update("{_id:#}", new ObjectId(idNews)).with("{ $push: {userLike:#}}",users.get_id());
             }else {
                 news.setNumLike(like-1);
                 collection.update("{_id:#}", new ObjectId(idNews)).with("{$set:{numLike:#}}",news.getNumLike());
-                collection.update("{_id:#}", new ObjectId(idNews)).with("{ $pull: {userLike:#}}",phone);
+                collection.update("{_id:#}", new ObjectId(idNews)).with("{ $pull: {userLike:#}}",users.get_id());
             }
             JsonObject object = new JsonObject();
             object.addProperty("numLike",news.getNumLike());
@@ -143,11 +144,17 @@ public class NewsServiceImp implements NewsService {
         if(cursor.hasNext()){
             News news = cursor.next();
             List<String> userLike = news.getUserLike();
-            if(userLike!=null && userLike.contains(phone)){
-                news.setIsLiked(true);
-            }else{
+            Users users = Utils.getUserByPhone(phone);
+            if (users!=null){
+                if(userLike!=null && userLike.contains(users.get_id())){
+                    news.setIsLiked(true);
+                }else{
+                    news.setIsLiked(false);
+                }
+            }else {
                 news.setIsLiked(false);
             }
+
             response.setData(news.toJson());
         }else {
             response.setError(ErrorCode.ID_NOT_EXIST);

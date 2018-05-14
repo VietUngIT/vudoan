@@ -15,11 +15,19 @@ public class ExpertInfoHandler extends BaseApiHandler {
         if(type!=null){
             if(type.equals("online")){
                 String online = request.getParam("online");
+                String strLat = request.getParam("lat");
+                String strLon = request.getParam("long");
                 String id = request.getParam("idexpert");
                 if(online!=null && id!=null){
                     try{
                         Boolean isOnline = Boolean.parseBoolean(online);
-                        return service.updateStatusOnlineExpert(isOnline,id);
+                        Double lat = 0D;
+                        Double lon = 0D;
+                        if(isOnline){
+                            lat = Double.parseDouble(strLat);
+                            lon = Double.parseDouble(strLon);
+                        }
+                        return service.updateStatusOnlineExpert(isOnline,id,lat,lon);
                     }catch (Exception e){
                         return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu."+e.getMessage());
                     }

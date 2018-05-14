@@ -101,15 +101,16 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         MongoCursor<ForumQuestion> cursor = collection.find(builder.toString(), new ObjectId(id)).as(ForumQuestion.class);
         if(cursor.hasNext()){
             ForumQuestion forumQuestion = cursor.next();
+            Users users = Utils.getUserById(forumQuestion.getIdUser());
             int like = forumQuestion.getNumLike()>=0?forumQuestion.getNumLike():0;
             if(isLike){
                 forumQuestion.setNumLike(like+1);
                 collection.update("{_id:#}", new ObjectId(id)).with("{$set:{numLike:#}}",forumQuestion.getNumLike());
-                collection.update("{_id:#}", new ObjectId(id)).with("{ $push: {userLike:#}}",phone);
+                collection.update("{_id:#}", new ObjectId(id)).with("{ $push: {userLike:#}}",users.get_id());
             }else {
                 forumQuestion.setNumLike(like-1);
                 collection.update("{_id:#}", new ObjectId(id)).with("{$set:{numLike:#}}",forumQuestion.getNumLike());
-                collection.update("{_id:#}", new ObjectId(id)).with("{ $pull: {userLike:#}}",phone);
+                collection.update("{_id:#}", new ObjectId(id)).with("{ $pull: {userLike:#}}",users.get_id());
             }
             JsonObject object = new JsonObject();
             object.addProperty("numLike",forumQuestion.getNumLike());
@@ -163,17 +164,20 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         response.setTotal(cursor.count());
         while(cursor.hasNext()){
             ForumQuestion forumQuestion = cursor.next();
-            Users users = Utils.getUserByPhone(forumQuestion.getPhone());
+            Users users = Utils.getUserById(forumQuestion.getIdUser());
             if(users!=null){
                 forumQuestion.setAvatar(users.getAvatar());
                 forumQuestion.setNameUser(users.getName());
-            }
-            List<String> userLike = forumQuestion.getUserLike();
-            if(userLike!=null && userLike.contains(phone)){
-                forumQuestion.setIsLiked(true);
-            }else{
+                List<String> userLike = forumQuestion.getUserLike();
+                if(userLike!=null && userLike.contains(users.get_id())){
+                    forumQuestion.setIsLiked(true);
+                }else{
+                    forumQuestion.setIsLiked(false);
+                }
+            }else {
                 forumQuestion.setIsLiked(false);
             }
+
             jsonArray.add(forumQuestion.toJson());
         }
         response.setArray(jsonArray);
@@ -198,17 +202,21 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         cursor = collection.find(builder.toString(),new ObjectId(id)).limit(1).as(ForumQuestion.class);
         if(cursor.hasNext()){
             ForumQuestion forumQuestion = cursor.next();
-            Users users = Utils.getUserByPhone(forumQuestion.getPhone());
+            Users users = Utils.getUserById(forumQuestion.getIdUser());
             if(users!=null){
                 forumQuestion.setAvatar(users.getAvatar());
                 forumQuestion.setNameUser(users.getName());
-            }
-            List<String> userLike = forumQuestion.getUserLike();
-            if(userLike!=null && userLike.contains(phone)){
-                forumQuestion.setIsLiked(true);
-            }else{
+
+                List<String> userLike = forumQuestion.getUserLike();
+                if(userLike!=null && userLike.contains(users.get_id())){
+                    forumQuestion.setIsLiked(true);
+                }else{
+                    forumQuestion.setIsLiked(false);
+                }
+            }else {
                 forumQuestion.setIsLiked(false);
             }
+
             response.setData(forumQuestion.toJson());
         }else{
             response.setError(ErrorCode.ID_NOT_EXIST);
@@ -303,11 +311,11 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
                     lstExpert = expertService.getExpertByIds(expertRorumQuestion.getIdExpert());
                     if(lstExpert.size()<=0){
                         // re-search expert
-                        lstExpert = ReSearchExpert(expertRorumQuestion.get_id(),expertRorumQuestion.getTags());
+                        lstExpert = ReSearchExpert(expertRorumQuestion.get_id(),expertRorumQuestion.getTags(),expertRorumQuestion.getNExpert());
                     }
                 }else{
                     // re-search expert
-                    lstExpert = ReSearchExpert(expertRorumQuestion.get_id(),expertRorumQuestion.getTags());
+                    lstExpert = ReSearchExpert(expertRorumQuestion.get_id(),expertRorumQuestion.getTags(),expertRorumQuestion.getNExpert());
                 }
                 if(lstExpert!=null){
                     List<Expert> lstTemp = new ArrayList<>();
@@ -367,17 +375,20 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         response.setTotal(cursor.count());
         while(cursor.hasNext()){
             ForumQuestion forumQuestion = cursor.next();
-            Users users = Utils.getUserByPhone(forumQuestion.getPhone());
+            Users users = Utils.getUserById(forumQuestion.getIdUser());
             if(users!=null){
                 forumQuestion.setAvatar(users.getAvatar());
                 forumQuestion.setNameUser(users.getName());
-            }
-            List<String> userLike = forumQuestion.getUserLike();
-            if(userLike!=null && userLike.contains(phone)){
-                forumQuestion.setIsLiked(true);
+                List<String> userLike = forumQuestion.getUserLike();
+                if(userLike!=null && userLike.contains(users.get_id())){
+                    forumQuestion.setIsLiked(true);
+                }else{
+                    forumQuestion.setIsLiked(false);
+                }
             }else{
                 forumQuestion.setIsLiked(false);
             }
+
             jsonArray.add(forumQuestion.toJson());
         }
         response.setArray(jsonArray);
@@ -476,8 +487,13 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
             //sort expert by weight macth
             Collections.sort(lstExpert,Expert.WEIGHT_MATCH_DESC);
             List<String> lstIdExpert = new ArrayList<>();
+            int i=0;
             for (Expert expert: lstExpert){
-                lstIdExpert.add(expert.get_id());
+                if(0<expertRorumQuestion.getNExpert()){
+                    checkExpertQuestionNoti(expert.get_id(),expertRorumQuestion.getIdForumQuestion(),jongo);
+                }
+                lstIdExpert.add(expert.getIdUser());
+                i++;
             }
             //update to tb temp
             collection.update("{idForumQuestion:#}",idQuestion).with("{$set:{tags:#,idField: #,idExpert: #}}",lstTag,lstIdField,lstIdExpert);
@@ -559,20 +575,23 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         cursor = collection.find(builder.toString(),id).sort("{timeCreate:-1}").skip(page*ofs).limit(ofs).as(ForumQuestion.class);
         JsonArray jsonArray = new JsonArray();
         response.setTotal(cursor.count());
-        Users users = Utils.getUserByPhone(phone);
         while(cursor.hasNext()){
             ForumQuestion forumQuestion = cursor.next();
 
+            Users users = Utils.getUserById(forumQuestion.getIdUser());
             if(users!=null){
                 forumQuestion.setAvatar(users.getAvatar());
                 forumQuestion.setNameUser(users.getName());
-            }
-            List<String> userLike = forumQuestion.getUserLike();
-            if(userLike!=null && userLike.contains(phone)){
-                forumQuestion.setIsLiked(true);
-            }else{
+                List<String> userLike = forumQuestion.getUserLike();
+                if(userLike!=null && userLike.contains(users.get_id())){
+                    forumQuestion.setIsLiked(true);
+                }else{
+                    forumQuestion.setIsLiked(false);
+                }
+            }else {
                 forumQuestion.setIsLiked(false);
             }
+
             jsonArray.add(forumQuestion.toJson());
         }
         response.setArray(jsonArray);
@@ -602,9 +621,21 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         cursor = collection.find(builder.toString(),lstOBid).skip(page*ofs).limit(ofs).as(ForumQuestion.class);
         JsonArray jsonArray = new JsonArray();
         response.setTotal(cursor.count());
-//        Users users = Utils.getUserByPhone(phone);
         while(cursor.hasNext()){
             ForumQuestion forumQuestion = cursor.next();
+            Users users = Utils.getUserByPhone(forumQuestion.getIdUser());
+            if(users!=null){
+                forumQuestion.setAvatar(users.getAvatar());
+                forumQuestion.setNameUser(users.getName());
+                List<String> userLike = forumQuestion.getUserLike();
+                if(userLike!=null && userLike.contains(users.get_id())){
+                    forumQuestion.setIsLiked(true);
+                }else{
+                    forumQuestion.setIsLiked(false);
+                }
+            }else {
+                forumQuestion.setIsLiked(false);
+            }
             jsonArray.add(forumQuestion.toJson());
         }
         response.setArray(jsonArray);
@@ -612,9 +643,9 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         return response;
     }
 
-    private List<String> getListQuestionbyExpert(String idExpert, Jongo jongo){
+    private List<String> getListQuestionbyExpert(String id, Jongo jongo){
         MongoCollection collection = jongo.getCollection(ForumAnswer.class.getSimpleName());
-        List<String> cursor = collection.distinct("idQuestion").query("{\"idUser\":#}",idExpert).as(String.class);
+        List<String> cursor = collection.distinct("idQuestion").query("{\"idUser\":#}",id).as(String.class);
         return cursor;
     }
 
@@ -631,7 +662,7 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         }
         return lstNum;
     }
-    private List<Expert> ReSearchExpert(String id, List<String> lstTags){
+    private List<Expert> ReSearchExpert(String id, List<String> lstTags, int requestNExpert){
         List<Expert> lstExpert = new ArrayList<>();
         FieldOfExpertService fieldOfExpertService = new FieldOfExpertServiceImp();
         ExpertService expertService = new ExpertServiceImp();
@@ -708,8 +739,13 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
                 //sort expert by weight macth
                 Collections.sort(lstExpert,Expert.WEIGHT_MATCH_DESC);
                 List<String> lstIdExpert = new ArrayList<>();
+                int i=0;
                 for (Expert expert: lstExpert){
-                    lstIdExpert.add(expert.get_id());
+                    if(0<requestNExpert){
+                        checkExpertQuestionNoti(expert.get_id(),expertRorumQuestion.getIdForumQuestion(),jongo);
+                    }
+                    lstIdExpert.add(expert.getIdUser());
+                    i++;
                 }
                 //update to tb temp
                 collection.update("{_id:#}",new ObjectId(id)).with("{$set:{idField: #,idExpert: #, timeCreate: #}}",lstIdField,lstIdExpert,Calendar.getInstance().getTimeInMillis());
@@ -722,6 +758,19 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         }
 
         return lstExpert;
+    }
+
+    private void checkExpertQuestionNoti(String idExpert, String idQuestion, Jongo jongo){
+        MongoCollection collection = jongo.getCollection(ExpertQuestionNoti.class.getSimpleName());
+        StringBuilder builder = new StringBuilder();
+        builder.append("{$and: [{idExpert: #,idQuestion:#}]}");
+        MongoCursor<ExpertQuestionNoti> cursor = collection.find(builder.toString(),idExpert,idQuestion).limit(1).as(ExpertQuestionNoti.class);
+        if(!cursor.hasNext()){
+            ExpertQuestionNoti expertQuestionNoti = new ExpertQuestionNoti();
+            expertQuestionNoti.setIdExpert(idExpert);
+            expertQuestionNoti.setIdQuestion(idQuestion);
+            MongoPool.log(ExpertQuestionNoti.class.getSimpleName(),expertQuestionNoti.toDocument());
+        }
     }
 
     private boolean checkConditionHourEnough24(long time1, long time2){

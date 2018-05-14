@@ -8,6 +8,7 @@ import org.bson.types.ObjectId;
 @Data
 public class CommentsNews extends MongoLog {
     private String _id;
+    private String idUser;
     private String name;
     private String phone;
     private String avatar;
@@ -23,6 +24,7 @@ public class CommentsNews extends MongoLog {
         document.append("idNews",idNews);
         document.append("timeCreate",timeCreate);
         document.append("content",content);
+        document.append("idUser",idUser);
         return document;
     }
     public JsonObject toJson(){
@@ -36,6 +38,7 @@ public class CommentsNews extends MongoLog {
         jsonObject.addProperty("idNews",idNews);
         jsonObject.addProperty("timeCreate",timeCreate);
         jsonObject.addProperty("content",content);
+        jsonObject.addProperty("idUser",idUser);
         return jsonObject;
     }
 }

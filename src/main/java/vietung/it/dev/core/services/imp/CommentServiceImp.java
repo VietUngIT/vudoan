@@ -37,6 +37,7 @@ public class CommentServiceImp implements CommentService {
         commentsNews.setPhone(users.getPhone());
         commentsNews.setContent(content);
         commentsNews.setIdNews(idNews);
+        commentsNews.setIdUser(users.get_id());
         commentsNews.setTimeCreate(Calendar.getInstance().getTimeInMillis());
         if(collection== Variable.COMMENTS_NEWS){
             MongoPool.log(Variable.MG_COMMENTS_NEWS,commentsNews.toDocument());
@@ -88,7 +89,7 @@ public class CommentServiceImp implements CommentService {
         MongoCursor<CommentsNews> cursor = mgcollection.find(builder.toString(), new ObjectId(idCmnt)).as(CommentsNews.class);
         if(cursor.hasNext()){
             CommentsNews commentsNews = cursor.next();
-            if(users.getRoles()==2 || users.getRoles()==3 || users.getPhone().equals(commentsNews.getPhone())){
+            if(users.getRoles()==2 || users.getRoles()==3 || users.get_id().equals(commentsNews.get_id())){
                 if(collection== Variable.COMMENTS_NEWS){
                     newsService.commentNews(commentsNews.getIdNews(),false);
                     mgcollection.remove(new ObjectId(idCmnt));
@@ -141,7 +142,7 @@ public class CommentServiceImp implements CommentService {
         MongoCursor<CommentsNews> cursor = mgcollection.find(builder.toString(), new ObjectId(idCmnt)).as(CommentsNews.class);
         if(cursor.hasNext()){
             CommentsNews commentsNews = cursor.next();
-            if(commentsNews.getPhone().equals(users.getPhone())){
+            if(commentsNews.getIdUser().equals(users.get_id())){
                 mgcollection.update("{_id:#}", new ObjectId(idCmnt)).with("{$set:{content:#}}",content);
             }else {
                 response.setError(ErrorCode.NO_ROLE_DELETE);
