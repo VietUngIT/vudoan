@@ -13,6 +13,7 @@ import java.util.List;
 @Data
 public class Expert extends MongoLog {
     private String _id;
+    private String idUser;
     private String name;
     private String phone;
     private String desc;
@@ -45,6 +46,7 @@ public class Expert extends MongoLog {
     public Document toDocument() {
         Document document = new Document();
         document.append("_id",new ObjectId(_id));
+        document.append("idUser",idUser);
         document.append("name",name);
         document.append("phone",phone);
         document.append("desc",desc);
@@ -73,6 +75,7 @@ public class Expert extends MongoLog {
         JsonObject object = new JsonObject();
         object.addProperty("_id",_id);
         object.addProperty("name",name);
+        object.addProperty("idUser",idUser);
         object.addProperty("phone",phone);
         object.addProperty("desc",desc);
         object.addProperty("email",email);

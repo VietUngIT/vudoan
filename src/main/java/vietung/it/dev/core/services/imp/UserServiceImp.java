@@ -114,16 +114,16 @@ public class UserServiceImp implements UserService {
             DB db =  MongoPool.getDBJongo();
             Jongo jongo = new Jongo(db);
             MongoCollection collection = jongo.getCollection(Users.class.getSimpleName());
-            MongoCursor<Users> cursor = collection.find("{phone:#}",oldPhone).limit(1).as(Users.class);
-            if(cursor.hasNext()){
+            MongoCursor<Users> cursor = collection.find("{phone:#}",newPhone).limit(1).as(Users.class);
+            if(!cursor.hasNext()){
                 MongoCollection collectionExpert = jongo.getCollection(Expert.class.getSimpleName());
-                collection.update("{phone: #}",oldPhone).with("{$set: {phone: #}}",newPhone);
-                collectionExpert.update("{phone: #}",oldPhone).with("{$set: {phone: #}}",newPhone);
+                collection.update("{_id: #}",users.get_id()).with("{$set: {phone: #}}",newPhone);
+                collectionExpert.update("{_id: #}",new ObjectId(users.get_id())).with("{$set: {phone: #}}",newPhone);
                 users.setPhone(newPhone);
                 response.setUsers(users);
             }else{
-                response.setError(ErrorCode.USER_NOT_EXIST);
-                response.setMsg("Người dùng này không tồn tại.");
+                response.setError(ErrorCode.DUPLICATE_USER);
+                response.setMsg("Số điện thoại đã được sử dụng.");
             }
         }else {
             response.setError(ErrorCode.USER_NOT_EXIST);
@@ -140,17 +140,18 @@ public class UserServiceImp implements UserService {
             DB db =  MongoPool.getDBJongo();
             Jongo jongo = new Jongo(db);
             MongoCollection collection = jongo.getCollection(Users.class.getSimpleName());
-            MongoCursor<Users> cursor = collection.find("{phone:#}",phone).limit(1).as(Users.class);
-            if(cursor.hasNext()){
-                MongoCollection collectionExpert = jongo.getCollection(Expert.class.getSimpleName());
-                collection.update("{phone: #}",phone).with("{$set: {name: #}}",name);
-                collectionExpert.update("{phone: #}",phone).with("{$set: {name: #}}",name);
-                users.setName(name);
-                response.setUsers(users);
-            }else{
-                response.setError(ErrorCode.USER_NOT_EXIST);
-                response.setMsg("Người dùng này không tồn tại.");
-            }
+            MongoCollection collectionExpert = jongo.getCollection(Expert.class.getSimpleName());
+            collection.update("{_id: #}",users.get_id()).with("{$set: {name: #}}",name);
+            collectionExpert.update("{_id: #}",new ObjectId(users.get_id())).with("{$set: {name: #}}",name);
+            users.setName(name);
+            response.setUsers(users);
+//            MongoCursor<Users> cursor = collection.find("{phone:#}",phone).limit(1).as(Users.class);
+//            if(cursor.hasNext()){
+//
+//            }else{
+//                response.setError(ErrorCode.USER_NOT_EXIST);
+//                response.setMsg("Người dùng này không tồn tại.");
+//            }
         }else {
             response.setError(ErrorCode.USER_NOT_EXIST);
             response.setMsg("Số điện thoại này chưa được đăng ký.");
@@ -166,17 +167,19 @@ public class UserServiceImp implements UserService {
             DB db =  MongoPool.getDBJongo();
             Jongo jongo = new Jongo(db);
             MongoCollection collection = jongo.getCollection(Users.class.getSimpleName());
-            MongoCursor<Users> cursor = collection.find("{phone:#}",phone).limit(1).as(Users.class);
-            if(cursor.hasNext()){
-                MongoCollection collectionExpert = jongo.getCollection(Expert.class.getSimpleName());
-                collection.update("{phone: #}",phone).with("{$set: {address: #}}",address);
-                collectionExpert.update("{phone: #}",phone).with("{$set: {address: #}}",address);
-                users.setAddress(address);
-                response.setUsers(users);
-            }else{
-                response.setError(ErrorCode.USER_NOT_EXIST);
-                response.setMsg("Người dùng này không tồn tại.");
-            }
+
+            MongoCollection collectionExpert = jongo.getCollection(Expert.class.getSimpleName());
+            collection.update("{_id: #}",users.get_id()).with("{$set: {address: #}}",address);
+            collectionExpert.update("{_id: #}",new ObjectId(users.get_id())).with("{$set: {address: #}}",address);
+            users.setAddress(address);
+            response.setUsers(users);
+//            MongoCursor<Users> cursor = collection.find("{phone:#}",phone).limit(1).as(Users.class);
+//            if(cursor.hasNext()){
+//
+//            }else{
+//                response.setError(ErrorCode.USER_NOT_EXIST);
+//                response.setMsg("Người dùng này không tồn tại.");
+//            }
         }else {
             response.setError(ErrorCode.USER_NOT_EXIST);
             response.setMsg("Số điện thoại này chưa được đăng ký.");

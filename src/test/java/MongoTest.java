@@ -23,7 +23,8 @@ public class MongoTest {
             Jongo jongo = new Jongo(db);
             System.out.println("start");
             long st = Calendar.getInstance().getTimeInMillis();
-            getDistint();
+            System.out.println(Utils.getUserById("5ae83b16cfd271211434e6cb"));
+//            getDistint();
 //            testREport();
 //            ExpertService service = new ExpertServiceImp();
 //            UserService userService = new UserServiceImp();

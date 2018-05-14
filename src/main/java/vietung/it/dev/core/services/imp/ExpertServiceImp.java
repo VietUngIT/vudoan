@@ -57,6 +57,7 @@ public class ExpertServiceImp implements ExpertService {
             ObjectId id = new ObjectId(userResponse.getUsers().get_id());
             expert.set_id(id.toString());
             expert.setName(name);
+            expert.setIdUser(userResponse.getUsers().get_id());
             expert.setPhone(phone);
             expert.setDesc(desc);
             expert.setEmail(email);
@@ -150,7 +151,7 @@ public class ExpertServiceImp implements ExpertService {
     }
 
     @Override
-    public ExpertResponse updateStatusOnlineExpert(Boolean isOnline, String id) throws Exception {
+    public ExpertResponse updateStatusOnlineExpert(Boolean isOnline, String id,Double lat,Double lon) throws Exception {
         ExpertResponse response = new ExpertResponse();
         if (!ObjectId.isValid(id)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
@@ -164,7 +165,13 @@ public class ExpertServiceImp implements ExpertService {
         MongoCursor<Expert> cursor = collection.find("{_id:#}",new ObjectId(id)).limit(1).as(Expert.class);
         if(cursor.hasNext()){
             Expert expert = cursor.next();
-            collection.update("{_id:#}",new ObjectId(id)).with("{$set:{isOnline:#}}",isOnline);
+            if(isOnline){
+                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{isOnline:#,lat#,lon:#}}",isOnline,lat,lon);
+                expert.setLat(lat);
+                expert.setLon(lon);
+            }else{
+                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{isOnline:#}}",isOnline);
+            }
             expert.setIsOnline(isOnline);
             response.setData(expert.toJson());
         }else {

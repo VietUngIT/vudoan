@@ -16,7 +16,7 @@ public interface ExpertService {
 
     ExpertResponse editExpert(String phone, String desc, Double lat,Double lon, String email, String idParentField, String workplace) throws Exception;
 
-    ExpertResponse updateStatusOnlineExpert(Boolean isOnline,String id) throws Exception;
+    ExpertResponse updateStatusOnlineExpert(Boolean isOnline,String id,Double lat,Double lon) throws Exception;
 
     ExpertResponse getInfoExpert(String id) throws Exception;
 

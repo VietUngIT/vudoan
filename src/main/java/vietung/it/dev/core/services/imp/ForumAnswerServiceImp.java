@@ -41,17 +41,21 @@ public class ForumAnswerServiceImp implements ForumAnswerService{
         response.setTotal(cursor.count());
         while(cursor.hasNext()){
             ForumAnswer forumAnswer = cursor.next();
-            Users users = Utils.getUserByPhone(forumAnswer.getPhone());
+            Users users = Utils.getUserById(forumAnswer.getIdUser());
             if(users!=null){
                 forumAnswer.setAvatar(users.getAvatar());
                 forumAnswer.setNameUser(users.getName());
-            }
-            List<String> userLike = forumAnswer.getUserLike();
-            if(userLike!=null && userLike.contains(phone)){
-                forumAnswer.setIsLiked(true);
-            }else{
+
+                List<String> userLike = forumAnswer.getUserLike();
+                if(userLike!=null && userLike.contains(users.get_id())){
+                    forumAnswer.setIsLiked(true);
+                }else{
+                    forumAnswer.setIsLiked(false);
+                }
+            }else {
                 forumAnswer.setIsLiked(false);
             }
+
             jsonArray.add(forumAnswer.toJson());
         }
         response.setArray(jsonArray);
@@ -75,15 +79,16 @@ public class ForumAnswerServiceImp implements ForumAnswerService{
         MongoCursor<ForumAnswer> cursor = collection.find(builder.toString(), new ObjectId(id)).as(ForumAnswer.class);
         if(cursor.hasNext()){
             ForumAnswer forumAnswer = cursor.next();
+            Users users = Utils.getUserById(forumAnswer.getIdUser());
             int like = forumAnswer.getNumLike()>=0?forumAnswer.getNumLike():0;
             if(isLike){
                 forumAnswer.setNumLike(like+1);
                 collection.update("{_id:#}", new ObjectId(id)).with("{$set:{numLike:#}}",forumAnswer.getNumLike());
-                collection.update("{_id:#}", new ObjectId(id)).with("{ $push: {userLike:#}}",phone);
+                collection.update("{_id:#}", new ObjectId(id)).with("{ $push: {userLike:#}}",users.get_id());
             }else {
                 forumAnswer.setNumLike(like-1);
                 collection.update("{_id:#}", new ObjectId(id)).with("{$set:{numLike:#}}",forumAnswer.getNumLike());
-                collection.update("{_id:#}", new ObjectId(id)).with("{ $pull: {userLike:#}}",phone);
+                collection.update("{_id:#}", new ObjectId(id)).with("{ $pull: {userLike:#}}",users.get_id());
             }
             JsonObject object = new JsonObject();
             object.addProperty("numLike",forumAnswer.getNumLike());

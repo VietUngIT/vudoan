@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mongodb.DB;
+import org.bson.types.ObjectId;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
@@ -11,6 +12,7 @@ import vietung.it.dev.apis.response.BaseResponse;
 import vietung.it.dev.apis.response.SimpleResponse;
 import vietung.it.dev.core.config.MongoConfig;
 import vietung.it.dev.core.config.MongoPool;
+import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.models.Users;
 
 import java.security.MessageDigest;
@@ -44,6 +46,21 @@ public class Utils {
         StringBuilder sb = new StringBuilder();
         sb.append("{$and: [{phone: #}]}");
         MongoCursor<Users> cursor = collection.find(sb.toString(), phone).limit(1).as(Users.class);
+        if (cursor.hasNext()){
+            return cursor.next();
+        }
+        return null;
+    }
+    public static Users getUserById(String id) {
+        if (!ObjectId.isValid(id)) {
+            return null;
+        }
+        DB db =  MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(Users.class.getSimpleName());
+        StringBuilder sb = new StringBuilder();
+        sb.append("{$and: [{_id: #}]}");
+        MongoCursor<Users> cursor = collection.find(sb.toString(), id).limit(1).as(Users.class);
         if (cursor.hasNext()){
             return cursor.next();
         }
