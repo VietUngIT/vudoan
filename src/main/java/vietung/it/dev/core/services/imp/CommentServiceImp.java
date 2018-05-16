@@ -178,6 +178,11 @@ public class CommentServiceImp implements CommentService {
         JsonArray jsonArray = new JsonArray();
         while(cursor.hasNext()){
             CommentsNews commentsNews = cursor.next();
+            if ((commentsNews.getIdUser()!=null && ObjectId.isValid(commentsNews.getIdUser()))){
+                Users users = Utils.getUserById(commentsNews.getIdUser());
+                commentsNews.setName(users.getName());
+                commentsNews.setAvatar(users.getAvatar());
+            }
             jsonArray.add(commentsNews.toJson());
         }
         response.setArray(jsonArray);
