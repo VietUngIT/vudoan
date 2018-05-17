@@ -89,7 +89,7 @@ public class CommentServiceImp implements CommentService {
         MongoCursor<CommentsNews> cursor = mgcollection.find(builder.toString(), new ObjectId(idCmnt)).as(CommentsNews.class);
         if(cursor.hasNext()){
             CommentsNews commentsNews = cursor.next();
-            if(users.getRoles()==2 || users.getRoles()==3 || users.get_id().equals(commentsNews.get_id())){
+            if(users.getRoles()==2 || users.getRoles()==3 || users.get_id().equals(commentsNews.getIdUser())){
                 if(collection== Variable.COMMENTS_NEWS){
                     newsService.commentNews(commentsNews.getIdNews(),false);
                     mgcollection.remove(new ObjectId(idCmnt));
@@ -174,8 +174,9 @@ public class CommentServiceImp implements CommentService {
 
         StringBuilder builder = new StringBuilder();
         builder.append("{$and: [{idNews: #}]}");
-        MongoCursor<CommentsNews> cursor = mgcollection.find(builder.toString(),idNews).sort("{timeCreate:-1}").skip(page*offset).limit(offset).as(CommentsNews.class);
+        MongoCursor<CommentsNews> cursor = mgcollection.find(builder.toString(),idNews).sort("{timeCreate:1}").skip(page*offset).limit(offset).as(CommentsNews.class);
         JsonArray jsonArray = new JsonArray();
+        response.setTotal(cursor.count());
         while(cursor.hasNext()){
             CommentsNews commentsNews = cursor.next();
             if ((commentsNews.getIdUser()!=null && ObjectId.isValid(commentsNews.getIdUser()))){
