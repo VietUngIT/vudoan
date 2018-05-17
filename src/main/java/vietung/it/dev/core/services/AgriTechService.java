@@ -18,4 +18,5 @@ public interface AgriTechService {
     AgriTechResponse getNewsAgriTechById(String id) throws Exception;
 
     AgriTechResponse getAllNewsAgriTechBySubCate(int page, int ofs, String idsubcate) throws Exception;
+    AgriTechResponse getHomeForAgriTech () throws Exception;
 }

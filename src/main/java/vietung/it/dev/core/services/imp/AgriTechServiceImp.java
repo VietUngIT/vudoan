@@ -12,6 +12,7 @@ import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.consts.Variable;
 import vietung.it.dev.core.models.AgriTech;
+import vietung.it.dev.core.models.Category;
 import vietung.it.dev.core.models.SubCategory;
 import vietung.it.dev.core.services.AgriTechService;
 import vietung.it.dev.core.services.UploadService;
@@ -286,5 +287,60 @@ public class AgriTechServiceImp implements AgriTechService {
         response.setArray(jsonArray);
 
         return response;
+    }
+
+    @Override
+    public AgriTechResponse getHomeForAgriTech() throws Exception {
+        AgriTechResponse response = new AgriTechResponse();
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(Variable.MG_CATEGORY_AGRI_TECH);
+        MongoCursor<Category> cursor = collection.find().as(Category.class);
+        JsonArray array = new JsonArray();
+        while(cursor.hasNext()){
+            Category cate = cursor.next();
+            JsonObject object = new JsonObject();
+            object.addProperty("idCate",cate.get_id());
+            object.addProperty("nameCate",cate.getName());
+            object.add("subCate",getAllSubCateAgriTechByIdCate(cate.get_id(),jongo));
+            array.add(object);
+        }
+        response.setArray(array);
+        return response;
+    }
+
+    private JsonArray getAllSubCateAgriTechByIdCate(String idCate, Jongo jongo){
+        MongoCollection collection = jongo.getCollection(Variable.MG_SUB_CATEGORY_AGRI_TECH);
+        StringBuilder builder = new StringBuilder();
+        builder.append("{idCate:#}");
+        MongoCursor<SubCategory> cursor = collection.find(builder.toString(),idCate).as(SubCategory.class);
+        JsonArray array = new JsonArray();
+        int i=0;
+        while(cursor.hasNext()){
+            SubCategory subCategory = cursor.next();
+            JsonObject object = new JsonObject();
+            object.addProperty("idSubCate",subCategory.get_id());
+            object.addProperty("nameSubCate",subCategory.getNameSubCate());
+            if(i==0){
+                object.add("news",getThreeNewsAgriTechForSubCate(subCategory.get_id(),jongo));
+            }
+            i++;
+            array.add(object);
+        }
+        return array;
+    }
+
+    private JsonArray getThreeNewsAgriTechForSubCate(String idSubCate,Jongo jongo){
+        StringBuilder builder = new StringBuilder();
+        MongoCursor<AgriTech> cursor = null;
+        MongoCollection collection = jongo.getCollection(AgriTech.class.getSimpleName());
+        builder.append("{$and: [{idSubCate: #}]}");
+        cursor = collection.find(builder.toString(),idSubCate).sort("{timeCreate:-1}").limit(3).as(AgriTech.class);
+        JsonArray jsonArray = new JsonArray();
+        while(cursor.hasNext()){
+            AgriTech agriTech = cursor.next();
+            jsonArray.add(agriTech.toJson());
+        }
+        return jsonArray;
     }
 }

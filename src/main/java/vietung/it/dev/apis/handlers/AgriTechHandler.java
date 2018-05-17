@@ -21,6 +21,8 @@ public class AgriTechHandler extends BaseApiHandler {
             }else if(type.equals("get")){
                 String id = request.getParam("id");
                 return getNewsAgriTechByIdHandler(id,service);
+            }else if(type.equals("getnewsforhome")){
+                return service.getHomeForAgriTech();
             }else {
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
             }
