@@ -166,7 +166,7 @@ public class ExpertServiceImp implements ExpertService {
         if(cursor.hasNext()){
             Expert expert = cursor.next();
             if(isOnline){
-                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{isOnline:#,lat#,lon:#}}",isOnline,lat,lon);
+                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{isOnline:#,lat:#,lon:#}}",isOnline,lat,lon);
                 expert.setLat(lat);
                 expert.setLon(lon);
             }else{
