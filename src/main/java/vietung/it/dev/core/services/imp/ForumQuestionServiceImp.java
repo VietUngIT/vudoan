@@ -710,12 +710,12 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
                 for (int i=0;i<lstExpert.size();i++){
                     int oldWeigth = lstExpert.get(i).getWeigthMatch();
                     if(i==0){
-                        lstExpert.get(i).setWeigthMatch(oldWeigth+ nExpert*35);
+                        lstExpert.get(i).setWeigthMatch(oldWeigth+ nExpert*30);
                     } else {
                         if(lstExpert.get(i).getNumMatchField()==lstExpert.get(i-1).getNumMatchField()){
-                            lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-tempField)*35);
+                            lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-tempField)*30);
                         }else{
-                            lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-i)*35);
+                            lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-i)*30);
                             tempField = i;
                         }
                     }
@@ -727,12 +727,12 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
                 for (int i=0;i<lstExpert.size();i++){
                     int oldWeigth = lstExpert.get(i).getWeigthMatch();
                     if(i==0){
-                        lstExpert.get(i).setWeigthMatch(oldWeigth+ nExpert*25);
+                        lstExpert.get(i).setWeigthMatch(oldWeigth+ nExpert*20);
                     } else {
                         if(lstExpert.get(i).getRate()==lstExpert.get(i-1).getRate()){
-                            lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-tempRate)*25);
+                            lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-tempRate)*20);
                         }else{
-                            lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-i)*35);
+                            lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-i)*20);
                             tempRate = i;
                         }
                     }

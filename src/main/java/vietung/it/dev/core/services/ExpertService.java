@@ -18,7 +18,7 @@ public interface ExpertService {
 
     ExpertResponse updateStatusOnlineExpert(Boolean isOnline,String id,Double lat,Double lon) throws Exception;
 
-    ExpertResponse getInfoExpert(String id) throws Exception;
+    ExpertResponse getInfoExpert(String id, String phone) throws Exception;
 
     ExpertResponse getListExpertNearest(Double lat, Double lon, int numExpert, String idparentfieldExpert) throws Exception;
 
@@ -28,7 +28,7 @@ public interface ExpertService {
 
     ExpertResponse editFieldExpert(String phone, String idfield) throws Exception;
 
-    ExpertResponse rateExpert(String id,int rate) throws Exception;
+    ExpertResponse rateExpert(String id,int rate, String phone) throws Exception;
 
     ExpertResponse getAllExpert(int ofs, int page) throws Exception;
 
