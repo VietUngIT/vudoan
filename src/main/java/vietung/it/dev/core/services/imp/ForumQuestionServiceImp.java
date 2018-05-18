@@ -611,7 +611,7 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         }
         DB db = MongoPool.getDBJongo();
         Jongo jongo = new Jongo(db);
-        List<String> lstIdQuestion = getListQuestionbyExpert(id,jongo);
+        List<String> lstIdQuestion = getListQuestionAnsweredbyExpert(id,jongo);
         List<ObjectId> lstOBid = new ArrayList<>();
         for (String str: lstIdQuestion){
             lstOBid.add(new ObjectId(str));
@@ -645,7 +645,66 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         return response;
     }
 
-    private List<String> getListQuestionbyExpert(String id, Jongo jongo){
+    @Override
+    public ForumQuestionResponse getQuestionNotAnswerByIDExpert(String id, int ofs, int page) throws Exception {
+        ForumQuestionResponse response = new ForumQuestionResponse();
+        if (!ObjectId.isValid(id)) {
+            response.setError(ErrorCode.NOT_A_OBJECT_ID);
+            response.setMsg("Id không đúng.");
+            return response;
+        }
+        DB db = MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        List<String> lstIdQuestionNotAnswer = getListQuestionNotAnsweredbyExpert(id,jongo);
+        List<ObjectId> lstOBid = new ArrayList<>();
+        for (String str: lstIdQuestionNotAnswer){
+            lstOBid.add(new ObjectId(str));
+        }
+
+        MongoCursor<ForumQuestion> cursor = null;
+        MongoCollection collection = jongo.getCollection(ForumQuestion.class.getSimpleName());
+        StringBuilder builder = new StringBuilder();
+        builder.append("{_id:{$in: #}}");
+        cursor = collection.find(builder.toString(),lstOBid).sort("{timeCreate:-1}").skip(page*ofs).limit(ofs).as(ForumQuestion.class);
+        JsonArray jsonArray = new JsonArray();
+        response.setTotal(cursor.count());
+        while(cursor.hasNext()){
+            ForumQuestion forumQuestion = cursor.next();
+            Users users = Utils.getUserById(forumQuestion.getIdUser());
+            if(users!=null){
+                forumQuestion.setAvatar(users.getAvatar());
+                forumQuestion.setNameUser(users.getName());
+                List<String> userLike = forumQuestion.getUserLike();
+                if(userLike!=null && userLike.contains(users.get_id())){
+                    forumQuestion.setIsLiked(true);
+                }else{
+                    forumQuestion.setIsLiked(false);
+                }
+            }else {
+                forumQuestion.setIsLiked(false);
+            }
+            jsonArray.add(forumQuestion.toJson());
+        }
+        response.setArray(jsonArray);
+
+        return response;
+    }
+
+    private List<String> getListQuestionNotAnsweredbyExpert(String id, Jongo jongo){
+
+        List<String> lstIdAnswered  = getListQuestionAnsweredbyExpert(id,jongo);
+        MongoCollection collection = jongo.getCollection(ExpertQuestionNoti.class.getSimpleName());
+        StringBuilder builder = new StringBuilder();
+        builder.append("{idExpert: #,idQuestion:{$nin: #}}");
+        MongoCursor<ExpertQuestionNoti> cursor = collection.find(builder.toString(),id,lstIdAnswered).as(ExpertQuestionNoti.class);
+        List<String> lstIdQSNotAnswer = new ArrayList<>();
+        while(cursor.hasNext()){
+            ExpertQuestionNoti expertQuestionNoti = cursor.next();
+            lstIdQSNotAnswer.add(expertQuestionNoti.getIdQuestion());
+        }
+        return lstIdQSNotAnswer;
+    }
+    private List<String> getListQuestionAnsweredbyExpert(String id, Jongo jongo){
         MongoCollection collection = jongo.getCollection(ForumAnswer.class.getSimpleName());
         List<String> cursor = collection.distinct("idQuestion").query("{\"idUser\":#}",id).as(String.class);
         return cursor;

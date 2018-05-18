@@ -36,4 +36,6 @@ public interface ForumQuestionService {
     ForumQuestionResponse getExpertByIDUserQuestion(String id, int ofs, int page, String phone) throws Exception;
 
     ForumQuestionResponse getExpertByIDExpertQuestion(String id, int ofs, int page) throws Exception;
+
+    ForumQuestionResponse getQuestionNotAnswerByIDExpert(String id, int ofs, int page) throws Exception;
 }
