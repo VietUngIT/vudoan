@@ -14,10 +14,7 @@ import vietung.it.dev.core.config.KafkaProduce;
 import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.models.*;
-import vietung.it.dev.core.services.ExpertService;
-import vietung.it.dev.core.services.FieldOfExpertService;
-import vietung.it.dev.core.services.ForumQuestionService;
-import vietung.it.dev.core.services.UploadService;
+import vietung.it.dev.core.services.*;
 import vietung.it.dev.core.utils.Utils;
 
 import java.util.*;
@@ -485,6 +482,17 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
                 }
 
             }
+            String idSend = "";
+            NotificationService notificationService = new NotificationServiceImp();
+            StringBuilder builderQues = new StringBuilder();
+            MongoCursor<ForumQuestion> cursorQues = null;
+            MongoCollection collectionQues = jongo.getCollection(ForumQuestion.class.getSimpleName());
+            builderQues.append("{$and: [{_id: #}]}");
+            cursorQues = collectionQues.find(builder.toString(),new ObjectId(idQuestion)).limit(1).as(ForumQuestion.class);
+            if(cursorQues.hasNext()){
+                ForumQuestion forumQuestion = cursorQues.next();
+                idSend = forumQuestion.getIdUser();
+            }
             //sort expert by weight macth
             Collections.sort(lstExpert,Expert.WEIGHT_MATCH_DESC);
             List<String> lstIdExpert = new ArrayList<>();
@@ -492,6 +500,7 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
             for (Expert expert: lstExpert){
                 if(0<expertRorumQuestion.getNExpert()){
                     checkExpertQuestionNoti(expert.get_id(),expertRorumQuestion.getIdForumQuestion(),jongo);
+                    notificationService.sendNotification(idSend,expert.get_id(),"Vừa đặt câu hỏi cho bạn: ",idQuestion,1);
                 }
                 lstIdExpert.add(expert.get_id());
                 i++;
