@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.Properties;
 
 public class KafkaConsume {
-    private static Logger logger = LoggerFactory.getLogger(KafkaProduce.class.getName());
+    private static Logger logger = LoggerFactory.getLogger(KafkaConsume.class.getName());
 
     private final static String TOPIC = "question-data-visualization";
     private final static String BOOTSTRAP_SERVERS = "localhost:9092";
@@ -59,9 +59,14 @@ public class KafkaConsume {
                     SeparatedFrom separatedFrom = gson.fromJson(record.value(),SeparatedFrom.class);
                     ForumQuestionService service = new ForumQuestionServiceImp();
                     String strTags = Utils.toJsonStringGson(separatedFrom.getCountFroms());
-                    service.getTagsForumQuestion(separatedFrom.getId(),strTags);
+
+                    logger.info(String.format("Consumer Record separatedFrom:(%s, %s)\n", separatedFrom.getId(), strTags));
+
+                    service.getTagsForumQuestion(separatedFrom.getId(), strTags);
+
                     logger.info(String.format("Consumer Record:(%d, %s, %d, %d)\n", record.key(), record.value(), record.partition(), record.offset()));
                 }catch (Exception e){
+                    e.printStackTrace();
                     logger.error(String.format("Error(%s)\n",e.getMessage()));
                 }
 
