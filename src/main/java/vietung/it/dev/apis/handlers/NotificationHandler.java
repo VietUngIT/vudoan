@@ -3,6 +3,7 @@ package vietung.it.dev.apis.handlers;
 import io.vertx.core.http.HttpServerRequest;
 import vietung.it.dev.apis.response.BaseResponse;
 import vietung.it.dev.core.consts.ErrorCode;
+import vietung.it.dev.core.models.Notification;
 import vietung.it.dev.core.services.NotificationService;
 import vietung.it.dev.core.services.imp.NotificationServiceImp;
 import vietung.it.dev.core.utils.Utils;
@@ -25,7 +26,13 @@ public class NotificationHandler  extends BaseApiHandler {
                 String action = request.getParam("action");
                 String types = request.getParam("type");
                 return sendNoti(idSend,idreceiver,message,action,types,service);
-            } else {
+            } if(type.equals("view")){
+                String id = request.getParam("id");
+                return updateStatus(id, Notification.VIEW,service);
+            } if(type.equals("succ")){
+                String id = request.getParam("id");
+                return updateStatus(id, Notification.SUCC,service);
+            }else {
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
             }
         }else {
@@ -56,6 +63,19 @@ public class NotificationHandler  extends BaseApiHandler {
             try {
                 int type = Integer.parseInt(types);
                 return service.sendNoti(idSend,idreceiver,message,action,type);
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+                return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");
+            }
+        }else {
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
+        }
+    }
+
+    private BaseResponse updateStatus(String id, int status,NotificationService service){
+        if(id!=null){
+            try {
+                return service.updateStatus(id,status);
             }catch (NumberFormatException e){
                 e.printStackTrace();
                 return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");

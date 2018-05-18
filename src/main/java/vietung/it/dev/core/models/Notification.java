@@ -9,7 +9,8 @@ import org.bson.types.ObjectId;
 public class Notification extends MongoLog {
     public static final int ACTICE = 0;
     public static final int INACTIVE = 1;
-
+    public static final int SUCC = 2;
+    public static final int VIEW = 3;
 
     private String _id;
     private String idSend;

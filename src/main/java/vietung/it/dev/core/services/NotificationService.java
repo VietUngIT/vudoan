@@ -10,4 +10,8 @@ public interface NotificationService {
     public NotificationResponse sendNoti(String idSend, String idreceiver,String message,String action,int type);
 
     public NotificationResponse sendNotification(String idSend, String idreceiver,String message,String action,int type);
+
+    public NotificationResponse sendNotificationLogin(String idreceiver);
+
+    public NotificationResponse updateStatus(String id,int status);
 }

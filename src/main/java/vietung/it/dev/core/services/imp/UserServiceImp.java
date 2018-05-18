@@ -11,6 +11,7 @@ import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.models.Expert;
 import vietung.it.dev.core.models.Users;
+import vietung.it.dev.core.services.NotificationService;
 import vietung.it.dev.core.services.UploadService;
 import vietung.it.dev.core.services.UserService;
 import vietung.it.dev.core.utils.Utils;
@@ -49,6 +50,17 @@ public class UserServiceImp implements UserService {
         if(users != null){
             if(users.getPassword().equals(pass)){
                 response.setUsers(users);
+                try {
+                    Thread thread = new Thread(){
+                        public void run(){
+                            NotificationService notificationService = new NotificationServiceImp();
+                            notificationService.sendNotificationLogin(users.get_id());
+                        }
+                    };
+                    thread.start();
+                }catch (Exception e){
+                    e.fillInStackTrace();
+                }
             }else {
                 response.setError(ErrorCode.INVALID_PASSWORD);
                 response.setMsg("Mật khẩu không đúng.");
