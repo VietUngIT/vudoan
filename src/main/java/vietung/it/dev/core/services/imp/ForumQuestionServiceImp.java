@@ -494,7 +494,7 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
                 if(0<expertRorumQuestion.getNExpert()){
                     checkExpertQuestionNoti(expert.get_id(),expertRorumQuestion.getIdForumQuestion(),jongo);
                 }
-                lstIdExpert.add(expert.getIdUser());
+                lstIdExpert.add(expert.get_id());
                 i++;
             }
             //update to tb temp
@@ -746,7 +746,7 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
                     if(0<requestNExpert){
                         checkExpertQuestionNoti(expert.get_id(),expertRorumQuestion.getIdForumQuestion(),jongo);
                     }
-                    lstIdExpert.add(expert.getIdUser());
+                    lstIdExpert.add(expert.get_id());
                     i++;
                 }
                 //update to tb temp
