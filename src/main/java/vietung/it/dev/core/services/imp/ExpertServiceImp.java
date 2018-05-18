@@ -23,7 +23,7 @@ import java.util.*;
 public class ExpertServiceImp implements ExpertService {
     private final static long BLOCK_DATE = 86400000;
     @Override
-    public ExpertResponse addExpert(String name, String phone, String desc, String email, String address,String idParentField, Double lat,Double lon, String field, String tags, String degree, String workplace) throws Exception {
+    public ExpertResponse addExpert(String name, String phone, String desc, String email, String address,String idParentField, String field, String tags, String degree, String workplace) throws Exception {
         ExpertResponse response = new ExpertResponse();
         UserResponse userResponse = new UserResponse();
         UserService service = new UserServiceImp();
@@ -64,8 +64,6 @@ public class ExpertServiceImp implements ExpertService {
             expert.setAddress(address);
             expert.setWorkPlace(workplace);
             expert.setIdParentField(idParentField);
-            expert.setLat(lat);
-            expert.setLon(lon);
             expert.setIdFields(lstIdField);
             expert.setTags(lstTags);
             expert.setDegree(lstDegree);
@@ -222,10 +220,13 @@ public class ExpertServiceImp implements ExpertService {
         List<Expert> lstExpert = new ArrayList<>();
         while(cursor.hasNext()){
             Expert expert = cursor.next();
-            expert.setNameFields(getListNameFieldOfExpert(expert.getIdFields()));
-            double dist = Utils.distance(lat,lon,expert.getLat(),expert.getLon(),"K");
-            expert.setDistance(dist);
-            lstExpert.add(expert);
+            if(expert.getLat()>0 && expert.getLon()>0){
+                expert.setNameFields(getListNameFieldOfExpert(expert.getIdFields()));
+                double dist = Utils.distance(lat,lon,expert.getLat(),expert.getLon(),"K");
+                expert.setDistance(dist);
+                lstExpert.add(expert);
+            }
+
         }
         Collections.sort(lstExpert,Expert.DISTANCE_ASC);
         JsonArray array = new JsonArray();

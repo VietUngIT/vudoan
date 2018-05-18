@@ -10,7 +10,7 @@ import vietung.it.dev.core.models.Report;
 import java.util.List;
 
 public interface ExpertService {
-    ExpertResponse addExpert(String name, String phone, String desc, String email, String address,String idParentField, Double lat,Double lon, String field, String tags, String degree, String workplace) throws Exception;
+    ExpertResponse addExpert(String name, String phone, String desc, String email, String address,String idParentField, String field, String tags, String degree, String workplace) throws Exception;
 
     ExpertResponse deleteExpert(String phone) throws Exception;
 
