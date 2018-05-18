@@ -9,5 +9,5 @@ public interface NotificationService {
 
     public NotificationResponse sendNoti(String idSend, String idreceiver,String message,String action,int type);
 
-    public void sendNotification(String idSend, String idreceiver,String message,String action,int type);
+    public NotificationResponse sendNotification(String idSend, String idreceiver,String message,String action,int type);
 }

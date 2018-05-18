@@ -2,6 +2,7 @@ package vietung.it.dev.core.config;
 
 import com.corundumstudio.socketio.*;
 import com.corundumstudio.socketio.listener.DataListener;
+import com.google.gson.JsonArray;
 import com.mongodb.DB;
 import org.bson.types.ObjectId;
 import org.jongo.Jongo;
@@ -12,15 +13,19 @@ import org.slf4j.LoggerFactory;
 import vietung.it.dev.apis.launcher.APILauncher;
 import vietung.it.dev.apis.response.MessagesResponse;
 import vietung.it.dev.apis.response.NotificationResponse;
+import vietung.it.dev.apis.response.RoomsResponse;
 import vietung.it.dev.apis.response.UserResponse;
 import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.models.*;
+import vietung.it.dev.core.services.NotificationService;
 import vietung.it.dev.core.services.UploadService;
+import vietung.it.dev.core.services.imp.NotificationServiceImp;
 import vietung.it.dev.core.services.imp.UploadServiceImp;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 public class Chat {
     private static SocketIOServer server;
@@ -143,6 +148,23 @@ public class Chat {
                     response.setData(data);
                 }
                 socketIONamespace.getBroadcastOperations().sendEvent("chatevent", response);
+                NotificationService notificationService = new NotificationServiceImp();
+                if (ObjectId.isValid(data.getIdRoom())) {
+                    DB db = MongoPool.getDBJongo();
+                    Jongo jongo = new Jongo(db);
+                    MongoCollection collectionRoom = jongo.getCollection(Room.class.getSimpleName());
+                    MongoCursor<Room> cursorRoomUser = collectionRoom.find("{_id:#}",new ObjectId(data.getIdRoom())).as(Room.class);
+                    if (cursorRoomUser.hasNext()) {
+                        Room room = cursorRoomUser.next();
+                        List<String> listuser = room.getUser();
+                        JsonArray users = new JsonArray();
+                        for(int i =0 ; i < listuser.size() ; i ++){
+                            if(!listuser.get(i).equals(data.getIdUser())) {
+                                notificationService.sendNotification(data.getIdUser(),listuser.get(i),"Bạn có tin nhắn : ",data.getIdRoom(),2);
+                            }
+                        }
+                    }
+                }
             }
         });
     }

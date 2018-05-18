@@ -102,7 +102,7 @@ public class NotificationServiceImp implements NotificationService {
     }
 
     @Override
-    public void sendNotification(String idSend, String idReceiver, String message, String action, int type) {
+    public NotificationResponse sendNotification(String idSend, String idReceiver, String message, String action, int type) {
         NotificationResponse response = new NotificationResponse();
         Notification notification = new Notification();
         ObjectId objectId = new ObjectId();
@@ -114,8 +114,30 @@ public class NotificationServiceImp implements NotificationService {
         notification.setAction(action);
         notification.setType(type);
         notification.setStatus(Notification.ACTICE);
+        notification.setCreate_at(Calendar.getInstance().getTimeInMillis());
+        notification.setUpdate_at(Calendar.getInstance().getTimeInMillis());
         MongoPool.log(Notification.class.getSimpleName(), notification.toDocument());
-        response.setData(notification);
+
+        DB db =  MongoPool.getDBJongo();
+        Jongo jongo = new Jongo(db);
+        MongoCollection collection = jongo.getCollection(Users.class.getSimpleName());
+        StringBuilder sb = new StringBuilder();
+        sb.append("{$and: [{_id: #}]}");
+        MongoCursor<Users> cursor = collection.find(sb.toString(), idSend).limit(1).as(Users.class);
+        if (cursor.hasNext()){
+            Users users = cursor.next();
+            notification.setNameSend(users.getName());
+            if(users.getAvatar() != null){
+                notification.setAvataSend(users.getAvatar());
+            }else {
+                notification.setAvataSend("");
+            }
+            response.setData(notification);
+        } else {
+            response.setError(ErrorCode.USER_NOT_EXIST);
+            response.setMsg("Id khong ton tai");
+        }
         Chat.sendNotification(response);
+        return response;
     }
 }

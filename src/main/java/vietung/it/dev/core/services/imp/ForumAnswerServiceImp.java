@@ -11,9 +11,12 @@ import vietung.it.dev.apis.response.ForumAnswerResponse;
 import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.consts.ErrorCode;
 import vietung.it.dev.core.models.ForumAnswer;
+import vietung.it.dev.core.models.ForumQuestion;
+import vietung.it.dev.core.models.Room;
 import vietung.it.dev.core.models.Users;
 import vietung.it.dev.core.services.ForumAnswerService;
 import vietung.it.dev.core.services.ForumQuestionService;
+import vietung.it.dev.core.services.NotificationService;
 import vietung.it.dev.core.services.UploadService;
 import vietung.it.dev.core.utils.Utils;
 
@@ -188,6 +191,22 @@ public class ForumAnswerServiceImp implements ForumAnswerService{
         MongoPool.log(ForumAnswer.class.getSimpleName(),forumAnswer.toDocument());
         response.setData(forumAnswer.toJson());
         service.commentQuestion(id,true);
+
+        NotificationService notificationService = new NotificationServiceImp();
+        if (ObjectId.isValid(forumAnswer.getIdQuestion())) {
+            DB db = MongoPool.getDBJongo();
+            Jongo jongo = new Jongo(db);
+            StringBuilder builder = new StringBuilder();
+            MongoCursor<ForumQuestion> cursor = null;
+            MongoCollection collection = jongo.getCollection(ForumQuestion.class.getSimpleName());
+            builder.append("{$and: [{_id: #}]}");
+            cursor = collection.find(builder.toString(),new ObjectId(id)).limit(1).as(ForumQuestion.class);
+            if(cursor.hasNext()){
+                ForumQuestion forumQuestion = cursor.next();
+                notificationService.sendNotification(forumAnswer.getIdUser(),forumQuestion.getIdUser(),"Vừa trả lời câu hỏi của bạn: ",forumAnswer.getIdQuestion(),1);
+            }
+        }
+
         return  response;
     }
 }
