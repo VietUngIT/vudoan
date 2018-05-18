@@ -41,6 +41,8 @@ public class Expert extends MongoLog {
     private int numRate3 = 0;
     private int numRate4 = 0;
     private int numRate5 = 0;
+    private int isRated = 0;
+    private List<UserRate> usersRate = new ArrayList<>();
 
     @Override
     public Document toDocument() {
@@ -111,6 +113,7 @@ public class Expert extends MongoLog {
         object.addProperty("numRate3",numRate3);
         object.addProperty("numRate4",numRate4);
         object.addProperty("numRate5",numRate5);
+        object.addProperty("isRated",isRated);
         return object;
     }
     public static Comparator<Expert> DISTANCE_ASC = new Comparator<Expert>() {

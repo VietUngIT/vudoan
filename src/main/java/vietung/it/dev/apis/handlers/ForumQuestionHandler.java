@@ -53,6 +53,11 @@ public class ForumQuestionHandler extends BaseApiHandler {
                 String strofset = request.getFormAttribute("ofset");
                 String strpage = request.getFormAttribute("page");
                 return getQuestionByIDExpertHandle(id,strofset,strpage,service);
+            }else if(type.equals("getquestionnotanswerbyidexpert")){
+                String id = request.getFormAttribute("idexpert");
+                String strofset = request.getFormAttribute("ofset");
+                String strpage = request.getFormAttribute("page");
+                return getQuestionNotAnswerByIDExpertHandle(id,strofset,strpage,service);
             }else if(type.equals("getbyid")){
                 String id = request.getFormAttribute("id");
                 String phone = request.getFormAttribute("ph");
@@ -70,6 +75,21 @@ public class ForumQuestionHandler extends BaseApiHandler {
                 return getQuestionAllHandle(phone,strofset,strpage,service);
             }else{
                 return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
+            }
+        }else {
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
+        }
+    }
+
+    private BaseResponse getQuestionNotAnswerByIDExpertHandle(String id, String strofset, String strpage, ForumQuestionService service) throws Exception {
+        if(id!=null && strofset!=null && strpage!=null){
+            try {
+                int ofs = Integer.parseInt(strofset);
+                int page = Integer.parseInt(strpage);
+                return service.getQuestionNotAnswerByIDExpert(id,ofs,page);
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+                return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");
             }
         }else {
             return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");

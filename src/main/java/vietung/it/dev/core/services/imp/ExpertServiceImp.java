@@ -180,13 +180,14 @@ public class ExpertServiceImp implements ExpertService {
     }
 
     @Override
-    public ExpertResponse getInfoExpert(String id) throws Exception {
+    public ExpertResponse getInfoExpert(String id, String phone) throws Exception {
         ExpertResponse response = new ExpertResponse();
         if (!ObjectId.isValid(id)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
             response.setMsg("Id không đúng.");
             return response;
         }
+        Users users = Utils.getUserByPhone(phone);
         DB db = MongoPool.getDBJongo();
         Jongo jongo = new Jongo(db);
         MongoCollection collection = jongo.getCollection(Expert.class.getSimpleName());
@@ -194,6 +195,13 @@ public class ExpertServiceImp implements ExpertService {
         if(cursor.hasNext()){
             Expert expert = cursor.next();
             expert.setNameFields(getListNameFieldOfExpert(expert.getIdFields()));
+            if(expert.getUsersRate()!=null){
+                for (UserRate u: expert.getUsersRate()){
+                    if(u.getUser().equals(users.get_id())){
+                        expert.setIsRated(u.getRate());
+                    }
+                }
+            }
             response.setData(expert.toJson());
         }else {
             response.setError(ErrorCode.USER_NOT_EXIST);
@@ -315,44 +323,67 @@ public class ExpertServiceImp implements ExpertService {
     }
 
     @Override
-    public ExpertResponse rateExpert(String id, int rate) throws Exception {
+    public ExpertResponse rateExpert(String id, int rate, String phone) throws Exception {
         ExpertResponse response = new ExpertResponse();
         if (!ObjectId.isValid(id)) {
             response.setError(ErrorCode.NOT_A_OBJECT_ID);
             response.setMsg("Id không đúng.");
         }
+        Users users = Utils.getUserByPhone(phone);
         DB db = MongoPool.getDBJongo();
         Jongo jongo = new Jongo(db);
         MongoCollection collection = jongo.getCollection(Expert.class.getSimpleName());
         MongoCursor<Expert> cursor = collection.find("{_id:#}",new ObjectId(id)).limit(1).as(Expert.class);
         if(cursor.hasNext()){
             Expert expert = cursor.next();
+            UserRate userRate = null;
+            if(expert.getUsersRate()!=null){
+                for (UserRate u: expert.getUsersRate()){
+                    if(u.getUser().equals(users.get_id())){
+//                        userRate = new UserRate();
+                        userRate = u;
+                        updateNumRate(userRate,jongo,expert);
+                    }
+                }
+            }
+
             int numRate = expert.getNumRate();
-            float newRate = caculatoRate(expert,rate);
+            float newRate = caculatoRate(expert,rate, userRate);
             if(rate==1){
                 int r1 = expert.getNumRate1();
-                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate1: #}}",(++numRate),newRate,++r1);
+                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate1: #}}",userRate==null?(++numRate):numRate,newRate,++r1);
                 expert.setNumRate1(r1);
             }else if(rate==2){
                 int r2 = expert.getNumRate2();
-                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate2: #}}",(++numRate),newRate,++r2);
+                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate2: #}}",userRate==null?(++numRate):numRate,newRate,++r2);
                 expert.setNumRate2(r2);
             }else if(rate==3){
                 int r3 = expert.getNumRate3();
-                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate3: #}}",(++numRate),newRate,++r3);
+                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate3: #}}",userRate==null?(++numRate):numRate,newRate,++r3);
                 expert.setNumRate3(r3);
             }else if(rate==4){
                 int r4 = expert.getNumRate4();
-                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate4: #}}",(++numRate),newRate,++r4);
+                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate4: #}}",userRate==null?(++numRate):numRate,newRate,++r4);
                 expert.setNumRate4(r4);
             }else if(rate==5){
                 int r5 = expert.getNumRate5();
-                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate5: #}}",(++numRate),newRate,++r5);
+                collection.update("{_id:#}",new ObjectId(id)).with("{$set:{numRate:#,rate:#,numRate5: #}}",userRate==null?(++numRate):numRate,newRate,++r5);
                 expert.setNumRate5(r5);
+            }
+            if(userRate==null){
+                userRate = new UserRate();
+                userRate.setRate(rate);
+                userRate.setUser(users.get_id());
+                collection.update("{_id:#}", new ObjectId(id)).with("{ $push: {usersRate:#}}",userRate.toDocument());
+            }else{
+                collection.update("{_id:#,usersRate.user: #}", new ObjectId(id),userRate.getUser()).with("{$set:{usersRate.$.rate:#}}",rate);
             }
             expert.setNumRate(numRate);
             expert.setRate(newRate);
-            response.setData(expert.toJson());
+            JsonObject object = new JsonObject();
+            object.addProperty("numRate",numRate);
+            object.addProperty("rate",newRate);
+            response.setData(object);
         }else{
             response.setError(ErrorCode.USER_NOT_EXIST);
             response.setMsg("Chuyên gia này không tồn tại.");
@@ -360,34 +391,98 @@ public class ExpertServiceImp implements ExpertService {
         return response;
     }
 
-    private float caculatoRate(Expert e, int rate){
-        float res = 0;
-        float ts = 0;
-        switch (rate){
+    private void updateNumRate(UserRate userRate,Jongo jongo, Expert expert){
+        MongoCollection collection = jongo.getCollection(Expert.class.getSimpleName());
+
+        switch (userRate.getRate()){
             case 1:
-                ts = ((e.getNumRate1()+1)+e.getNumRate2()*2+e.getNumRate3()*3+e.getNumRate4()*4+e.getNumRate5()*5);
-                res = ts/(float)(e.getNumRate()+1);
+                int n1 = expert.getNumRate1();
+                collection.update("{_id:#}",new ObjectId(expert.get_id())).with("{$set:{numRate1: #}}",--n1);
+//                expert.setNumRate1(n1);
                 break;
             case 2:
-                ts = (e.getNumRate1()+(e.getNumRate2()+1)*2+e.getNumRate3()*3+e.getNumRate4()*4+e.getNumRate5()*5);
-                res = ts/(float)(e.getNumRate()+1);
+                int n2 = expert.getNumRate2();
+                collection.update("{_id:#}",new ObjectId(expert.get_id())).with("{$set:{numRate2: #}}",--n2);
+//                expert.setNumRate2(n2);
                 break;
             case 3:
-                ts = (e.getNumRate1()+e.getNumRate2()*2+(e.getNumRate3()+1)*3+e.getNumRate4()*4+e.getNumRate5()*5);
-                res = ts/(float)(e.getNumRate()+1);
+                int n3 = expert.getNumRate3();
+                collection.update("{_id:#}",new ObjectId(expert.get_id())).with("{$set:{numRate3: #}}",--n3);
+//                expert.setNumRate3(n3);
                 break;
             case 4:
-                ts = (e.getNumRate1()+e.getNumRate2()*2+e.getNumRate3()*3+(e.getNumRate4()+1)*4+e.getNumRate5()*5);
-                res = ts/(float)(e.getNumRate()+1);
+                int n4 = expert.getNumRate4();
+                collection.update("{_id:#}",new ObjectId(expert.get_id())).with("{$set:{numRate4: #}}",--n4);
+//                expert.setNumRate4(n4);
                 break;
             case 5:
-                ts = (e.getNumRate1()+e.getNumRate2()*2+e.getNumRate3()*3+e.getNumRate4()*4+(e.getNumRate5()+1)*5);
-                res = ts/(float)(e.getNumRate()+1);
+                int n5 = expert.getNumRate5();
+                collection.update("{_id:#}",new ObjectId(expert.get_id())).with("{$set:{numRate5: #}}",--n5);
+//                expert.setNumRate5(n5);
                 break;
         }
-        float tempRes = res*10;
-        float kq = Math.round(tempRes);
-        return kq / 10;
+    }
+
+    private float caculatoRate(Expert e, int rate, UserRate userRate){
+        if (userRate==null){
+            float res = 0;
+            float ts = 0;
+            switch (rate){
+                case 1:
+                    ts = ((e.getNumRate1()+1)+e.getNumRate2()*2+e.getNumRate3()*3+e.getNumRate4()*4+e.getNumRate5()*5);
+                    res = ts/(float)(e.getNumRate()+1);
+                    break;
+                case 2:
+                    ts = (e.getNumRate1()+(e.getNumRate2()+1)*2+e.getNumRate3()*3+e.getNumRate4()*4+e.getNumRate5()*5);
+                    res = ts/(float)(e.getNumRate()+1);
+                    break;
+                case 3:
+                    ts = (e.getNumRate1()+e.getNumRate2()*2+(e.getNumRate3()+1)*3+e.getNumRate4()*4+e.getNumRate5()*5);
+                    res = ts/(float)(e.getNumRate()+1);
+                    break;
+                case 4:
+                    ts = (e.getNumRate1()+e.getNumRate2()*2+e.getNumRate3()*3+(e.getNumRate4()+1)*4+e.getNumRate5()*5);
+                    res = ts/(float)(e.getNumRate()+1);
+                    break;
+                case 5:
+                    ts = (e.getNumRate1()+e.getNumRate2()*2+e.getNumRate3()*3+e.getNumRate4()*4+(e.getNumRate5()+1)*5);
+                    res = ts/(float)(e.getNumRate()+1);
+                    break;
+            }
+            float tempRes = res*10;
+            float kq = Math.round(tempRes);
+            return kq / 10;
+        }else {
+            float res = 0;
+            float ts = 0;
+            switch (rate){
+                case 1:
+                    ts = ((e.getNumRate1()+1)+e.getNumRate2()*2+e.getNumRate3()*3+e.getNumRate4()*4+e.getNumRate5()*5 - userRate.getRate());
+                    res = ts/(float)(e.getNumRate());
+                    break;
+                case 2:
+                    ts = (e.getNumRate1()+(e.getNumRate2()+1)*2+e.getNumRate3()*3+e.getNumRate4()*4+e.getNumRate5()*5 - userRate.getRate());
+                    res = ts/(float)(e.getNumRate());
+                    break;
+                case 3:
+                    ts = (e.getNumRate1()+e.getNumRate2()*2+(e.getNumRate3()+1)*3+e.getNumRate4()*4+e.getNumRate5()*5 - userRate.getRate());
+                    res = ts/(float)(e.getNumRate());
+                    break;
+                case 4:
+                    ts = (e.getNumRate1()+e.getNumRate2()*2+e.getNumRate3()*3+(e.getNumRate4()+1)*4+e.getNumRate5()*5 - userRate.getRate());
+                    res = ts/(float)(e.getNumRate());
+                    break;
+                case 5:
+                    ts = (e.getNumRate1()+e.getNumRate2()*2+e.getNumRate3()*3+e.getNumRate4()*4+(e.getNumRate5()+1)*5 - userRate.getRate());
+                    res = ts/(float)(e.getNumRate());
+                    break;
+            }
+
+            float tempRes = res*10;
+            float kq = Math.round(tempRes);
+            return kq / 10;
+        }
+
     }
 
     @Override

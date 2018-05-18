@@ -56,7 +56,8 @@ public class ExpertInfoHandler extends BaseApiHandler {
             }else if(type.equals("get")){
                 String id = request.getParam("idexpert");
                 if(id!=null){
-                    return service.getInfoExpert(id);
+                    String phone = request.getParam("ph");
+                    return service.getInfoExpert(id,phone);
                 }else{
                     return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
                 }
@@ -99,9 +100,10 @@ public class ExpertInfoHandler extends BaseApiHandler {
                 String tags = request.getParam("tags");
                 return editTagsExpertHandle(phone,tags,service);
             }else if(type.equals("rate")){
-                String phone = request.getParam("phone");
+                String id = request.getParam("idexpert");
+                String phone = request.getParam("ph");
                 String strrate = request.getParam("rate");
-                return rateExpertHandle(phone,strrate,service);
+                return rateExpertHandle(id,strrate,phone,service);
             }else if(type.equals("statiticcommentbyexpert")){
                 String id = request.getParam("idexpert");
                 if(id!=null){
@@ -118,11 +120,11 @@ public class ExpertInfoHandler extends BaseApiHandler {
 
     }
 
-    private BaseResponse rateExpertHandle(String id, String strrate, ExpertService service) throws Exception {
+    private BaseResponse rateExpertHandle(String id, String strrate,String phone, ExpertService service) throws Exception {
         if(id!=null && strrate!=null){
             try{
                 int rate = Integer.parseInt(strrate);
-                return service.rateExpert(id,rate);
+                return service.rateExpert(id,rate,phone);
             }catch (NumberFormatException e){
                 e.printStackTrace();
                 return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");
