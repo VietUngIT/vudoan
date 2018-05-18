@@ -45,6 +45,19 @@ public class APILauncher {
                             logger.error("Unable to start your application", event.cause());
                         }
                     });
+            ExecutorService service3 = Executors.newFixedThreadPool(1);
+            service3.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Chat.init();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
             ExecutorService service = Executors.newFixedThreadPool(1);
             service.execute(new Runnable() {
                 @Override
@@ -59,19 +72,7 @@ public class APILauncher {
                     KafkaConsume.init();
                 }
             });
-            ExecutorService service3 = Executors.newFixedThreadPool(1);
-            service3.execute(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Chat.init();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+
         }catch (Exception e){
             e.printStackTrace();
         }

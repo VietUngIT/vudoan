@@ -488,7 +488,7 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
             MongoCursor<ForumQuestion> cursorQues = null;
             MongoCollection collectionQues = jongo.getCollection(ForumQuestion.class.getSimpleName());
             builderQues.append("{$and: [{_id: #}]}");
-            cursorQues = collectionQues.find(builder.toString(),new ObjectId(idQuestion)).limit(1).as(ForumQuestion.class);
+            cursorQues = collectionQues.find(builderQues.toString(),new ObjectId(idQuestion)).limit(1).as(ForumQuestion.class);
             if(cursorQues.hasNext()){
                 ForumQuestion forumQuestion = cursorQues.next();
                 idSend = forumQuestion.getIdUser();
@@ -500,7 +500,9 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
             for (Expert expert: lstExpert){
                 if(0<expertRorumQuestion.getNExpert()){
                     checkExpertQuestionNoti(expert.get_id(),expertRorumQuestion.getIdForumQuestion(),jongo);
-                    notificationService.sendNotification(idSend,expert.get_id(),"Vừa đặt câu hỏi cho bạn: ",idQuestion,1);
+                    if(!idSend.equals("") && expert.get_id() != null ){
+                        notificationService.sendNotification(idSend,expert.get_id(),"Vừa đặt câu hỏi cho bạn: ",idQuestion,1);
+                    }
                 }
                 lstIdExpert.add(expert.get_id());
                 i++;
