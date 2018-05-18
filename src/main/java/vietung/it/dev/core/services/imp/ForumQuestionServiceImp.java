@@ -320,22 +320,24 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
                 if(lstExpert!=null){
                     List<Expert> lstTemp = new ArrayList<>();
                     for (Expert e : lstExpert){
-                        if (status==1){
-                            if(e.getIsOnline()){
+                        if(e.getLat()>0 && e.getLon()>0){
+                            if (status==1){
+                                if(e.getIsOnline()){
+                                    double dist = Utils.distance(lat,lon,e.getLat(),e.getLon(),"K");
+                                    e.setDistance(dist);
+                                    lstTemp.add(e);
+                                }
+                            } else if(status==0){
+                                if (!e.getIsOnline()){
+                                    double dist = Utils.distance(lat,lon,e.getLat(),e.getLon(),"K");
+                                    e.setDistance(dist);
+                                    lstTemp.add(e);
+                                }
+                            }else if (status==-1){
                                 double dist = Utils.distance(lat,lon,e.getLat(),e.getLon(),"K");
                                 e.setDistance(dist);
                                 lstTemp.add(e);
                             }
-                        } else if(status==0){
-                            if (!e.getIsOnline()){
-                                double dist = Utils.distance(lat,lon,e.getLat(),e.getLon(),"K");
-                                e.setDistance(dist);
-                                lstTemp.add(e);
-                            }
-                        }else if (status==-1){
-                            double dist = Utils.distance(lat,lon,e.getLat(),e.getLon(),"K");
-                            e.setDistance(dist);
-                            lstTemp.add(e);
                         }
                     }
                     List<Expert> expertList = new ArrayList<>();
@@ -413,7 +415,6 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
             JsonObject object = array.get(i).getAsJsonObject();
             lstTag.add(object.get("name").getAsString());
         }
-        //get by idquestion in table expertRorumQuestion
 
         DB db = MongoPool.getDBJongo();
         Jongo jongo = new Jongo(db);
@@ -767,6 +768,8 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         MongoCursor<ExpertQuestionNoti> cursor = collection.find(builder.toString(),idExpert,idQuestion).limit(1).as(ExpertQuestionNoti.class);
         if(!cursor.hasNext()){
             ExpertQuestionNoti expertQuestionNoti = new ExpertQuestionNoti();
+            ObjectId id = new ObjectId();
+            expertQuestionNoti.set_id(id.toHexString());
             expertQuestionNoti.setIdExpert(idExpert);
             expertQuestionNoti.setIdQuestion(idQuestion);
             MongoPool.log(ExpertQuestionNoti.class.getSimpleName(),expertQuestionNoti.toDocument());

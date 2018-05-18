@@ -22,12 +22,12 @@ public class AdminExpertHandler extends BaseApiHandler{
                 String address = request.getFormAttribute("address");
                 String workplace = request.getFormAttribute("workplace");
                 String idParentField = request.getFormAttribute("idparentfield");
-                String strlat = request.getFormAttribute("lat");
-                String strlon = request.getFormAttribute("long");
+//                String strlat = request.getFormAttribute("lat");
+//                String strlon = request.getFormAttribute("long");
                 String field = request.getFormAttribute("field");
                 String tags = request.getFormAttribute("tags");
                 String degree = request.getFormAttribute("degree");
-                return addExpertHandle(name,phone,desc,email,address,idParentField,strlat,strlon,field,tags,degree,workplace,service);
+                return addExpertHandle(name,phone,desc,email,address,idParentField,field,tags,degree,workplace,service);
             }else if(type.equals("edit")){
                 String phone = request.getFormAttribute("phone");
                 String desc = request.getFormAttribute("desc");
@@ -101,8 +101,8 @@ public class AdminExpertHandler extends BaseApiHandler{
     }
 
 
-    private BaseResponse addExpertHandle(String name, String phone, String desc, String email, String address,String idParentField, String strLat, String strLon, String field, String tags, String degree,String workplace, ExpertService service) throws Exception {
-        if(name!=null && phone!=null && email!=null && address!=null && strLat!=null && strLon!=null && idParentField!=null && workplace!=null){
+    private BaseResponse addExpertHandle(String name, String phone, String desc, String email, String address,String idParentField, String field, String tags, String degree,String workplace, ExpertService service) throws Exception {
+        if(name!=null && phone!=null && email!=null && address!=null && idParentField!=null && workplace!=null){
             if(field==null){
                 field="[]";
             }
@@ -112,13 +112,7 @@ public class AdminExpertHandler extends BaseApiHandler{
             if(degree==null){
                 degree="[]";
             }
-            try{
-                Double lat = Double.parseDouble(strLat);
-                Double lon = Double.parseDouble(strLon);
-                return service.addExpert(name,phone,desc,email,address,idParentField,lat,lon,field,tags,degree,workplace);
-            }catch (Exception e){
-                return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu."+e.getMessage());
-            }
+            return service.addExpert(name,phone,desc,email,address,idParentField,field,tags,degree,workplace);
         }else {
             return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }

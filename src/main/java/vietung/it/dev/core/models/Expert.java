@@ -20,8 +20,8 @@ public class Expert extends MongoLog {
     private String email;
     private String address;
     private String workPlace;
-    private Double lat;
-    private Double lon;
+    private Double lat = 0D;
+    private Double lon = 0D;
     private int numRate;
     private float rate;
     private String idParentField;
