@@ -42,6 +42,7 @@ public class Expert extends MongoLog {
     private int numRate4 = 0;
     private int numRate5 = 0;
     private int isRated = 0;
+    private float score;
     private List<UserRate> usersRate = new ArrayList<>();
 
     @Override
