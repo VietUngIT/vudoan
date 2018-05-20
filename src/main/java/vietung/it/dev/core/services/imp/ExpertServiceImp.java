@@ -73,6 +73,9 @@ public class ExpertServiceImp implements ExpertService {
             MongoPool.log(Expert.class.getSimpleName(),expert.toDocument());
             response.setData(expert.toJson());
             service.changeAddress(phone,address);
+            if(expert.getEmail()!=null && !expert.getEmail().trim().equals("")){
+                Utils.sendEmail(expert.getEmail().trim(),expert.getName(),expert.getPhone());
+            }
             return response;
         }else{
             response.setError(userResponse.getError());
@@ -626,6 +629,11 @@ public class ExpertServiceImp implements ExpertService {
         report.setCount(count);
         report.setLst(hashMap);
         return report;
+    }
+
+    @Override
+    public ExpertResponse searcxhExpert(int ofs, int page, String content) throws Exception {
+        return null;
     }
 
 

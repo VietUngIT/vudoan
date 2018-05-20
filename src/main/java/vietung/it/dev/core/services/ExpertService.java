@@ -41,4 +41,6 @@ public interface ExpertService {
     ExpertResponse statiticCommentByExpert(String id) throws Exception;
 
     Report gtExpertForDashBoard(Jongo jongo) throws Exception;
+
+    ExpertResponse searcxhExpert(int ofs, int page, String content) throws Exception;
 }

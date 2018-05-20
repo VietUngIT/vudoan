@@ -104,6 +104,11 @@ public class ExpertInfoHandler extends BaseApiHandler {
                 String phone = request.getParam("ph");
                 String strrate = request.getParam("rate");
                 return rateExpertHandle(id,strrate,phone,service);
+            }else if(type.equals("searchexpert")){
+                String content = request.getParam("content");
+                String strofset = request.getParam("ofset");
+                String strpage = request.getParam("page");
+                return searchExpertHandle(content,strofset,strpage,service);
             }else if(type.equals("statiticcommentbyexpert")){
                 String id = request.getParam("idexpert");
                 if(id!=null){
@@ -118,6 +123,27 @@ public class ExpertInfoHandler extends BaseApiHandler {
             return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
         }
 
+    }
+
+    private BaseResponse searchExpertHandle(String content, String strofset, String strpage, ExpertService service)  throws Exception {
+        if(content!=null && !content.trim().toString().equals("")){
+            if(strofset==null){
+                strofset = "4";
+            }
+            if(strpage==null){
+                strpage = "0";
+            }
+            try {
+                int ofs = Integer.parseInt(strofset);
+                int page = Integer.parseInt(strpage);
+                return  service.searcxhExpert(ofs,page,content);
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+                return Utils.notifiError(ErrorCode.CANT_CAST_TYPE,"Lỗi ép kiểu dữ liệu.");
+            }
+        }else {
+            return Utils.notifiError(ErrorCode.INVALID_PARAMS,"Invalid params.");
+        }
     }
 
     private BaseResponse rateExpertHandle(String id, String strrate,String phone, ExpertService service) throws Exception {

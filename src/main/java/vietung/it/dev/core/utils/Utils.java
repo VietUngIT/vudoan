@@ -1,5 +1,6 @@
 package vietung.it.dev.core.utils;
 
+import com.google.appengine.repackaged.org.json.JSONException;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -13,6 +14,7 @@ import vietung.it.dev.apis.response.SimpleResponse;
 import vietung.it.dev.core.config.MongoConfig;
 import vietung.it.dev.core.config.MongoPool;
 import vietung.it.dev.core.consts.ErrorCode;
+import vietung.it.dev.core.models.Sendgrid;
 import vietung.it.dev.core.models.Users;
 
 import java.security.MessageDigest;
@@ -122,5 +124,23 @@ public class Utils {
         calendar.set(Calendar.SECOND,59);
         calendar.set(Calendar.MILLISECOND,990);
         return calendar.getTimeInMillis();
+    }
+
+    public static void sendEmail(String sender,String name,String phone){
+        Sendgrid mail = new Sendgrid("lecongtuananh356","dudu1111");
+
+        mail.setTo(sender)
+            .setFrom("vietung.it@gmail.com")
+            .setSubject("Thư từ hệ thống Ifamer")
+            .setText("Thư hệ thống.")
+            .setHtml("<div><strong>Xin chào chuyên gia: "+name+"</strong></div><div>Chúng tôi đã tạo cho bạn một tài khoản chuyên gia để truy cập hệ thống ifamer</div>"+
+                            "<div>Tài khoản: <strong><i>"+phone+"</i></strong></div><div>Mật khẩu: <strong><i>123456</i></strong></div><div>Sau khi nhận email này bạn hãy đăng nhập vào ứng dụng để xác nhận tài khoản và đổi mật khẩu.</div>");
+
+// send your message
+        try {
+            mail.send();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
