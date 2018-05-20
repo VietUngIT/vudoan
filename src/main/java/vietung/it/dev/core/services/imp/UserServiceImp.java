@@ -18,6 +18,9 @@ import vietung.it.dev.core.utils.Utils;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class UserServiceImp implements UserService {
     @Override
@@ -51,13 +54,14 @@ public class UserServiceImp implements UserService {
             if(users.getPassword().equals(pass)){
                 response.setUsers(users);
                 try {
-                    Thread thread = new Thread(){
-                        public void run(){
+                    final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+                    executorService.scheduleAtFixedRate(new Runnable() {
+                        @Override
+                        public void run() {
                             NotificationService notificationService = new NotificationServiceImp();
                             notificationService.sendNotificationLogin(users.get_id());
                         }
-                    };
-                    thread.start();
+                    }, 30000, 1, TimeUnit.SECONDS);
                 }catch (Exception e){
                     e.fillInStackTrace();
                 }

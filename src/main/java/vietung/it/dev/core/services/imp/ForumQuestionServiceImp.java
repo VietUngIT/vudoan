@@ -635,7 +635,7 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
         response.setTotal(cursor.count());
         while(cursor.hasNext()){
             ForumQuestion forumQuestion = cursor.next();
-            Users users = Utils.getUserByPhone(forumQuestion.getIdUser());
+            Users users = Utils.getUserById(forumQuestion.getIdUser());
             if(users!=null){
                 forumQuestion.setAvatar(users.getAvatar());
                 forumQuestion.setNameUser(users.getName());
