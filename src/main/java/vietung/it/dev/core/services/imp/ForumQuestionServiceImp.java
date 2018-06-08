@@ -435,12 +435,12 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
             Collections.sort(lstExpert,Expert.NUM_MATCH_TAGS_DESC);
             for (int i=0;i<lstExpert.size();i++){
                 if(i==0){
-                    lstExpert.get(i).setWeigthMatch(nExpert*50);
+                    lstExpert.get(i).setWeigthMatch(nExpert*0);
                 } else {
                     if(lstExpert.get(i).getNumMatchTags()==lstExpert.get(i-1).getNumMatchTags()){
                         lstExpert.get(i).setWeigthMatch(lstExpert.get(i-1).getWeigthMatch());
                     }else{
-                        lstExpert.get(i).setWeigthMatch((nExpert-i)*50);
+                        lstExpert.get(i).setWeigthMatch((nExpert-i)*0);
                     }
                 }
 
@@ -454,12 +454,12 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
             for (int i=0;i<lstExpert.size();i++){
                 int oldWeigth = lstExpert.get(i).getWeigthMatch();
                 if(i==0){
-                    lstExpert.get(i).setWeigthMatch(oldWeigth+ nExpert*35);
+                    lstExpert.get(i).setWeigthMatch(oldWeigth+ nExpert*0);
                 } else {
                     if(lstExpert.get(i).getNumMatchField()==lstExpert.get(i-1).getNumMatchField()){
-                        lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-tempField)*35);
+                        lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-tempField)*0);
                     }else{
-                        lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-i)*35);
+                        lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-i)*0);
                         tempField = i;
                     }
                 }
@@ -471,12 +471,12 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
             for (int i=0;i<lstExpert.size();i++){
                 int oldWeigth = lstExpert.get(i).getWeigthMatch();
                 if(i==0){
-                    lstExpert.get(i).setWeigthMatch(oldWeigth+ nExpert*25);
+                    lstExpert.get(i).setWeigthMatch(oldWeigth+ nExpert*100);
                 } else {
                     if(lstExpert.get(i).getRate()==lstExpert.get(i-1).getRate()){
-                        lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-tempRate)*25);
+                        lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-tempRate)*100);
                     }else{
-                        lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-i)*35);
+                        lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-i)*100);
                         tempRate = i;
                     }
                 }
@@ -760,12 +760,12 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
                 Collections.sort(lstExpert,Expert.NUM_MATCH_TAGS_DESC);
                 for (int i=0;i<lstExpert.size();i++){
                     if(i==0){
-                        lstExpert.get(i).setWeigthMatch(nExpert*50);
+                        lstExpert.get(i).setWeigthMatch(nExpert*0);
                     } else {
                         if(lstExpert.get(i).getNumMatchTags()==lstExpert.get(i-1).getNumMatchTags()){
                             lstExpert.get(i).setWeigthMatch(lstExpert.get(i-1).getWeigthMatch());
                         }else{
-                            lstExpert.get(i).setWeigthMatch((nExpert-i)*50);
+                            lstExpert.get(i).setWeigthMatch((nExpert-i)*0);
                         }
                     }
 
@@ -779,12 +779,12 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
                 for (int i=0;i<lstExpert.size();i++){
                     int oldWeigth = lstExpert.get(i).getWeigthMatch();
                     if(i==0){
-                        lstExpert.get(i).setWeigthMatch(oldWeigth+ nExpert*30);
+                        lstExpert.get(i).setWeigthMatch(oldWeigth+ nExpert*0);
                     } else {
                         if(lstExpert.get(i).getNumMatchField()==lstExpert.get(i-1).getNumMatchField()){
-                            lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-tempField)*30);
+                            lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-tempField)*0);
                         }else{
-                            lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-i)*30);
+                            lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-i)*0);
                             tempField = i;
                         }
                     }
@@ -796,12 +796,12 @@ public class ForumQuestionServiceImp implements ForumQuestionService {
                 for (int i=0;i<lstExpert.size();i++){
                     int oldWeigth = lstExpert.get(i).getWeigthMatch();
                     if(i==0){
-                        lstExpert.get(i).setWeigthMatch(oldWeigth+ nExpert*20);
+                        lstExpert.get(i).setWeigthMatch(oldWeigth+ nExpert*100);
                     } else {
                         if(lstExpert.get(i).getRate()==lstExpert.get(i-1).getRate()){
-                            lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-tempRate)*20);
+                            lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-tempRate)*100);
                         }else{
-                            lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-i)*20);
+                            lstExpert.get(i).setWeigthMatch(oldWeigth + (nExpert-i)*100);
                             tempRate = i;
                         }
                     }

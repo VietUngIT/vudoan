@@ -23,7 +23,7 @@ public class Users extends MongoLog {
     @Override
     public Document toDocument() {
         Document doc = new Document();
-        doc.append("_id", new ObjectId(_id));
+        doc.append("_id", _id);
         doc.append("name", name);
         doc.append("phone", phone);
         doc.append("password", password);
